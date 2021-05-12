@@ -1,0 +1,7 @@
+Artículo estado del arte:
+Solving 0–1 knapsack problem by a novel global harmony search algorithm
+
+Referencia 65
+https://www.sciencedirect.com/science/article/abs/pii/S1568494610002000
+
+items: 4,5,7,10,15,20,23

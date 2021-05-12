@@ -1,0 +1,14 @@
+knapsack input contains n + 1 lines. The first line contains two integers, the first is the number of items in the problem, n. The second number is the capacity of the knapsack, K. The remaining lines present the data for each of the items. Each line, i = 0...: n - 1 contains two integers, the item's value vi followed by its weight wi.
+
+Input Format
+n K
+v_0 w_0
+v_1 w_1
+...
+v_n-1 w_n-1
+
+Aditional lines contains a knapsack solution . The first line contains two values
+obj and opt. obj is the total value of the items selected to go into the knapsack (i.e. the objective value). The next line is a list of n 0=1-values, one for each of the xi variables. This line encodes the solution.
+
+obj 
+x_0 x_1 x_2 ... x_n-1
