@@ -10,16 +10,15 @@ class Knapsack:
         self.items = []
         self.objetive = 0
         self.solution = []
+        self.quantum_solution = []
 
     def is_equal_solution(self, list_solution):
         """ compares solution"""
-        print(f"quantum solution: {list_solution}")
         if(len(self.solution) != len(list_solution)):             
             return False
         else:             
             for i in range(0,len(self.solution)):
-                if(self.solution[i] != list_solution[i]):                    
-                    print("en false") 
+                if(self.solution[i] != list_solution[i]): 
                     return False
         return True 
 
@@ -33,19 +32,20 @@ class Knapsack:
 
     #setters
     def set_solution(self, s):
-        """ add an item to solution list"""
+        """ set solution list"""
         self.solution = s
 
-    def add_item_to_item_list(self, item):
-        """ """
-        self.items.append(item)
+    def set_quantum_solution(self, qs):
+        """ set quantum solution list"""
+        self.quantum_solution = qs
 
-    def add_element_to_item_list(self, value, weight):
-        self.items.append(new )
+    def add_item_to_item_list(self, item):
+        """ add an item to solution list """
+        self.items.append(item)
 
     def set_objetive(self, obj):
         """ set objetive value for the solution """
-        self.objetive = obj  
+        self.objetive = obj
 
     def setCapacity(self, c):
         """set maximum capacity of knapsack"""
@@ -67,6 +67,11 @@ class Knapsack:
     def get_solution(self):
         """"get the given solution list"""
         return self.solution     
+
+    def get_quantum_solution(self):
+        """"get the find quantum solution list"""
+        return self.quantum_solution
+        
 
     def get_items_list(self):
         """"get items list"""

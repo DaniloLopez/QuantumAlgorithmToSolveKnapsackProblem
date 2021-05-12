@@ -20,7 +20,9 @@ obj_fileWriter  = FileWriter()
 num_iterations = 20
 
 FOLDER_DATASET_FN = "files/dataset_fn/"
+
 FOLDER_DATASET_GENERATED = "files/generated_dataset/"
+#FOLDER_DATASET_GENERATED = "files/generated_dataset_complete"
 
 FOLDER_DATASET_GEN_EASY = "easy"
 FOLDER_DATASET_GEN_MEDIUM = "medium"

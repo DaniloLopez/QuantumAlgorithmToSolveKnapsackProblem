@@ -44,7 +44,7 @@ def get_line_result_format(obj_kp, profits_solution, weigths_solution, num_exact
     line += fill_spaces(num_exact_solution, 18)
     line += fill_spaces(num_iterations - num_exact_solution, 22)
     line += fill_spaces(str((num_exact_solution*100) / num_iterations)+"%", 15)
-    line += fill_spaces(str(max(times)), 15)
+    line += fill_spaces("{0:.2f}".format(max(times)), 15)
     line += fill_spaces(str(min(times)), 15)
     line += fill_spaces(str(sum(times)/len(times)), 14)
     return line
