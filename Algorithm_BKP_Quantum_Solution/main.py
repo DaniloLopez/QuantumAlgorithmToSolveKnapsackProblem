@@ -2,24 +2,13 @@
 #!/usr/bin/python
 
 #necessary packages 
-import argparse
 
-DESCRIPTION_TEXT = "This program execute and analize a set of data with information about a knapsack every file; the information of a file is read and with an algorithm that emaule the functionality of a quantum computer"
+from modules.menu.menu import Menu
 
-parser = argparse.ArgumentParser(description=DESCRIPTION_TEXT)
-parser.add_argument("-i", "--iterations", help="Number of iterations to run each file with a knapsack")
-args = parser.parse_args()
-
-num_iterations = 0
-
-if args.iterations:
-    num_iterations = args.iterations
-else:
-    num_iterations = 20
-
-#necessary packages 
+"""
 from qiskit.aqua.input import EnergyInput
 from qiskit.aqua.algorithms import ExactEigensolver
+import modules.quantum.quantum as quantum"""
 from time import time
 from datetime import datetime
 from os import scandir, getcwd, listdir
@@ -28,8 +17,15 @@ import modules.util.util as util
 from modules.knapsack.knapsack import Knapsack
 from modules.file.fileWriter import FileWriter
 import modules.file.fileReader as fileReader
-import modules.quantum.quantum as quantum
+
 import numpy as np
+
+DESCRIPTION_TEXT = "This program execute and analize a set of data with information about a knapsack every file; the information of a file is read and with an algorithm that emaule the functionality of a quantum computer"
+EPILOG_TEXT="Author: Danilo López - dlopezs@unicauca.edu.co"
+
+menu = Menu(DESCRIPTION_TEXT, EPILOG_TEXT)
+
+num_iterations = 20
 
 obj_fileWriter  = FileWriter()
 # obj_fileWriter.open(str(util.get_result_file_name()))
@@ -62,6 +58,7 @@ def complete_objetive_and_solution():
 
 #complete_objetive_and_solution()
 
+"""
 try:
     print("running...")
     obj_fileWriter.open(util.get_result_file_name())
@@ -116,3 +113,4 @@ finally:
     print("execution finished")
     obj_fileWriter.close()
 
+"""
