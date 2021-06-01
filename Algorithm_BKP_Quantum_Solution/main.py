@@ -2,6 +2,22 @@
 #!/usr/bin/python
 
 #necessary packages 
+import argparse
+
+DESCRIPTION_TEXT = "This program execute and analize a set of data with information about a knapsack every file; the information of a file is read and with an algorithm that emaule the functionality of a quantum computer"
+
+parser = argparse.ArgumentParser(description=DESCRIPTION_TEXT)
+parser.add_argument("-i", "--iterations", help="Number of iterations to run each file with a knapsack")
+args = parser.parse_args()
+
+num_iterations = 0
+
+if args.iterations:
+    num_iterations = args.iterations
+else:
+    num_iterations = 20
+
+#necessary packages 
 from qiskit.aqua.input import EnergyInput
 from qiskit.aqua.algorithms import ExactEigensolver
 from time import time
@@ -17,7 +33,7 @@ import numpy as np
 
 obj_fileWriter  = FileWriter()
 # obj_fileWriter.open(str(util.get_result_file_name()))
-num_iterations = 20
+
 
 FOLDER_DATASET_FN = "files/dataset_fn/"
 
