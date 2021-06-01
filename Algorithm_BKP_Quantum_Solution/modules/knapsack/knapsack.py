@@ -81,7 +81,7 @@ class Knapsack:
         return [p.get_value() for p in self.items]
 
     def get_weigths(self):
-        return [p.get_value() for p in self.items]
+        return [p.get_weight() for p in self.items]
 
     # metodo para comparar objetos
     def __cmp__(self, other):

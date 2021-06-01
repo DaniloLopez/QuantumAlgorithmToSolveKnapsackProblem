@@ -65,6 +65,7 @@ try:
 
             obj_kp = fileReader.read_file_knapsack(name_file)        
             print(obj_kp)
+            result_solution = None
             for it in range(num_iterations):  
                 #get isntances of Pauli operator for ExactEigensolver      
                 qubitOp, offset = quantum.get_knapsack_qubitops(obj_kp.get_profits(), obj_kp.get_weigths(), 
@@ -80,12 +81,16 @@ try:
                 most_lightly = result['eigvecs'][0] #format result
                 x = quantum.sample_most_likely(most_lightly)
                 result_solution = x[:len(obj_kp.get_profits())]
-                
+
                 v , w =  obj_kp.calculate_knapsack_value_weight(result_solution)
                 profits_solution.append(v)
                 weigths_solution.append(w)
                 num_exact_solution += 1 if obj_kp.is_equal_solution(result_solution.tolist()) else 0                     
-                
+            
+            va , wa =  obj_kp.calculate_knapsack_value_weight(result_solution)
+            print(result_solution , end="")
+            print(f" profit: {va}  weight: {wa}\n")
+
             line_result = util.get_line_result_format(obj_kp, profits_solution, weigths_solution, num_exact_solution, num_iterations, times)        
             obj_fileWriter.write(line_result)
             obj_fileWriter.new_line()
