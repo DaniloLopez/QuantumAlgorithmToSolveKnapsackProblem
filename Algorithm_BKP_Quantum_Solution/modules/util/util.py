@@ -6,6 +6,7 @@ import os
 import numpy as np
 sys.path.append('../')
 from datetime import datetime
+from os import scandir, getcwd
 
 def get_path():
     return os.getcwd()
@@ -43,10 +44,10 @@ def get_line_result_format(obj_kp, profits_solution, weigths_solution, num_exact
     line += fill_spaces(sum(weigths_solution) / len(weigths_solution), 19)
     line += fill_spaces(num_exact_solution, 18)
     line += fill_spaces(num_iterations - num_exact_solution, 22)
-    line += fill_spaces(str((num_exact_solution*100) / num_iterations)+"%", 15)
-    line += fill_spaces("{0:.2f}".format(max(times)), 15)
-    line += fill_spaces(str(min(times)), 15)
-    line += fill_spaces(str(sum(times)/len(times)), 14)
+    line += fill_spaces(str((num_exact_solution*100) / num_iterations)+"%", 17)
+    line += fill_spaces("{0:.4f}".format(max(times)), 15)
+    line += fill_spaces("{0:.4f}".format(min(times)), 15)
+    line += fill_spaces("{0:.4f}".format(sum(times)/len(times)), 14)
     return line
     
 def get_line_result(obj_kp, profits_solution, weigths_solution, num_exact_solution, num_iterations, times):    
@@ -65,3 +66,7 @@ def get_line_result(obj_kp, profits_solution, weigths_solution, num_exact_soluti
     line += str(min(times) + " ")
     line += str(sum(times)/len(times) + " ")
     return line
+
+def get_list_files_folder(ruta = getcwd()):
+    """lista los archivos existentes en una ruta determinada"""
+    return [arch.name for arch in scandir(ruta) if arch.is_file()]
