@@ -58,9 +58,10 @@ def complete_objetive_and_solution():
         list_files = get_list_files_folder(FOLDER_DATASET_GENERATED + folder_name)
         for i in list_files:
             obj_kp = fileReader.read_file_knapsack_generate_pisinger(FOLDER_DATASET_GENERATED + folder_name + "/" + i) 
-            #print(obj_kp)
+            print(obj_kp)
 
 #complete_objetive_and_solution()
+
 
 try:
     print("running...")
@@ -115,4 +116,3 @@ except OSError:
 finally:
     print("execution finished")
     obj_fileWriter.close()
-
