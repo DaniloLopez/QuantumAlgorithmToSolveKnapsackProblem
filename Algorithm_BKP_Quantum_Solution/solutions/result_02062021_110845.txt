@@ -1,0 +1,2 @@
+Number of iterations: 2 
+n-items | capacity | objetive value | max profit | min profit | average profit | max capacity | min capacity | average capacity | exact solutions | NON exact solutions | success rate |   max time   |   min time   |   average time

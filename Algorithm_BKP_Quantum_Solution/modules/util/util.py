@@ -8,6 +8,8 @@ sys.path.append('../')
 from datetime import datetime
 from os import scandir, getcwd
 
+import modules.util.generalValue as general
+
 def get_path():
     return os.getcwd()
 
@@ -70,3 +72,9 @@ def get_line_result(obj_kp, profits_solution, weigths_solution, num_exact_soluti
 def get_list_files_folder(ruta = getcwd()):
     """lista los archivos existentes en una ruta determinada"""
     return [arch.name for arch in scandir(ruta) if arch.is_file()]
+
+def generateNameFile(id, level, name):
+    return ".." + get_separator() + ".." + get_separator() + general.FOLDER_GENERATED_DATASET + get_separator() + name + get_separator() + "t" + str(id.type_corr) + "_d" +str(level) + "_n" + str(id.n_items) + "_r" + str(id.range) + ".txt"
+
+def generateUrlNewDataset(id, level, name_folder):
+    return str(id.n_items) + " " + str(id.range) + " " + str(id.type_corr) + " " + str(id.n_instances) + " " + str(id.n_test) + " " + generateNameFile(id, level, name_folder)
