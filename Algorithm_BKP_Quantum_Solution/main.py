@@ -13,7 +13,7 @@ args = parser.parse_args()
 num_iterations = 0
 
 if args.iterations:
-    num_iterations = args.iterations
+    num_iterations = int(args.iterations)
 else:
     num_iterations = 20
 
@@ -77,7 +77,7 @@ try:
             times = []
             name_file = FOLDER_DATASET_GENERATED + folder_name + "/" + file
             print(name_file)
-            num_exact_solution = 0        
+            cant_best_solution_found = 0        
             time_sum = 0
 
             obj_kp = fileReader.read_file_knapsack(name_file)        
@@ -103,13 +103,13 @@ try:
                 profits_solution.append(v)
                 weigths_solution.append(w)
                 
-                num_exact_solution += 1 if (v >= obj_kp.objetive and w <= obj_kp.capacity) else 0                     
+                cant_best_solution_found += 1 if (v >= obj_kp.objetive and w <= obj_kp.capacity) else 0                     
             
             va , wa =  obj_kp.calculate_knapsack_value_weight(result_solution)
             print(result_solution , end="")
             print(f" profit: {va}  weight: {wa}\n")
 
-            line_result = util.get_line_result_format(obj_kp, profits_solution, weigths_solution, num_exact_solution, num_iterations, times)        
+            line_result = util.get_line_result_format(obj_kp, profits_solution, weigths_solution, cant_best_solution_found, num_iterations, times)        
             obj_fileWriter.write(line_result)
             obj_fileWriter.new_line()
 except OSError:
