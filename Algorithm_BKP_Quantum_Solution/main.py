@@ -56,13 +56,13 @@ list_folder_dataset_generated = listdir(FOLDER_DATASET_GENERATED)
 def complete_objetive_and_solution():
     for folder_name in list_folder_dataset_generated:
         list_files = get_list_files_folder(FOLDER_DATASET_GENERATED + folder_name)
+        print(list_files)
         for i in list_files:
             obj_kp = fileReader.read_file_knapsack_generate_pisinger(FOLDER_DATASET_GENERATED + folder_name + "/" + i) 
             print(obj_kp)
+complete_objetive_and_solution()
 
-#complete_objetive_and_solution()
-
-
+"""
 try:
     print("running...")
     obj_fileWriter.open(util.get_result_file_name())
@@ -116,3 +116,4 @@ except OSError:
 finally:
     print("execution finished")
     obj_fileWriter.close()
+"""

@@ -71,14 +71,15 @@ def calculateOptimalSolution(knapsack):
     best_value = 0
     best_weight = 0
     best_value, best_weight = knapsack.calculate_knapsack_value_weight(format_num_binary(format(0, "b"), knapsack.get_n_items()))
-    print()
+    print("aqui")
     for i in range(1, pow(2, knapsack.get_n_items())):
         bin = format(i, "b")
         temp_solution = format_num_binary(bin, knapsack.get_n_items())
-        v, w = knapsack.calculate_knapsack_value_weight(temp_solution)
-        #print("value: " + str(v) + "   wei: " + str(w))
+        v, w = knapsack.calculate_knapsack_value_weight(temp_solution)        
+        print()
+        print(temp_solution)
+        print(" value: " + str(v) + "   wei: " + str(w))
         if(w <= knapsack.get_capacity() and v >= best_value):
-            #print("cambio")
             best_value,best_weight=v,w
             best_result = temp_solution
     return best_value, best_result
