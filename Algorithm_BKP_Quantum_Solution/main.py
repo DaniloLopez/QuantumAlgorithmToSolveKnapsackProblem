@@ -60,9 +60,9 @@ def complete_objetive_and_solution():
         for i in list_files:
             obj_kp = fileReader.read_file_knapsack_generate_pisinger(FOLDER_DATASET_GENERATED + folder_name + "/" + i) 
             print(obj_kp)
-complete_objetive_and_solution()
+#complete_objetive_and_solution()
 
-"""
+
 try:
     print("running...")
     obj_fileWriter.open(util.get_result_file_name())
@@ -102,7 +102,8 @@ try:
                 v , w =  obj_kp.calculate_knapsack_value_weight(result_solution)
                 profits_solution.append(v)
                 weigths_solution.append(w)
-                num_exact_solution += 1 if obj_kp.is_equal_solution(result_solution.tolist()) else 0                     
+                
+                num_exact_solution += 1 if (v >= obj_kp.objetive and w <= obj_kp.capacity) else 0                     
             
             va , wa =  obj_kp.calculate_knapsack_value_weight(result_solution)
             print(result_solution , end="")
@@ -116,4 +117,3 @@ except OSError:
 finally:
     print("execution finished")
     obj_fileWriter.close()
-"""

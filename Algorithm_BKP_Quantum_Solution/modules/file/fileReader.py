@@ -64,29 +64,21 @@ def read_file_knapsack_generate_pisinger(file_name):
         return kd
 
 def calculateOptimalSolution(knapsack):
-    result = []
     best_result = []
     print([it.get_weight() for it in knapsack.get_items_list()])
 
-    best_value = 0
-    best_weight = 0
-    best_value, best_weight = knapsack.calculate_knapsack_value_weight(format_num_binary(format(0, "b"), knapsack.get_n_items()))
-    print("aqui")
+    best_value, best_weight = knapsack.calculate_knapsack_value_weight(format_binary_number(format(0, "b"), "0", knapsack.get_n_items()))    
+    
     for i in range(1, pow(2, knapsack.get_n_items())):
         bin = format(i, "b")
-        temp_solution = format_num_binary(bin, knapsack.get_n_items())
-        v, w = knapsack.calculate_knapsack_value_weight(temp_solution)        
-        print()
-        print(temp_solution)
-        print(" value: " + str(v) + "   wei: " + str(w))
+        temp_solution = format_binary_number(bin, "0", knapsack.get_n_items())
+        v, w = knapsack.calculate_knapsack_value_weight(temp_solution)
+        print("sol: " + str(bin) + "  value: " + str(v) + "   wei: " + str(w))
         if(w <= knapsack.get_capacity() and v >= best_value):
-            best_value,best_weight=v,w
+            best_value,best_weight=v, w
             best_result = temp_solution
     return best_value, best_result
 
-def format_num_binary(num, lenght):
-    solution = list(num)
-    for i in range(len(num), lenght):
-        solution.append('0')    
-    #print("sol" + str(solution))
-    return solution
+def format_binary_number(num, char, lenght):
+    """complete value """
+    return list(str(num).rjust(lenght, char)[:lenght])
