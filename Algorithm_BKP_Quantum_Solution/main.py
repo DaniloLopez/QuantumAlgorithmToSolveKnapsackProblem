@@ -58,11 +58,12 @@ def complete_objetive_and_solution():
         list_files = get_list_files_folder(FOLDER_DATASET_GENERATED + folder_name)
         print(list_files)
         for i in list_files:
-            obj_kp = fileReader.read_file_knapsack_generate_pisinger(FOLDER_DATASET_GENERATED + folder_name + "/" + i) 
+            obj_kp = fileReader.read_file_knapsack(FOLDER_DATASET_GENERATED + folder_name + "/" + i) 
             print(obj_kp)
-#complete_objetive_and_solution()
 
+complete_objetive_and_solution()
 
+"""
 try:
     print("running...")
     obj_fileWriter.open(util.get_result_file_name())
@@ -113,7 +114,8 @@ try:
             obj_fileWriter.write(line_result)
             obj_fileWriter.new_line()
 except OSError:
-    print("execution error")
+    print("Execution error")
 finally:
-    print("execution finished")
+    print("Execution finished")
     obj_fileWriter.close()
+"""
