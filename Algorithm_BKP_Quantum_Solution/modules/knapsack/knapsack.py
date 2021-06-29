@@ -30,6 +30,12 @@ class Knapsack:
             sum_weight += int(solution[i]) * self.items[i].get_weight()        
         return sum_value, sum_weight
 
+    def evaluate(self, dim):
+        sum = 0
+        for i in range self.n_items
+            sum = sum + (dim[i] * self.items[i].value)
+        return sum
+
     #setters
     def set_solution(self, s):
         """ set solution list"""
