@@ -6,6 +6,9 @@ import os
 import numpy as np
 sys.path.append('../')
 from datetime import datetime
+from os import scandir, getcwd
+
+import modules.util.generalValue as general
 
 def get_path():
     return os.getcwd()
@@ -43,10 +46,10 @@ def get_line_result_format(obj_kp, profits_solution, weigths_solution, num_exact
     line += fill_spaces(sum(weigths_solution) / len(weigths_solution), 19)
     line += fill_spaces(num_exact_solution, 18)
     line += fill_spaces(num_iterations - num_exact_solution, 22)
-    line += fill_spaces(str((num_exact_solution*100) / num_iterations)+"%", 15)
-    line += fill_spaces("{0:.2f}".format(max(times)), 15)
-    line += fill_spaces(str(min(times)), 15)
-    line += fill_spaces(str(sum(times)/len(times)), 14)
+    line += fill_spaces(str((num_exact_solution*100) / num_iterations)+"%", 17)
+    line += fill_spaces("{0:.4f}".format(max(times)), 15)
+    line += fill_spaces("{0:.4f}".format(min(times)), 15)
+    line += fill_spaces("{0:.4f}".format(sum(times)/len(times)), 14)
     return line
     
 def get_line_result(obj_kp, profits_solution, weigths_solution, num_exact_solution, num_iterations, times):    
@@ -65,3 +68,13 @@ def get_line_result(obj_kp, profits_solution, weigths_solution, num_exact_soluti
     line += str(min(times) + " ")
     line += str(sum(times)/len(times) + " ")
     return line
+
+def get_list_files_folder(ruta = getcwd()):
+    """lista los archivos existentes en una ruta determinada"""
+    return [arch.name for arch in scandir(ruta) if arch.is_file()]
+
+def generateNameFile(id, level, name):
+    return general.FOLDER_GENERATED_DATASET + get_separator() + name + get_separator() + "t" + str(id.type_corr) + "_d" +str(level) + "_n" + str(id.n_items) + "_r" + str(id.range) + ".txt"
+
+def generateUrlNewDataset(id, level, name_folder):
+    return str(id.n_items) + " " + str(id.range) + " " + str(id.type_corr) + " " + str(id.n_instances) + " " + str(id.n_test) + " " + generateNameFile(id, level, name_folder)

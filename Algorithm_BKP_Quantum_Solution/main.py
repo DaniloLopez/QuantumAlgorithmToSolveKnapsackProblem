@@ -2,6 +2,7 @@
 #!/usr/bin/python
 
 #necessary packages 
+
 import argparse
 
 DESCRIPTION_TEXT = "This program execute and analize a set of data with information about a knapsack every file; the information of a file is read and with an algorithm that emaule the functionality of a quantum computer"
@@ -26,23 +27,23 @@ from os import scandir, getcwd, listdir
 
 import modules.util.util as util
 from modules.knapsack.knapsack import Knapsack
+
+from modules.menu.menu import Menu
+import modules.util.generalValue as general
+from modules.generator.datasetGenerator import DatasetGenerator
+from modules.evaluator.datasetEvaluator import DatasetEvaluator
+
+
+
 from modules.file.fileWriter import FileWriter
-import modules.file.fileReader as fileReader
-import modules.quantum.quantum as quantum
-import numpy as np
+from os import listdir, path
 
-obj_fileWriter  = FileWriter()
-# obj_fileWriter.open(str(util.get_result_file_name()))
+# Manage list directory
+ROOT_DIR = path.dirname(path.abspath(__file__))
+list_folder_dataset_generated = listdir(ROOT_DIR + general.FOLDER_DATASET_GENERATED)
+print(ROOT_DIR)
+print(ROOT_DIR + general.FOLDER_DATASET_GENERATED)
 
-
-FOLDER_DATASET_FN = "files/dataset_fn/"
-
-FOLDER_DATASET_GENERATED = "files/generated_dataset/"
-#FOLDER_DATASET_GENERATED = "files/generated_dataset_complete"
-
-FOLDER_DATASET_GEN_EASY = "easy"
-FOLDER_DATASET_GEN_MEDIUM = "medium"
-FOLDER_DATASET_GEN_HARD = "hard"
 
 files_fn = ["f3.txt", "f2.txt", "f8.txt", "f6.txt", "f9.txt", "f5.txt",  "f11.txt", "f10.txt", "f4.txt", "f7.txt", "f1.txt"]
 
@@ -95,7 +96,7 @@ try:
                 elapsed_time = time() - start_time #final time
                 time_sum += elapsed_time
                 times.append(elapsed_time)
-
+                
                 most_lightly = result['eigvecs'][0] #format result
                 x = quantum.sample_most_likely(most_lightly)
                 result_solution = x[:len(obj_kp.get_profits())]
@@ -119,3 +120,29 @@ finally:
     print("Execution finished")
     obj_fileWriter.close()
 """
+
+menu = Menu(general.DESCRIPTION_TEXT, general.EPILOG_TEXT) # instance to manage program menu
+obj_fileWriter  = FileWriter()
+
+num_iterations = int(menu.getIterations()) if (menu.getIterations() is not None) else general.NUM_ITERATIONS_STATIC
+
+#instance to manage program generator dataset
+generator = DatasetGenerator(1000)
+
+#instance to manage program evaluator dataset
+evaluator = DatasetEvaluator()
+    
+
+if(menu.is_generated_data()):
+    generator.generate()
+    print("Successfully generated dataset")
+
+if(menu.is_evaluate_data()):
+    #evaluator.evaluate()
+    print("Successfully evaluated dataset")
+    
+if(menu.is_generate_evaluate()):
+    #generator.generate()
+    #evaluator.evaluate()
+    print("Successfully generated and evaluate dataset")
+
