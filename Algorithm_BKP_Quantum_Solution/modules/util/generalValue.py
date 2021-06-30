@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
-#!/usr/bin/python
-
 from os import path
-from modules.util.util import get_separator
+
+
+def get_separator():
+    return path.sep
 
 NAME_FILES_FN = ["f3.txt", "f2.txt", "f8.txt", "f6.txt", "f9.txt", "f5.txt",  "f11.txt", "f10.txt", "f4.txt", "f7.txt", "f1.txt"]
 
@@ -13,7 +13,7 @@ NUM_ITERATIONS_STATIC = 20
 M = 2000000
 
 FOLDER_DATASET_FN = "files" + get_separator() + "dataset_fn"
-FOLDER_DATASET_GENERATED = get_separator() + "files" + get_separator() + "generated_dataset"
+FOLDER_DATASET_GENERATED = get_separator() + "files" + get_separator() + "generated_dataset" + get_separator()
 #FOLDER_DATASET_GENERATED = get_separator() + "files" + get_separator() + "generated_dataset_complete"
 
 FOLDER_GENERATED_DATASET = "files" + get_separator() + "generated_dataset"

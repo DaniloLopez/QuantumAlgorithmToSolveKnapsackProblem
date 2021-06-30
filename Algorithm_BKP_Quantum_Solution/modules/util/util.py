@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-#!/usr/bin/python
-
 import sys
 import os
 import numpy as np
@@ -68,10 +65,6 @@ def get_line_result(obj_kp, profits_solution, weigths_solution, num_exact_soluti
     line += str(min(times) + " ")
     line += str(sum(times)/len(times) + " ")
     return line
-
-def get_list_files_folder(ruta = getcwd()):
-    """lista los archivos existentes en una ruta determinada"""
-    return [arch.name for arch in scandir(ruta) if arch.is_file()]
 
 def generateNameFile(id, level, name):
     return general.FOLDER_GENERATED_DATASET + get_separator() + name + get_separator() + "t" + str(id.type_corr) + "_d" +str(level) + "_n" + str(id.n_items) + "_r" + str(id.range) + ".txt"

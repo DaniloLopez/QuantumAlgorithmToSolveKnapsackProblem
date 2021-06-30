@@ -6,7 +6,7 @@ class Knapsack:
     def __init__(self, n, capacity):
         """ Information about of knapsack """
         self.n_items = n
-        self.capacity = capacity        
+        self.capacity = capacity
         self.items = []
         self.objetive = 0
         self.solution = []
@@ -32,7 +32,7 @@ class Knapsack:
 
     def evaluate(self, dim):
         sum = 0
-        for i in range self.n_items
+        for i in range (self.n_items):
             sum = sum + (dim[i] * self.items[i].value)
         return sum
 

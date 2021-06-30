@@ -2,23 +2,6 @@
 #!/usr/bin/python
 
 #necessary packages 
-
-import argparse
-
-DESCRIPTION_TEXT = "This program execute and analize a set of data with information about a knapsack every file; the information of a file is read and with an algorithm that emaule the functionality of a quantum computer"
-
-parser = argparse.ArgumentParser(description=DESCRIPTION_TEXT)
-parser.add_argument("-i", "--iterations", help="Number of iterations to run each file with a knapsack")
-args = parser.parse_args()
-
-num_iterations = 0
-
-if args.iterations:
-    num_iterations = int(args.iterations)
-else:
-    num_iterations = 20
-
-#necessary packages 
 from qiskit.aqua.input import EnergyInput
 from qiskit.aqua.algorithms import ExactEigensolver
 from time import time
@@ -33,52 +16,40 @@ import modules.util.generalValue as general
 from modules.generator.datasetGenerator import DatasetGenerator
 from modules.evaluator.datasetEvaluator import DatasetEvaluator
 
-
-
 from modules.file.fileWriter import FileWriter
+import modules.file.fileReader as fileReader
 from os import listdir, path
 
 # Manage list directory
 ROOT_DIR = path.dirname(path.abspath(__file__))
+
 list_folder_dataset_generated = listdir(ROOT_DIR + general.FOLDER_DATASET_GENERATED)
-print(ROOT_DIR)
-print(ROOT_DIR + general.FOLDER_DATASET_GENERATED)
+# listar las carpetas contenidas en el directorio
+#list_folder_dataset_generated = listdir(general.FOLDER_DATASET_GENERATED)
 
+menu = Menu(general.DESCRIPTION_TEXT, general.EPILOG_TEXT) # instance to manage program menu
+num_iterations = int(menu.getIterations()) if (menu.getIterations() is not None) else general.NUM_ITERATIONS_STATIC
+obj_fileWriter  = FileWriter()
 
-files_fn = ["f3.txt", "f2.txt", "f8.txt", "f6.txt", "f9.txt", "f5.txt",  "f11.txt", "f10.txt", "f4.txt", "f7.txt", "f1.txt"]
+#instance to manage program generator dataset
+generator = DatasetGenerator(1000)
+#instance to manage program evaluator dataset
+evaluator = DatasetEvaluator()
 
 def get_list_files_folder(ruta = getcwd()):
     """lista los archivos existentes en una ruta determinada"""
     return [arch.name for arch in scandir(ruta) if arch.is_file()]
 
-# listar las carpetas contenidas en el directorio
-list_folder_dataset_generated = listdir(FOLDER_DATASET_GENERATED)
-
 def complete_objetive_and_solution():
     for folder_name in list_folder_dataset_generated:
-        list_files = get_list_files_folder(FOLDER_DATASET_GENERATED + folder_name)
+        list_files = get_list_files_folder(ROOT_DIR + general.FOLDER_DATASET_GENERATED + folder_name)
         print(list_files)
         for i in list_files:
-            obj_kp = fileReader.read_file_knapsack(FOLDER_DATASET_GENERATED + folder_name + "/" + i) 
+            obj_kp = fileReader.read_file_knapsack(ROOT_DIR + general.FOLDER_DATASET_GENERATED + folder_name + util.get_separator() + i) 
             print(obj_kp)
 
-complete_objetive_and_solution()
-
-menu = Menu(general.DESCRIPTION_TEXT, general.EPILOG_TEXT) # instance to manage program menu
-obj_fileWriter  = FileWriter()
-
-num_iterations = int(menu.getIterations()) if (menu.getIterations() is not None) else general.NUM_ITERATIONS_STATIC
-
-run_quantum_algorithm()
-
-#instance to manage program generator dataset
-generator = DatasetGenerator(1000)
-
-#instance to manage program evaluator dataset
-evaluator = DatasetEvaluator()
-
 if(menu.is_generated_data()):
-    generator.generate()
+    #generator.generate()
     print("Successfully generated dataset")
 
 if(menu.is_evaluate_data()):
@@ -92,7 +63,6 @@ if(menu.is_generate_evaluate()):
 
 def run_quantum_algorithm():
     try:
-        print("running...")
         obj_fileWriter.open(util.get_result_file_name())
         obj_fileWriter.write(util.get_line_header(num_iterations))
         obj_fileWriter.new_line()
@@ -145,3 +115,10 @@ def run_quantum_algorithm():
     finally:
         print("Execution finished")
         obj_fileWriter.close()
+
+
+#program init
+print("running...")
+complete_objetive_and_solution()
+run_quantum_algorithm()
+print("finish...")
