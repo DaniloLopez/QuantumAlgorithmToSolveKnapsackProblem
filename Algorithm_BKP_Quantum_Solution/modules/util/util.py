@@ -4,8 +4,10 @@ import numpy as np
 sys.path.append('../')
 from datetime import datetime
 from os import scandir, getcwd
+from pathlib import Path
 
-import modules.util.generalValue as general
+def get_project_root():
+    return Path(__file__).parent.parent.parent
 
 def get_path():
     return os.getcwd()

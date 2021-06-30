@@ -9,6 +9,7 @@ from datetime import datetime
 from os import scandir, getcwd, listdir
 
 import modules.util.util as util
+import modules.quantum.quantum as quantum
 from modules.knapsack.knapsack import Knapsack
 
 from modules.menu.menu import Menu
@@ -21,9 +22,9 @@ import modules.file.fileReader as fileReader
 from os import listdir, path
 
 # Manage list directory
-ROOT_DIR = path.dirname(path.abspath(__file__))
+ROOT_DIR = path.dirname(path.abspath(__file__)) 
 
-list_folder_dataset_generated = listdir(ROOT_DIR + general.FOLDER_DATASET_GENERATED)
+list_folder_dataset_generated = listdir(general.FOLDER_DATASET_GENERATED)
 # listar las carpetas contenidas en el directorio
 #list_folder_dataset_generated = listdir(general.FOLDER_DATASET_GENERATED)
 
@@ -42,12 +43,12 @@ def get_list_files_folder(ruta = getcwd()):
 
 def complete_objetive_and_solution():
     for folder_name in list_folder_dataset_generated:
-        list_files = get_list_files_folder(ROOT_DIR + general.FOLDER_DATASET_GENERATED + folder_name)
+        list_files = get_list_files_folder(general.FOLDER_DATASET_GENERATED + folder_name)
         print(list_files)
         for i in list_files:
-            obj_kp = fileReader.read_file_knapsack(ROOT_DIR + general.FOLDER_DATASET_GENERATED + folder_name + util.get_separator() + i) 
+            obj_kp = fileReader.read_file_knapsack(general.FOLDER_DATASET_GENERATED + folder_name + util.get_separator() + i) 
             print(obj_kp)
-
+"""
 if(menu.is_generated_data()):
     #generator.generate()
     print("Successfully generated dataset")
@@ -60,6 +61,7 @@ if(menu.is_generate_evaluate()):
     #generator.generate()
     #evaluator.evaluate()
     print("Successfully generated and evaluate dataset")
+"""
 
 def run_quantum_algorithm():
     try:
@@ -67,13 +69,13 @@ def run_quantum_algorithm():
         obj_fileWriter.write(util.get_line_header(num_iterations))
         obj_fileWriter.new_line()
         for folder_name in list_folder_dataset_generated:
-            list_files = get_list_files_folder(FOLDER_DATASET_GENERATED + folder_name)
+            list_files = get_list_files_folder(general.FOLDER_DATASET_GENERATED + folder_name)
             for file in list_files:
                 M = 2000000
                 profits_solution = []
                 weigths_solution = []
                 times = []
-                name_file = FOLDER_DATASET_GENERATED + folder_name + "/" + file
+                name_file = general.FOLDER_DATASET_GENERATED + folder_name + util.get_separator() + file
                 print(name_file)
                 cant_best_solution_found = 0        
                 time_sum = 0

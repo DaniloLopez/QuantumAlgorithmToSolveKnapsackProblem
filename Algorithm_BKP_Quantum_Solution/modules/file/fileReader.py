@@ -7,7 +7,6 @@ from modules.knapsack.item import Item
 def read_file_knapsack(file_name):
     """read content of a file with information of knapsack and items fn"""
     f = open_file(file_name, 'r+')
-    print(f)
     k = read_initial_values_knapsack(f)
     line = f.readline()
     if(line):
@@ -29,7 +28,6 @@ def open_file(file_name, mode):
 def read_initial_values_knapsack(file):
     """read knapsack initial values and items"""
     line = file.readline().split()
-    print(line)
     k = Knapsack( int(line[0]) , int(line[1]) )        
     for i in range( k.get_n_items() ):
         item_line = file.readline().split()
