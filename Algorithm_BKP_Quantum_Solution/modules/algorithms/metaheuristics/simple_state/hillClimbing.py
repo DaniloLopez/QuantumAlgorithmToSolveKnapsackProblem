@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/python
 
-from algorithms.metaheuristics.metaheuristic import Metaheuristic
+from Algorithm_BKP_Quantum_Solution.modules.algorithms.metaheuristics.metaheuristic import Metaheuristic
 
 class HillClimbing(Metaheuristic):
     """docstring for HillClimbing."""

@@ -1,5 +1,5 @@
-from Algorithm_BKP_Quantum_Solution.algorithms.metaheuristics.quantum.ibmQuantum import IbmQuantum
-from Algorithm_BKP_Quantum_Solution.algorithms.metaheuristics.simple_state.hillClimbing import HillClimbing
+from modules.algorithms.metaheuristics.quantum_based.ibmQuantum import IbmQuantum
+from modules.algorithms.metaheuristics.simple_state.hillClimbing import HillClimbing
 from modules.util.util import get_separator, get_project_root
 
 
@@ -11,7 +11,6 @@ EPILOG_TEXT="Author: Danilo López - dlopezs@unicauca.edu.co"
 
 #GLOBAL VARIABLES
 NUM_ITERATIONS_STATIC = 20
-M = 2000000
 MH_LIST = [HillClimbing(20), IbmQuantum(20)]
 
 FOLDER_DATASET_FN = DIR_FILES + "dataset_fn" + get_separator()

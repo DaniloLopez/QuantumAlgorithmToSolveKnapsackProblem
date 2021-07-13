@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # coding=utf-8
 
-from algorithms.algorithm import Algorithm
+from Algorithm_BKP_Quantum_Solution.modules.algorithms.algorithm import Algorithm
 
 class Metaheuristic(Algorithm):
     """docstring for Metaheuristic."""

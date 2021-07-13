@@ -22,18 +22,22 @@ def get_info_time():
     return datetime.now().strftime("%d%m%Y_%H%M%S")
 
 def get_result_file_name():
-    return get_path() + get_separator() + "solutions" + get_separator() + "result_" + get_info_time() + ".txt"    
+    return (get_path() + get_separator() + "solutions" + get_separator() + 
+            "result_" + get_info_time() + ".txt")    
 
 def fill_spaces(value, tamanio):
     return str(value).ljust(tamanio)[:tamanio]
 
 def get_line_header(iterations):
-    line = f"Number of iterations: {iterations} \n"
-    line += "n-items | capacity | objetive value | max profit | min profit | average profit | max capacity | min capacity | average capacity | "
-    line += "exact solutions | NON exact solutions | success rate |   max time   |   min time   |   average time"
+    line =f"Number of iterations: {iterations} \n"
+    line+="n-items | capacity | objetive value | max profit | min profit | "
+    line+="average profit | max capacity | min capacity | average capacity | "
+    line+="exact solutions | NON exact solutions | success rate | "
+    line+="max time   |   min time   |   average time"
     return line
 
-def get_line_result_format(obj_kp, profits_solution, weigths_solution, num_exact_solution, num_iterations, times):    
+def get_line_result_format(obj_kp, profits_solution, weigths_solution, 
+                            num_exact_solution, num_iterations, times):    
     line =  fill_spaces(obj_kp.get_n_items(), 10)
     line += fill_spaces(obj_kp.get_capacity(), 11)
     line += fill_spaces(obj_kp.get_objetive(), 17)
@@ -51,7 +55,8 @@ def get_line_result_format(obj_kp, profits_solution, weigths_solution, num_exact
     line += fill_spaces("{0:.4f}".format(sum(times)/len(times)), 14)
     return line
     
-def get_line_result(obj_kp, profits_solution, weigths_solution, num_exact_solution, num_iterations, times):    
+def get_line_result(obj_kp, profits_solution, weigths_solution, 
+                    num_exact_solution, num_iterations, times):    
     line =  str(obj_kp.get_n_items() + " ")
     line += str(obj_kp.get_capacity() + " ")
     line += str(obj_kp.get_objetive() + " ")
@@ -69,7 +74,11 @@ def get_line_result(obj_kp, profits_solution, weigths_solution, num_exact_soluti
     return line
 
 def generateNameFile(id, level, name):
-    return general.FOLDER_GENERATED_DATASET + get_separator() + name + get_separator() + "t" + str(id.type_corr) + "_d" +str(level) + "_n" + str(id.n_items) + "_r" + str(id.range) + ".txt"
+    return (general.FOLDER_GENERATED_DATASET + get_separator() + name + 
+            get_separator() + "t" + str(id.type_corr) + "_d" +str(level) + 
+            "_n" + str(id.n_items) + "_r" + str(id.range) + ".txt")
 
 def generateUrlNewDataset(id, level, name_folder):
-    return str(id.n_items) + " " + str(id.range) + " " + str(id.type_corr) + " " + str(id.n_instances) + " " + str(id.n_test) + " " + generateNameFile(id, level, name_folder)
+    return (str(id.n_items) + " " + str(id.range) + " " + str(id.type_corr) + 
+            " " + str(id.n_instances) + " " + str(id.n_test) + " " + 
+            generateNameFile(id, level, name_folder))
