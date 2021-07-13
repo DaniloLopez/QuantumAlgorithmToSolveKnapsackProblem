@@ -1,9 +1,9 @@
 import sys
 import os
 import numpy as np
+
 sys.path.append('../')
 from datetime import datetime
-from os import scandir, getcwd
 from pathlib import Path
 
 def get_project_root():

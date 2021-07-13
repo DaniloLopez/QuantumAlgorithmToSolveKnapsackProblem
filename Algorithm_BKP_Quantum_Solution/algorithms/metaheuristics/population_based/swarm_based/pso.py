@@ -5,7 +5,7 @@
 from algorithms.metaheuristics import Metaheuristic
 
 class Pso(Metaheuristic):
-    
+
     def __init__(self, max_efos):
         super().__init__(max_efos)
         self.swarm_size = 50;

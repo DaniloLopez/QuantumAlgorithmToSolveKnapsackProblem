@@ -1,17 +1,18 @@
-from os import path
-from modules.util.util import get_separator
-import modules.util.util as util
+from Algorithm_BKP_Quantum_Solution.algorithms.metaheuristics.quantum.ibmQuantum import IbmQuantum
+from Algorithm_BKP_Quantum_Solution.algorithms.metaheuristics.simple_state.hillClimbing import HillClimbing
+from modules.util.util import get_separator, get_project_root
 
-ROOT_DIR = util.get_project_root()
 
-NAME_FILES_FN = ["f3.txt", "f2.txt", "f8.txt", "f6.txt", "f9.txt", "f5.txt",  "f11.txt", "f10.txt", "f4.txt", "f7.txt", "f1.txt"]
-DIR_FILES = str(ROOT_DIR) + get_separator() + "files" + get_separator()
+DIR_FILES = str(get_project_root()) + get_separator() + "files" + get_separator()
 
+#DESCRIPTION
 DESCRIPTION_TEXT = "This program execute and analize a set of data with information about a knapsack every file; the information of a file is read and with an algorithm that emaule the functionality of a quantum computer."
 EPILOG_TEXT="Author: Danilo López - dlopezs@unicauca.edu.co"
 
+#GLOBAL VARIABLES
 NUM_ITERATIONS_STATIC = 20
 M = 2000000
+MH_LIST = [HillClimbing(20), IbmQuantum(20)]
 
 FOLDER_DATASET_FN = DIR_FILES + "dataset_fn" + get_separator()
 FOLDER_DATASET_GENERATED = DIR_FILES + "generated_dataset" + get_separator()
@@ -30,4 +31,5 @@ FOLDER_EASY_INSTANCE = "easy"
 FOLDER_MEDIUM_INSTANCE = "medium"
 FOLDER_HARD_INSTANCE = "hard"
 
+#GLOBAL GENERAL VARIABLES 
 ZERO_CHAR = "0"

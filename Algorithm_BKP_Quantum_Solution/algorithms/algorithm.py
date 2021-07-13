@@ -1,46 +1,51 @@
 #!/usr/bin/env python3
 # coding=utf-8
 
-from abc import ABC, abstractmethod, abstractproperty
+from abc import ABC, abstractmethod
 
 class Algorithm(ABC):
     """docstring for Algorithm."""
 
     def __init__(self):
-        """init class Algorithm"""
-
-    def my_best_solution(self):
-        pass
-
-    def my_best_solution(self, value):
-        pass
-
-    def my_knapsack(self):
-        pass
-    
-    def my_knapsack(self, value):
-        pass
-
-    def my_aleatory(self):
-        pass
+        self.max_efos = None
+        self.current_efos = 0
+        self.my_best_solution = None
+        self.my_knapsack = None
+        self.my_aleatory = None
 
     @abstractmethod
     def execute(self, the_knapsack, the_aleatory):
         pass
-
-    #abstract properties
-    def get_max_efos(self):
+"""
+    #getters & setters
+    def _get_max_efos(self):
         pass
 
-    def set_max_efos(self, value):
+    def _set_max_efos(self, value):
+        self.max_efos = value
+
+    def _get_current_efos(self):
         pass
 
-    max_efos = abstractproperty(get_max_efos, set_max_efos) 
-
-    def get_current_efos(self):
+    def _set_current_efos(self, arg):
         pass
 
-    def set_current_efos(self, value):
-        pass
+    def get_my_best_solution(self):
+        return self.my_best_solution
 
-    current_efos = abstractproperty(get_current_efos, set_current_efos)
+    def set_my_best_solution(self, value):
+        self.my_best_solution = value
+
+    def get_my_knapsack(self):
+        return self.my_knapsack
+
+    def set_my_knapsack(self, value):
+        self.my_knapsack = value
+
+    def _my_aleatory(self):
+        return self.my_aleatory
+    
+    def _my_aleatory(self, value):
+        self.my_aleatory = value
+
+        """
