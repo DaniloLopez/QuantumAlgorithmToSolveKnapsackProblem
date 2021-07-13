@@ -2,7 +2,9 @@
 #!/usr/bin/python
 import numpy as np
 
-class Knapsack:
+class Knapsack():
+    """docstring for Knapsack."""
+
     def __init__(self, n, capacity):
         """ Information about of knapsack """
         self.n_items = n
