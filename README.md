@@ -1,19 +1,21 @@
-# QKP.0.0.1-29112020
+# QKP.0.0.2-13072021
 
-> Quantum Knapsack Problem
+> Quantum algorithm to solve Knapsack Problem
 
 
 ## Requirements
 
-* Python 3
+* Python >= 3.6
 * Pipenv `pip install pipenv`
 
 
 ## Setup
 
-pipenv install --dev
+> rootDirectory/pipenv install --dev
 
 
 ## Development
 
 ### Run 
+
+> rootDirectory/python main.py
