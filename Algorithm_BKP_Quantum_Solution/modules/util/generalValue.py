@@ -11,7 +11,7 @@ EPILOG_TEXT="Author: Danilo López - dlopezs@unicauca.edu.co"
 
 #GLOBAL VARIABLES
 NUM_ITERATIONS_STATIC = 20
-MH_LIST = [HillClimbing(20), IbmQuantum(20)]
+MH_LIST = [IbmQuantum(20)]
 
 FOLDER_DATASET_FN = DIR_FILES + "dataset_fn" + get_separator()
 FOLDER_DATASET_GENERATED = DIR_FILES + "generated_dataset" + get_separator()

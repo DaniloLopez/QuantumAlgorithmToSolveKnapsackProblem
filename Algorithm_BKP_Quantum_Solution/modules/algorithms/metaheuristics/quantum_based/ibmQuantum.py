@@ -25,8 +25,8 @@ class IbmQuantum(Metaheuristic):
 
         #get isntances of Pauli operator for ExactEigensolver      
         qubitOp, offset = self._get_knapsack_qubitops(
-            self.my_knapsack.get_profits(), self.my_knapsack.get_weigths(), 
-            self.my_knapsack.get_capacity(), self._M )
+            self.my_knapsack.profits, self.my_knapsack.weigths, 
+            self.my_knapsack.capacity, self._M )
         EnergyInput(qubitOp)
         ee = ExactEigensolver(qubitOp, k=1) #instance of exactEigensolver        
         result = ee.run() #Run quantum algorithm
@@ -38,13 +38,7 @@ class IbmQuantum(Metaheuristic):
         print(result_solution , end="")
         print(f" profit: {v}  weight: {w}\n")
 
-    def __str__(self):
-        return "quantum"
-
-    def __cmp__(self, obj_quantum):
-        pass
-
-    def _sample_most_likely(state_vector):
+    def _sample_most_likely(self, state_vector):
         if isinstance(state_vector, dict) or isinstance(state_vector, OrderedDict):
             # get the binary string with the largest count
             binary_string = sorted(state_vector.items(), 
@@ -60,7 +54,7 @@ class IbmQuantum(Metaheuristic):
                 k >>= 1
             return x
 
-    def _get_knapsack_qubitops(values, weights, w_max, M):
+    def _get_knapsack_qubitops(self, values, weights, w_max, M):
         ysize = int(math.log(w_max + 1, 2))
         n = len(values)
         num_values = n + ysize;
@@ -167,5 +161,10 @@ class IbmQuantum(Metaheuristic):
             zp[i] = not zp[i]
             pauli_list.append([0.5 * values[i], Pauli(zp, xp)])
             shift -= 0.5 * values[i]
-                
         return WeightedPauliOperator(paulis=pauli_list), shift
+    
+    def __str__(self):
+        return "quantum"
+
+    def __cmp__(self, obj_quantum):
+        pass

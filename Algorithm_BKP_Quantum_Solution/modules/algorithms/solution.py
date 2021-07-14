@@ -1,33 +1,38 @@
 #!/usr/bin/env python3
 # coding=utf-8
 
+import solution_tweak as tweak
+
 class Solution():
     """docstring for Solution."""
-
-    position = None
-    fitness = None
-    weight = None
-    my_container = None
 
     def __init__(self):
         raise RuntimeError
 
     @classmethod
-    def init_owner(cls, the_owner):
-        obj_solution = cls.__new__(cls)
-        obj_solution.my_container = the_owner
+    def init_owner(cls, owner):
+        obj_solution = cls.__new__(cls)        
         obj_solution.position = []
+        obj_solution.fitness = None
+        obj_solution.weight = None
+        obj_solution.my_container = owner
         return obj_solution
 
     @classmethod
-    def init_original(cls, original):
-        obj_solution = cls.__new__(cls)
-        obj_solution.set_my_container = original.get_my_container()
-        cls.set_position(original.get_position().copy())
-        cls.set_fitness(original.get_fitness())
+    def init_solution(cls, solution):
+        obj_solution = cls.__new__(cls)        
+        obj_solution.position = solution.position.copy()
+        obj_solution.fitness = solution.fitness
+        obj_solution.weight = solution.weight
+        obj_solution.my_container = solution.my_container
+        return obj_solution
 
     def random_initialization(self):
-        pass
+        selected = []
+        unselected = []
+        my_weight = self._define_selected_unselected_list(selected, unselected)
+        self._complete(unselected, my_weight)
+        self.evaluate()
     
     def tweak(self):
         pass
@@ -41,34 +46,49 @@ class Solution():
     def modify(self, value):
         pass
 
-    #getters and setters
-    def get_position(self):
-        return self.position
+    def _define_selected_unselected_list(self, selected, unselected):
+        selected = []
+        unselected = []
+        my_weight = 0.0
+        for i in range(self.position.size()):
+            if(self.position[i] == 1):
+                selected.append(i)
+                my_weight += self.my_container.my_knapsack.weight(i)
+            else:
+                unselected.append(i)
+        return my_weight    
 
-    def set_position(self, value):
-        self.position = value
+    def _complete(self, unselected, my_weight):
+        while True:
+            self._leave_only_valid_unselected_items(unselected, my_weight)
+            if not unselected:
+                my_weight = self._turn_on_random(unselected, my_weight)
+            else:
+                break
 
-    def get_fitness(self):
-        return self.fitness
+    def _leave_only_valid_unselected_items(self, unselected, my_weight):
+        free_space = self.my_container.my_knapsack.capacity - my_weight
+        for i in range(len(unselected), 0, -1):
+            if self.my_container.my_knapsack.weight(unselected[i])>free_space:
+                del unselected[i]
+    
+    def _turn_on_random(self, unselected, my_weight):
+        """Escoger aleatoriamente un elemento de la lista de no seleccionados, 
+        eliminarlo y activar el vector posicion[] con el dato escogido 
+        convirtiendolo a uno"""
+        if not unselected:
+            pos = self.my_container.my_aleatory.randint(0, len(unselected))
+            pos_turn_on = unselected[pos]
+            del unselected[pos_turn_on]
+            self.position[pos_turn_on] = 1
+            my_weight += self.my_container.my_knapsack.weight(pos_turn_on)
+        return my_weight
 
-    def set_fitness(self, value):
-        self.fitness = value
 
-    def get_weight(self):
-        return self.weight
-
-    def set_weight(self, value):
-        self.weight = value
-
-    def get_my_container(self):
-        return self.my_container
-
-    def set_my_container(self, value):
-        self.my_container = value
 
     #override
     def __str__(self):
-        pass
+        return (f"p: {self.position} f: {self.fitness} w: {self.weight} con: {self.my_container}")
         
     def __cmp__(self, other = None):
         pass

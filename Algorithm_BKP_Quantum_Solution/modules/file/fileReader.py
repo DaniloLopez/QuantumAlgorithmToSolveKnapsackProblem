@@ -6,15 +6,15 @@ from modules.knapsack.item import Item
 
 def read_file_knapsack(file_name):
     """read content of a file with information of knapsack and items fn"""
-    f = open_file(file_name, 'r+')
-    k = read_initial_values_knapsack(f)
-    line = f.readline()
+    file = open_file(file_name, 'r+')
+    knapsack = read_initial_values_knapsack(file)
+    line = file.readline()
     if(line):
-        read_objetive_solution(k, line, f)
+        read_objetive_solution(knapsack, line, file)
     else:
-        set_objetive_solution(k, f)
-    f.close()
-    return k
+        set_objetive_solution(knapsack, file)
+    file.close()
+    return knapsack
 
 def open_file(file_name, mode):
     """open file with name file_name"""
@@ -28,30 +28,30 @@ def open_file(file_name, mode):
 def read_initial_values_knapsack(file):
     """read knapsack initial values and items"""
     line = file.readline().split()
-    k = Knapsack( int(line[0]) , int(line[1]) )        
-    for i in range( k.get_n_items() ):
+    k = Knapsack(int(line[0]) , int(line[1]))
+    for i in range( k.n_items ):
         item_line = file.readline().split()
         k.add_item_to_item_list(Item(i, int(item_line[0]),int(item_line[1])))
     return k
 
-def read_objetive_solution(k, line, f):
+def read_objetive_solution(knapsack, line, file):
     """read objetive and solution of a knapsack"""
-    k.set_objetive(int(line))
-    line = f.readline()
+    knapsack.objetive = int(line)
+    line = file.readline()
     if line:
-        k.set_solution([int (i) for i in line.split()])
+        knapsack.solution = [int (i) for i in line.split()]
     else:
-        print(f"Dataset imcomplete or corrupt. file: {file_name}")
+        print(f"Dataset imcomplete or corrupt. file: {file.name}")
 
-def set_objetive_solution(kd, f):
+def set_objetive_solution(knapsack, file):
     """generate objetive and solution for set to knapsack"""
-    objetive, solution = calculateOptimalSolution(kd)
-    f.write(str(objetive) + "\n")
-    f.write(" ".join(map(str, solution)))
-    kd.set_objetive(objetive)
-    kd.set_solution([int (i) for i in solution])
+    objetive, solution = calculate_optimal_solution(knapsack)
+    file.write(str(objetive) + "\n")
+    file.write(" ".join(map(str, solution)))
+    knapsack.set_objetive(objetive)
+    knapsack.set_solution([int (i) for i in solution])
     
-def calculateOptimalSolution(knapsack):
+def calculate_optimal_solution(knapsack):
     """generate optimal solution to knasack"""
     best_result = []
     print([it.get_weight() for it in knapsack.get_items_list()])

@@ -16,36 +16,3 @@ class Algorithm(ABC):
     @abstractmethod
     def execute(self, the_knapsack, the_aleatory):
         pass
-"""
-    #getters & setters
-    def _get_max_efos(self):
-        pass
-
-    def _set_max_efos(self, value):
-        self.max_efos = value
-
-    def _get_current_efos(self):
-        pass
-
-    def _set_current_efos(self, arg):
-        pass
-
-    def get_my_best_solution(self):
-        return self.my_best_solution
-
-    def set_my_best_solution(self, value):
-        self.my_best_solution = value
-
-    def get_my_knapsack(self):
-        return self.my_knapsack
-
-    def set_my_knapsack(self, value):
-        self.my_knapsack = value
-
-    def _my_aleatory(self):
-        return self.my_aleatory
-    
-    def _my_aleatory(self, value):
-        self.my_aleatory = value
-
-        """

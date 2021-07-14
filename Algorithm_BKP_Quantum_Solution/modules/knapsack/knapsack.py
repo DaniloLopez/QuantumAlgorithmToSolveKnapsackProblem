@@ -15,7 +15,7 @@ class Knapsack():
         self.quantum_solution = []
 
     def is_equal_solution(self, list_solution):
-        """ compares solution"""
+        """compares solution"""
         if(len(self.solution) != len(list_solution)):             
             return False
         else:             
@@ -28,8 +28,8 @@ class Knapsack():
         sum_value = 0
         sum_weight = 0
         for i in range(len(solution)):
-            sum_value += int(solution[i]) * self.items[i].get_value()
-            sum_weight += int(solution[i]) * self.items[i].get_weight()        
+            sum_value += int(solution[i]) * self.items[i].value
+            sum_weight += int(solution[i]) * self.items[i].weight
         return sum_value, sum_weight
 
     def evaluate(self, dim):
@@ -37,6 +37,9 @@ class Knapsack():
         for i in range (self.n_items):
             sum = sum + (dim[i] * self.items[i].value)
         return sum
+
+    def weight(self, index):
+        return self.items[index].weight
 
     #setters
     def set_solution(self, s):
@@ -79,17 +82,16 @@ class Knapsack():
     def get_quantum_solution(self):
         """"get the find quantum solution list"""
         return self.quantum_solution
-        
 
     def get_items_list(self):
         """"get items list"""
         return self.items
 
     def get_profits(self):
-        return [p.get_value() for p in self.items]
+        return [p.value for p in self.items]
 
     def get_weigths(self):
-        return [p.get_weight() for p in self.items]
+        return [p.weight for p in self.items]
 
     # metodo para comparar objetos
     def __cmp__(self, other):

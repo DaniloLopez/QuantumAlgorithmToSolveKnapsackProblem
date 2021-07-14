@@ -2,6 +2,7 @@
 #!/usr/bin/python
 
 #necessary packages
+import random
 import numpy as np
 import modules.util.util as util
 import modules.util.generalValue as general
@@ -84,7 +85,8 @@ def run_metaheuristic():
                         general.FOLDER_DATASET_GENERATED + folder_name +
                         util.get_separator() + file
                     )
-                    obj_kp = fileReader.read_file_knapsack(name_file)                            
+                    obj_kp = fileReader.read_file_knapsack(name_file)
+                    print("mochila: " + str(obj_kp))
                     list_fitness = []
                     list_efos = []
                     list_times = []
@@ -92,16 +94,16 @@ def run_metaheuristic():
                     for it in range(num_iterations):  
                         start_time= time() #initial time                        
                         #invocation execute metaheuristic
-                        my_metaheuristic.execute(obj_kp, np.random.seed(it)) 
+                        my_metaheuristic.execute(obj_kp, random.seed(it)) 
                         elapsed_time = time() - start_time #final time
                         list_fitness.append (
-                            my_metaheuristic.my_best_solution.fitness
+                            my_metaheuristic.my_best_solution.objetive
                         )
                         list_efos.append(my_metaheuristic.current_efos)
                         list_times.append(elapsed_time - start_time)
                         times_found_ideal += (
                             1 if (
-                                    my_metaheuristic.my_best_solution.fitness - 
+                                    my_metaheuristic.my_best_solution.objetive-
                                     obj_kp.objetive
                                 ) < 1e-10
                             else 0
