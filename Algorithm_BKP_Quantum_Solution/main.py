@@ -9,11 +9,11 @@ import modules.util.generalValue as general
 import modules.file.fileReader as fileReader
 from time import time
 from os import listdir, path
-from modules.menu.menu import Menu
+from modules.parameters.parameter import CommandLineParameter
 from os import scandir, getcwd, listdir
 from modules.file.fileWriter import FileWriter
-from modules.generator.datasetGenerator import DatasetGenerator
-from modules.evaluator.datasetEvaluator import DatasetEvaluator
+#from modules.generator.datasetGenerator import DatasetGenerator
+#from modules.evaluator.datasetEvaluator import DatasetEvaluator
 
 
 
@@ -23,35 +23,106 @@ ROOT_DIR = path.dirname(path.abspath(__file__))
 # listar las carpetas contenidas en el directorio raiz
 list_folder_dataset_generated = listdir(general.FOLDER_DATASET_GENERATED)
 
-# instance to manage program menu
-menu = Menu(general.DESCRIPTION_TEXT, general.EPILOG_TEXT)
+# instance to manage program parameters
+param = CommandLineParameter(general.DESCRIPTION_TEXT, general.EPILOG_TEXT)
 
 ##num iterations, 20 by default
-num_iterations=int(menu.getIterations()) if (
-    menu.getIterations() is not None) else general.NUM_ITERATIONS_STATIC
+num_iterations=int(param.getIterations()) if (
+    param.getIterations() is not None) else general.NUM_ITERATIONS_STATIC
 obj_fileWriter=FileWriter()
 
 #instance to manage program generator dataset
-generator = DatasetGenerator(1000)
+#generator = DatasetGenerator(1000)
 #instance to manage program evaluator dataset
-evaluator = DatasetEvaluator()
+#evaluator = DatasetEvaluator()
 
 def get_list_files_folder(ruta = getcwd()):
     """lista los archivos existentes en una ruta determinada"""
     return [arch.name for arch in scandir(ruta) if arch.is_file()]
 
-def complete_objetive_and_solution():
+def complete_objetive_and_solution(folder_name):
     for folder_name in list_folder_dataset_generated:
         list_files = get_list_files_folder (
             general.FOLDER_DATASET_GENERATED + folder_name
         )
         print(list_files)
-        for i in list_files:
-            obj_kp = fileReader.read_file_knapsack (
+        for file in list_files:
+            knapsack = fileReader.read_file_knapsack (
                 general.FOLDER_DATASET_GENERATED + 
-                folder_name + util.get_separator() + i
+                folder_name + util.get_separator() + file
             ) 
-            print(obj_kp)
+            print(knapsack)
+
+def get_knapsack_list():
+    knapsack_list = []
+    for folder_name in list_folder_dataset_generated:
+        root = general.FOLDER_DATASET_GENERATED + folder_name
+        for file in get_list_files_folder ( root ):
+            #read knapsack file
+            file_name = root + util.get_separator() + file
+            knapsack = fileReader.read_knapsack_file(file_name)
+            knapsack_list.append(knapsack)
+    return knapsack_list
+
+def run_metaheuristics(knapsack_list):
+    try:        
+        obj_fileWriter.open(util.get_result_file_name())
+        obj_fileWriter.write(util.get_line_header(num_iterations))
+        obj_fileWriter.new_line()
+        for my_metaheuristic in general.METAHEURISTIC_LIST:
+            for knapsack in knapsack_list:
+                times = []
+                list_fitness = []
+                list_efos = []
+                list_times = []                    
+                times_found_ideal = 0                                                            
+                print("mochila: " + str(knapsack))
+                
+                for it in range(num_iterations):
+                    start_time= time() #initial time                        
+                    #invocation execute metaheuristic
+                    my_metaheuristic.execute(knapsack, random.seed(it)) 
+                    elapsed_time = time() - start_time #final time
+                    list_fitness.append (
+                        my_metaheuristic.my_best_solution.objetive
+                    )
+                    list_efos.append(my_metaheuristic.current_efos)
+                    list_times.append(elapsed_time - start_time)
+                    times_found_ideal += (
+                        1 if (
+                                my_metaheuristic.my_best_solution.objetive - 
+                                knapsack.objetive
+                            ) < 1e-10
+                        else 0
+                    )
+                line_result = util.get_line_result_format (
+                    knapsack, [5], [5], times_found_ideal, 
+                    num_iterations, times
+                )
+                obj_fileWriter.write(line_result)
+                obj_fileWriter.new_line()
+    except OSError:
+        print("Execution error")
+    finally:
+        print("Execution finished")
+        obj_fileWriter.close()
+
+def main ():
+    """main program"""
+    knapsack_list = get_knapsack_list() #knapsack list
+    print("running...")
+    #complete_objetive_and_solution()
+    #run_metaheuristics(knapsack_list)
+    for i in knapsack_list:
+        print(i)
+
+#invocaton main program
+main()
+
+
+
+
+
 """
 if(menu.is_generated_data()):
     #generator.generate()
@@ -66,61 +137,3 @@ if(menu.is_generate_evaluate()):
     #evaluator.evaluate()
     print("Successfully generated and evaluate dataset")
 """
-
-
-
-def run_metaheuristic():
-    try:
-        obj_fileWriter.open(util.get_result_file_name())
-        obj_fileWriter.write(util.get_line_header(num_iterations))
-        obj_fileWriter.new_line()
-        for my_metaheuristic in general.MH_LIST:
-            for folder_name in list_folder_dataset_generated:
-                list_files = get_list_files_folder (
-                    general.FOLDER_DATASET_GENERATED + folder_name
-                )
-                for file in list_files:
-                    times = []
-                    name_file = (
-                        general.FOLDER_DATASET_GENERATED + folder_name +
-                        util.get_separator() + file
-                    )
-                    obj_kp = fileReader.read_file_knapsack(name_file)
-                    print("mochila: " + str(obj_kp))
-                    list_fitness = []
-                    list_efos = []
-                    list_times = []
-                    times_found_ideal = 0
-                    for it in range(num_iterations):  
-                        start_time= time() #initial time                        
-                        #invocation execute metaheuristic
-                        my_metaheuristic.execute(obj_kp, random.seed(it)) 
-                        elapsed_time = time() - start_time #final time
-                        list_fitness.append (
-                            my_metaheuristic.my_best_solution.objetive
-                        )
-                        list_efos.append(my_metaheuristic.current_efos)
-                        list_times.append(elapsed_time - start_time)
-                        times_found_ideal += (
-                            1 if (
-                                    my_metaheuristic.my_best_solution.objetive-
-                                    obj_kp.objetive
-                                ) < 1e-10
-                            else 0
-                        )
-                    line_result = util.get_line_result_format (
-                        obj_kp, [5], [5], times_found_ideal, 
-                        num_iterations, times
-                    )
-                    obj_fileWriter.write(line_result)
-                    obj_fileWriter.new_line()
-    except OSError:
-        print("Execution error")
-    finally:
-        print("Execution finished")
-        obj_fileWriter.close()
-
-#program init
-print("running...")
-#complete_objetive_and_solution()
-run_metaheuristic()

@@ -1,7 +1,7 @@
 #  usr/bin/env
 # -*- coding: utf-8 -*-
 
-from Algorithm_BKP_Quantum_Solution.modules.util.util import get_separator
+from modules.util.util import get_separator
 import os
 from modules.generator.instanceData import InstanceData
 from modules.util.util import generateUrlNewDataset

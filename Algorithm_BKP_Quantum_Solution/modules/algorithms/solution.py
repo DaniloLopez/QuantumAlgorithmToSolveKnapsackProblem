@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # coding=utf-8
 
-import solution_tweak as tweak
-
 class Solution():
     """docstring for Solution."""
 
