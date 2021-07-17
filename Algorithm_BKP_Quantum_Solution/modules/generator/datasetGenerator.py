@@ -33,7 +33,7 @@ class DatasetGenerator():
         for i in range(self.range_min, self.range_max):
             self.generarDataset(10, i, general.EXEC_MEDIUM_KP_GEN, general.FOLDER_MEDIUM_INSTANCE)
 
-    def generateDatasetMediumDificult(self):
+    def generateDatasetHighDificult(self):
         """se genera dataset con dificultad alta"""
         for i in range(self.range_min, self.range_max):
             self.generarDataset(10, i, general.EXEC_HARD_KP_GEN, general.FOLDER_HARD_INSTANCE)

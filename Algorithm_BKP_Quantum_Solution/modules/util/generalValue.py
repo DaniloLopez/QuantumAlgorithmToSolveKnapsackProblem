@@ -1,7 +1,8 @@
+# -*- coding=utf-8 -*-
+
 #from modules.algorithms.metaheuristics.quantum_based.ibmQuantum import IbmQuantum
 #from modules.algorithms.metaheuristics.simple_state.hillClimbing import HillClimbing
 from modules.util.util import get_separator, get_project_root
-
 
 DIR_FILES = str(get_project_root()) + get_separator() + "files" + get_separator()
 

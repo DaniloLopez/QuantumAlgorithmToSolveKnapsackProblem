@@ -1,21 +1,18 @@
 # -*- coding: utf-8 -*-
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 #necessary packages
 import random
 import numpy as np
 import modules.util.util as util
 import modules.util.generalValue as general
-import modules.file.fileReader as fileReader
+from modules.file.fileReader import FileReader
 from time import time
 from os import listdir, path
 from modules.parameters.parameter import CommandLineParameter
 from os import scandir, getcwd, listdir
 from modules.file.fileWriter import FileWriter
-#from modules.generator.datasetGenerator import DatasetGenerator
-#from modules.evaluator.datasetEvaluator import DatasetEvaluator
-
-
+from modules.generator.datasetGenerator import DatasetGenerator
 
 # Manage list directory
 ROOT_DIR = path.dirname(path.abspath(__file__)) 
@@ -31,26 +28,26 @@ num_iterations=int(param.getIterations()) if (
     param.getIterations() is not None) else general.NUM_ITERATIONS_STATIC
 obj_fileWriter=FileWriter()
 
-#instance to manage program generator dataset
-#generator = DatasetGenerator(1000)
-#instance to manage program evaluator dataset
-#evaluator = DatasetEvaluator()
+#instance to manage dataset generator program
+generator = DatasetGenerator(1000)
+
 
 def get_list_files_folder(ruta = getcwd()):
     """lista los archivos existentes en una ruta determinada"""
     return [arch.name for arch in scandir(ruta) if arch.is_file()]
 
 def complete_objetive_and_solution(folder_name):
+    
     for folder_name in list_folder_dataset_generated:
+        root = general.FOLDER_DATASET_GENERATED + folder_name
         list_files = get_list_files_folder (
             general.FOLDER_DATASET_GENERATED + folder_name
         )
         print(list_files)
         for file in list_files:
-            knapsack = fileReader.read_file_knapsack (
-                general.FOLDER_DATASET_GENERATED + 
-                folder_name + util.get_separator() + file
-            ) 
+            file_name = root + util.get_separator() + file
+            file_reader = FileReader(file_name)
+            knapsack = file_reader.get_knapsack()
             print(knapsack)
 
 def get_knapsack_list():
@@ -60,8 +57,10 @@ def get_knapsack_list():
         for file in get_list_files_folder ( root ):
             #read knapsack file
             file_name = root + util.get_separator() + file
-            knapsack = fileReader.read_knapsack_file(file_name)
-            knapsack_list.append(knapsack)
+            file_reader = FileReader(file_name)
+            knapsack = file_reader.get_knapsack()
+            if knapsack is not None:
+                knapsack_list.append(knapsack)
     return knapsack_list
 
 def run_metaheuristics(knapsack_list):
@@ -88,13 +87,12 @@ def run_metaheuristics(knapsack_list):
                     )
                     list_efos.append(my_metaheuristic.current_efos)
                     list_times.append(elapsed_time - start_time)
-                    times_found_ideal += (
-                        1 if (
-                                my_metaheuristic.my_best_solution.objetive - 
-                                knapsack.objetive
-                            ) < 1e-10
-                        else 0
+                    resto = (
+                        my_metaheuristic.my_best_solution.objetive - 
+                        knapsack.objetive
                     )
+                    if (resto < 1e-10 ): 
+                        times_found_ideal += 1                    
                 line_result = util.get_line_result_format (
                     knapsack, [5], [5], times_found_ideal, 
                     num_iterations, times

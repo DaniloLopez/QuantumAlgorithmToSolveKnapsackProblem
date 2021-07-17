@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-#!/usr/bin/python
-import numpy as np
 
 class Knapsack():
     """docstring for Knapsack."""
