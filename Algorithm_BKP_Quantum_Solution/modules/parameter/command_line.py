@@ -91,7 +91,8 @@ class CommandLineParameter(Parameter):
     def _set_subcomands(self):
         subparser_generate = self.parser.add_subparsers(            
             title="subcommands", 
-            description="valid subcommands"
+            description="valid subcommands",
+            dest="generate"
         )
         self.command_generate = subparser_generate.add_parser(
             "generate",
@@ -100,13 +101,18 @@ class CommandLineParameter(Parameter):
         )
 
     def _init_variables(self):
-        self.iterations = self.args.iterations
+        self.iterations = self.args.iterations        
         self.file = self.args.file
         self.folder = self.args.folder        
+        if(self.args.generate):
+           self.type = self.args.type
+           self.difficult = self.args.difficult
+           self.nitems = self.args.nitems
+           self.range = self.args.range
         print(self.args)
 
     def abstract(self):
         pass
 
     def __str__(self):
-        return f"i: {self.iterations} fl:{self.file} fd:{self.folder}"
+        return f"i: {self.iterations} type:{self.type} difficult:{self.difficult} n items:{self.nitems} range:{self.range} fl:{self.file} fd:{self.folder}"
