@@ -4,10 +4,14 @@
 #from modules.algorithms.metaheuristics.simple_state.hillClimbing import HillClimbing
 from modules.util.util import get_separator, get_project_root
 
-DIR_FILES = str(get_project_root()) + get_separator() + "files" + get_separator()
+FILES = "files"
+DIR_FILES = str(get_project_root()) + get_separator() + FILES + get_separator()
 
 #DESCRIPTION
-DESCRIPTION_TEXT = "This program execute and analize a set of data with information about a knapsack every file; the information of a file is read and with an algorithm that emaule the functionality of a quantum computer."
+DESCRIPTION_TEXT = "This program execute and analize a set of data with "\
+    "information about a knapsack every file; the information of a file is "\
+    "read and with an algorithm that emaule the functionality of a quantum "\
+    "computer."
 EPILOG_TEXT="Author: Danilo López - dlopezs@unicauca.edu.co"
 
 #GLOBAL VARIABLES
@@ -41,15 +45,9 @@ ARG_I = "-i"
 ARG_ITERATION = "--iterations"
 ARGH_ITERATION = "Number of iterations to run each file with a knapsack"
 
-ARG_F = "-f"
-ARG_FUNCTION = "--function"
-ARGH_FUNCTION = "Defines functionality to run. \n1) Generate dataset "\
-    "2) Evaluate dataset, 3) Generate and evaluate dataset)"
-
 ARG_T = "-t"
 ARG_TYPE = "--type"
-ARGH_TYPE = "Indicate type of correlation between items. value should "\
-    "be an integer number."
+ARGH_TYPE = "Indicate type of correlation between items."
 
 ARG_D = "-d"
 ARG_DIFFICULT = "--difficult"
@@ -58,21 +56,26 @@ ARGH_DIFFICULT = "Indicate difficult of generated dataset (1=Easy, 2=Medium, "\
 
 ARG_N = "-n"
 ARG_NITEMS = "--nitems"
-ARGH_NITEMS = "Indicate quantity o fitems stored in knapsack. value should "\
-    "be an integer number."
+ARGH_NITEMS = "Indicate quantity o items stored in knapsack"
 
 ARG_R = "-r"
 ARG_RANGE = "--range"
-ARGH_RANGE = "Indicate range to create every file."
+ARGH_RANGE = "Indicate range of creation for dataset."
+
+ARG_G = "-g"
+ARG_GENERATE = "--generate"
+ARGH_GENERATE = "To generate dataset according to input parameters.\nT=Type "\
+    + ARGH_TYPE + "\nD=Difficult " + ARGH_DIFFICULT + "\nN=N_Items "\
+    + ARGH_NITEMS + "\nR=Range " + ARGH_RANGE
 
 ARG_FL = "-fl"
 ARG_FILE = "--file"
-ARGH_FILE="Indicate file with content of a knapsack to make evaluationself."\
-    "Folder root fodler default to dataset is [rootProject/files/folder] or "\
-    "provide the full address"
+ARGH_FILE="Indicate file with content of a knapsack to make evaluation.\n"\
+    "Default root folder where the dataset is stored is "\
+    "[rootProject/files/folder] or provide the full address"
 
-ARG_FD = "--fd"
+ARG_FD = "-fd"
 ARG_FOLDER = "--folder"
 ARGH_FOLDER = "Indicate folder with knapsack files to make evaluation."\
-    "Folder root folder default is [rootProject/files/folder] or provide the "\
+    "Default root folder is [rootProject/files/folder] or provide the "\
     "full address "

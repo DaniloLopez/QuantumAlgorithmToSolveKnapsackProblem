@@ -22,6 +22,11 @@ class FileWriter:
         """write line in file"""
         self.file.write(line)
 
+    def write_line(self, line):
+        """write line in file ending with new line"""
+        self.file.write(line)
+        self.new_line()
+
     def new_line(self):
         """new line"""
         self.file.write(util.get_line_separator())

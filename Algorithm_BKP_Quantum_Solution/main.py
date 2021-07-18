@@ -9,7 +9,7 @@ import modules.util.generalValue as general
 from modules.file.fileReader import FileReader
 from time import time
 from os import listdir, path
-from modules.parameters.parameter import CommandLineParameter
+from modules.parameter.command_line import CommandLineParameter
 from os import scandir, getcwd, listdir
 from modules.file.fileWriter import FileWriter
 from modules.generator.datasetGenerator import DatasetGenerator
@@ -22,10 +22,9 @@ list_folder_dataset_generated = listdir(general.FOLDER_DATASET_GENERATED)
 
 # instance to manage program parameters
 param = CommandLineParameter(general.DESCRIPTION_TEXT, general.EPILOG_TEXT)
+print(param)
 
-##num iterations, 20 by default
-num_iterations=int(param.getIterations()) if (
-    param.getIterations() is not None) else general.NUM_ITERATIONS_STATIC
+
 obj_fileWriter=FileWriter()
 
 #instance to manage dataset generator program
@@ -36,6 +35,7 @@ def get_list_files_folder(ruta = getcwd()):
     """lista los archivos existentes en una ruta determinada"""
     return [arch.name for arch in scandir(ruta) if arch.is_file()]
 
+"""
 def complete_objetive_and_solution(folder_name):
     
     for folder_name in list_folder_dataset_generated:
@@ -63,19 +63,21 @@ def get_knapsack_list():
                 knapsack_list.append(knapsack)
     return knapsack_list
 
+def init_result_file():
+    obj_fileWriter.open(util.get_result_file_name())
+    obj_fileWriter.write(util.get_line_header(num_iterations))
+    obj_fileWriter.new_line()
+
 def run_metaheuristics(knapsack_list):
     try:        
-        obj_fileWriter.open(util.get_result_file_name())
-        obj_fileWriter.write(util.get_line_header(num_iterations))
-        obj_fileWriter.new_line()
+        init_result_file()
         for my_metaheuristic in general.METAHEURISTIC_LIST:
             for knapsack in knapsack_list:
                 times = []
                 list_fitness = []
                 list_efos = []
-                list_times = []                    
-                times_found_ideal = 0                                                            
-                print("mochila: " + str(knapsack))
+                list_times = []
+                times_found_ideal = 0
                 
                 for it in range(num_iterations):
                     start_time= time() #initial time                        
@@ -97,8 +99,7 @@ def run_metaheuristics(knapsack_list):
                     knapsack, [5], [5], times_found_ideal, 
                     num_iterations, times
                 )
-                obj_fileWriter.write(line_result)
-                obj_fileWriter.new_line()
+                obj_fileWriter.write_line(line_result)
     except OSError:
         print("Execution error")
     finally:
@@ -106,18 +107,19 @@ def run_metaheuristics(knapsack_list):
         obj_fileWriter.close()
 
 def main ():
-    """main program"""
     knapsack_list = get_knapsack_list() #knapsack list
     print("running...")
+
+
     #complete_objetive_and_solution()
     #run_metaheuristics(knapsack_list)
     for i in knapsack_list:
         print(i)
 
-#invocaton main program
-main()
+if __name__ == '__main__':
+    main()
 
-
+"""
 
 
 
