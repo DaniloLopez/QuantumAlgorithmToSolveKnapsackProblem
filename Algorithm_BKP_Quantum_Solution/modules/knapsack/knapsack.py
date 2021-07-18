@@ -8,7 +8,7 @@ class Knapsack():
         self.n_items = n
         self.capacity = capacity
         self.items = []
-        self.objetive = 0
+        self.objective = 0
         self.solution = []
         self.quantum_solution = []
 
@@ -40,55 +40,14 @@ class Knapsack():
         return self.items[index].weight
 
     #setters
-    def set_solution(self, s):
-        """ set solution list"""
-        self.solution = s
-
-    def set_quantum_solution(self, qs):
-        """ set quantum solution list"""
-        self.quantum_solution = qs
-
     def add_item_to_item_list(self, item):
         """ add an item to solution list """
         self.items.append(item)
 
-    def set_objetive(self, obj):
-        """ set objetive value for the solution """
-        self.objetive = obj
-
-    def setCapacity(self, c):
-        """set maximum capacity of knapsack"""
-        self.capacity = c
-
-    #getters
-    def get_n_items(self):
-        """get item quantity value"""
-        return self.n_items
-    
-    def get_capacity(self):
-        """get maximum knapsack capacity"""
-        return self.capacity
-    
-    def get_objetive(self):
-        """get objective value"""        
-        return self.objetive
-    
-    def get_solution(self):
-        """"get the given solution list"""
-        return self.solution     
-
-    def get_quantum_solution(self):
-        """"get the find quantum solution list"""
-        return self.quantum_solution
-
-    def get_items_list(self):
-        """"get items list"""
-        return self.items
-
     def get_profits(self):
         return [p.value for p in self.items]
 
-    def get_weigths(self):
+    def get_weights(self):
         return [p.weight for p in self.items]
 
     # metodo para comparar objetos
@@ -105,6 +64,6 @@ class Knapsack():
         """ to_string function to print information from a knapsack instance"""
         str = f"Number of items: {self.n_items}  "
         str += f"Capacity: {self.capacity}  "
-        str += f"Objetive {self.objetive}  "
+        str += f"Objective {self.objective}  "
         str += f"Solution {self.solution}  "
         return str

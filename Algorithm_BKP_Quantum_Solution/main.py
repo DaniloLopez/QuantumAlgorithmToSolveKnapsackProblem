@@ -30,13 +30,11 @@ obj_fileWriter=FileWriter()
 #instance to manage dataset generator program
 generator = DatasetGenerator(1000)
 
-
 def get_list_files_folder(ruta = getcwd()):
     """lista los archivos existentes en una ruta determinada"""
     return [arch.name for arch in scandir(ruta) if arch.is_file()]
 
-"""
-def complete_objetive_and_solution(folder_name):
+def complete_objective_and_solution(folder_name):
     
     for folder_name in list_folder_dataset_generated:
         root = general.FOLDER_DATASET_GENERATED + folder_name
@@ -65,7 +63,7 @@ def get_knapsack_list():
 
 def init_result_file():
     obj_fileWriter.open(util.get_result_file_name())
-    obj_fileWriter.write(util.get_line_header(num_iterations))
+    obj_fileWriter.write(util.get_line_header(param.iterations))
     obj_fileWriter.new_line()
 
 def run_metaheuristics(knapsack_list):
@@ -106,34 +104,16 @@ def run_metaheuristics(knapsack_list):
         print("Execution finished")
         obj_fileWriter.close()
 
+
 def main ():
     knapsack_list = get_knapsack_list() #knapsack list
     print("running...")
-
-
-    #complete_objetive_and_solution()
+    if param.generate:
+        print("generate")
+    #complete_objective_and_solution()
     #run_metaheuristics(knapsack_list)
     for i in knapsack_list:
         print(i)
 
 if __name__ == '__main__':
     main()
-
-"""
-
-
-
-"""
-if(menu.is_generated_data()):
-    #generator.generate()
-    print("Successfully generated dataset")
-
-if(menu.is_evaluate_data()):
-    #evaluator.evaluate()
-    print("Successfully evaluated dataset")
-    
-if(menu.is_generate_evaluate()):
-    #generator.generate()
-    #evaluator.evaluate()
-    print("Successfully generated and evaluate dataset")
-"""

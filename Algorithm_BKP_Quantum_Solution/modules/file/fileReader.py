@@ -10,23 +10,23 @@ class FileReader():
         super(FileReader, self).__init__()
         self.file_name = file_name
         self.mode = mode
-        self.kanapsack = None
+        self.knapsack = None
         self.file = None
         self._read_knapsack_file()
         
     def get_knapsack(self):
-        return copy.deepcopy(self.kanapsack)
+        return copy.deepcopy(self.knapsack)
 
     def _read_knapsack_file(self):
         """read content of a file with information of knapsack and items fn"""
-        self._open_file(self.file_name, self.mode)
+        self._open_file()
         if self.file:
             self._read_initial_values_knapsack()
             line = self.file.readline()
             if line:
-                self._read_objetive_solution(line)
+                self._read_objective_solution(line)
             else:
-                self._set_objetive_solution()
+                self._set_objective_solution()
             self.file.close()
 
     def _open_file(self):
@@ -48,23 +48,23 @@ class FileReader():
                 Item(i, int(item_line[0]),int(item_line[1]))
             )
 
-    def _read_objetive_solution(self, line):
-        """read objetive and solution of a knapsack"""
+    def _read_objective_solution(self, line):
+        """read objective and solution of a knapsack"""
         print(self.file.name)
-        self.knapsack.objetive = int(line)
+        self.knapsack.objective = int(line)
         line = self.file.readline()
         if line:
             self._knapsack.solution = [int (i) for i in line.split()]
         else:
-            print(f"Dataset imcomplete or corrupt. file: {self.file.name}")
+            print(f"Dataset incomplete or corrupt. file: {self.file.name}")
 
-    def _set_objetive_solution(self):
-        """generate objetive and solution for set to knapsack"""
-        objetive, solution = self._calculate_optimal_solution()
-        self.file.write(str(objetive) + "\n")
+    def _set_objective_solution(self):
+        """generate objective and solution for set to knapsack"""
+        objective, solution = self._calculate_optimal_solution()
+        self.file.write(str(objective) + "\n")
         self.file.write(" ".join(map(str, solution)))
-        self.knapsack.set_objetive(objetive)
-        self.knapsack.set_solution([int (i) for i in solution])
+        self.knapsack.objective = objective
+        self.knapsack.solution = [int (i) for i in solution]
 
     def _calculate_optimal_solution(self):
         """generate optimal solution to knapsack with brute force"""
@@ -73,20 +73,20 @@ class FileReader():
         #initialize variables to zero sending zero_list 
         best_value,best_weight = self.knapsack.calculate_knapsack_value_weight(
             self._complete_text_right(
-                format(0, "b"), "0", self.knapsack.get_n_items()
+                format(0, "b"), "0", self.knapsack.n_items
             )
         )
-        for i in range(1, pow(2, self.knapsack.get_n_items())):
+        for i in range(1, pow(2, self.knapsack.n_items)):
             bin = format(i, "b")
             temp_solution = self._complete_text_right(
-                bin, "0", self.knapsack.get_n_items()
+                bin, "0", self.knapsack.n_items
             )
             v, w = self.knapsack.calculate_knapsack_value_weight(temp_solution)
-            if(w <= self.knapsack.get_capacity() and v >= best_value):
+            if(w <= self.knapsack.capacity and v >= best_value):
                 best_value,best_weight=v, w
                 best_result = temp_solution
         return best_value, best_result
 
-    def _complete_text_right(self, text, char, lenght):
-        """complete @text on the right according to @char @lenght"""
-        return list(str(text).rjust(lenght, char)[:lenght])
+    def _complete_text_right(self, text, char, length):
+        """complete @text on the right according to @char @length"""
+        return list(str(text).rjust(length, char)[:length])
