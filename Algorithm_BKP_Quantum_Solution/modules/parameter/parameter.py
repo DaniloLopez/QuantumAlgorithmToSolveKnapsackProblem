@@ -15,7 +15,3 @@ class Parameter(ABC):
         self.range = None
         self.file = None
         self.folder = None
-
-    @abstractmethod
-    def abstract(self):
-        pass

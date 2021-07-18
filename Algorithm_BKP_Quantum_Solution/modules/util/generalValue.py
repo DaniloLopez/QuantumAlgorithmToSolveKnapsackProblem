@@ -41,6 +41,10 @@ ZERO_CHAR = "0"
 PROGRAM_NAME = "main"
 
 #VARIABLES FOR PARAMETERS MENU
+SUBCOMANDS = "subcomands"
+CMD_GENERATE = "generate"
+CMDH_GENERATE = "generate dataset "
+
 ARG_I = "-i"
 ARG_ITERATION = "--iterations"
 ARGH_ITERATION = "Number of iterations to run each file with a knapsack"
