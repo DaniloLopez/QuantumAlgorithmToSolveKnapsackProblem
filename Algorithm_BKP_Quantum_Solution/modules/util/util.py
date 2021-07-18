@@ -3,6 +3,7 @@
 import sys
 import os
 import numpy as np
+from os import scandir, getcwd
 
 sys.path.append('../')
 from datetime import datetime
@@ -84,3 +85,7 @@ def generateUrlNewDataset(id, level, name_folder):
     return (str(id.n_items) + " " + str(id.range) + " " + str(id.type_corr) + 
             " " + str(id.n_instances) + " " + str(id.n_test) + " " + 
             generateNameFile(id, level, name_folder))
+
+def get_list_files_folder(path = getcwd()):
+    """list existing files in a given path"""
+    return [arch.name for arch in scandir(path) if arch.is_file()]

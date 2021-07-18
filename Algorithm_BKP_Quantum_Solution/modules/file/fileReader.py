@@ -49,14 +49,13 @@ class FileReader():
             )
 
     def _read_objective_solution(self, line):
-        """read objective and solution of a knapsack"""
-        print(self.file.name)
+        """read objective and solution of a knapsack"""        
         self.knapsack.objective = int(line)
         line = self.file.readline()
         if line:
-            self._knapsack.solution = [int (i) for i in line.split()]
+            self.knapsack.solution = [int (i) for i in line.split()]
         else:
-            print(f"Dataset incomplete or corrupt. file: {self.file.name}")
+            print(f"file incomplete or corrupt: {self.file.name}")
 
     def _set_objective_solution(self):
         """generate objective and solution for set to knapsack"""

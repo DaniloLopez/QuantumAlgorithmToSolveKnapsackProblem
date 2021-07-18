@@ -30,29 +30,11 @@ obj_fileWriter=FileWriter()
 #instance to manage dataset generator program
 generator = DatasetGenerator(1000)
 
-def get_list_files_folder(ruta = getcwd()):
-    """lista los archivos existentes en una ruta determinada"""
-    return [arch.name for arch in scandir(ruta) if arch.is_file()]
-
-def complete_objective_and_solution(folder_name):
-    
-    for folder_name in list_folder_dataset_generated:
-        root = general.FOLDER_DATASET_GENERATED + folder_name
-        list_files = get_list_files_folder (
-            general.FOLDER_DATASET_GENERATED + folder_name
-        )
-        print(list_files)
-        for file in list_files:
-            file_name = root + util.get_separator() + file
-            file_reader = FileReader(file_name)
-            knapsack = file_reader.get_knapsack()
-            print(knapsack)
-
 def get_knapsack_list():
     knapsack_list = []
     for folder_name in list_folder_dataset_generated:
         root = general.FOLDER_DATASET_GENERATED + folder_name
-        for file in get_list_files_folder ( root ):
+        for file in util.get_list_files_folder( root ):
             #read knapsack file
             file_name = root + util.get_separator() + file
             file_reader = FileReader(file_name)
@@ -106,11 +88,16 @@ def run_metaheuristics(knapsack_list):
 
 
 def main ():
-    knapsack_list = get_knapsack_list() #knapsack list
+    knapsack_list = []
     print("running...")
-    if param.generate:
-        print("generate")
-    #complete_objective_and_solution()
+    #generate dataset acording to arguments of subcomnad generate
+    if param.is_generate():
+        print("generating dataset...")
+        #generator.generarDataset(param.args)
+        print("dataset generated.")
+    
+    print("\nrun algorithm")
+    knapsack_list = get_knapsack_list() #knapsack list
     #run_metaheuristics(knapsack_list)
     for i in knapsack_list:
         print(i)

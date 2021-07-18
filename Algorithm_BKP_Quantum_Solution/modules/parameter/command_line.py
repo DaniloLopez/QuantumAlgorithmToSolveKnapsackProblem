@@ -28,8 +28,12 @@ class CommandLineParameter(Parameter):
         #init variables        
         self.args = self.parser.parse_args()
         self._init_variables()
-        
 
+    #override abstract methods
+    def is_generate(self):
+        return self.args.generate
+    
+    #private methods
     def _init_parser_arguments(self):        
         self.parser.add_argument(
             general.ARG_I,
