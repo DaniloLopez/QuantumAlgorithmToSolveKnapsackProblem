@@ -3,46 +3,54 @@
 
 from modules.util.util import get_separator
 import os
-from modules.generator.instanceData import InstanceData
-from modules.util.util import generateUrlNewDataset
+from modules.util.util import build_commnad_line_generate
 import modules.util.generalValue as general
 
 class DatasetGenerator():
 
-    def __init__(self, ntest, nmax=5, tipemax=2, rmax=4, rmin=1, ninstances=5):
-        self.n_max = nmax
-        self.type_max = tipemax
-        self.range_max = rmax
-        self.range_min = rmin
-        self.n_test = ntest
-        self.n_instances = ninstances
+    def __init__(self, args):
+        self.args = args
+        self.validate_arguments()
+
+    def validate_arguments(self):
+        self._validate_duplicate_arguments_type()
+        self._validate_type()
 
     def generate(self):
-        """algoritmo principal encargado de generar los dataset"""
-        self.generateDatasetLowDificult()
-        #self.generateDatasetMediumDificult()
-        #self.generateDatasetMediumDificult()    
+        self.generate_type()
 
-    def generateDatasetLowDificult(self):
-        """generar dataset con dificultad baja"""
-        for i in range(self.range_min, self.range_max):
-            self.generarDataset(10, i, general.EXEC_EASY_KP_GEN, general.FOLDER_EASY_INSTANCE)
+    def _validate_duplicate_arguments_type(self):
+        if(len(set(self.args.type)) != len(self.args.type)):
+            raise Exception(general.ERR_DUPLICATED_ARGUMENT + " Review flag -t/--type")
+        if(len(set(self.args.difficult)) != len(self.args.difficult)):
+            raise Exception(general.ERR_DUPLICATED_ARGUMENT + " Review flag -d/--difficult")
+        if(len(set(self.args.nitems)) != len(self.args.nitems)):
+            raise Exception(general.ERR_DUPLICATED_ARGUMENT + " Review flag -n/--nitem")
+        if(len(set(self.args.range)) != len(self.args.range)):
+            raise Exception(general.ERR_DUPLICATED_ARGUMENT + " Review flag -r/--range")
 
-    def generateDatasetMediumDificult(self):
-        """generar dataset con dificultad media"""
-        for i in range(self.range_min, self.range_max):
-            self.generarDataset(10, i, general.EXEC_MEDIUM_KP_GEN, general.FOLDER_MEDIUM_INSTANCE)
+    def _generate_type(self):
+        if sum(self.args.type) <= 10 and len(self.args) < 4 :
+            if self.args.type.__contains__(1) :
+                self.generate_uncorrelated()
+            if self.args.type.__contains__(2) :
+                self.generate_weakly_correlation()
+            if self.args.type.__contains__(3) :
+                self.generate_strongly_correlation()
+            if self.args.type.__contains__(4) :
+                self.generate_subset_sum()
+        else:
+            raise Exception("Bad arguments for parameter -t/-T ")
 
-    def generateDatasetHighDificult(self):
-        """se genera dataset con dificultad alta"""
-        for i in range(self.range_min, self.range_max):
-            self.generarDataset(10, i, general.EXEC_HARD_KP_GEN, general.FOLDER_HARD_INSTANCE)
+    def generate_difficult(self):
+        """generate dataset low difficult"""
+        self.generate(general.EASY)
+        self.generate(general.MEDIUM)
+        self._generate(general.HARD)
     
-    def generarDataset(self, step_range, type_corr, execute, folder):        
-        for n in range(5, self.n_max+1):
-            for r in range(self.range_min, self.range_max + 1, step_range):
-                kp_data = InstanceData(n, r, type_corr, self.n_instances, self.n_test)                
-                name_file_new = generateUrlNewDataset(kp_data, 1, folder)
-                print("######" + execute + " " + name_file_new)
-                os.system(execute + " " + name_file_new)
-                #fileReader.read_file_knapsack_generate_pisinger(name_file_new)
+    def _generate(self, difficult):
+        for type in self.args.type :
+            for nitems in range(self.args.nitems[0], self.args.nitems[1]+1):
+                for range in range(self.args.range[0], self.args.range[1]):
+                    file_name = build_commnad_line_generate(type, difficult, nitems, range, 3)
+                    os.system(difficult + " " + file_name)

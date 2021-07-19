@@ -10,25 +10,19 @@ from modules.file.fileReader import FileReader
 from time import time
 from os import listdir, path
 from modules.parameter.command_line import CommandLineParameter
-from os import scandir, getcwd, listdir
+from os import listdir
 from modules.file.fileWriter import FileWriter
 from modules.generator.datasetGenerator import DatasetGenerator
 
-# Manage list directory
 ROOT_DIR = path.dirname(path.abspath(__file__)) 
 
 # listar las carpetas contenidas en el directorio raiz
 list_folder_dataset_generated = listdir(general.FOLDER_DATASET_GENERATED)
 
-# instance to manage program parameters
 param = CommandLineParameter(general.DESCRIPTION_TEXT, general.EPILOG_TEXT)
 print(param)
 
-
 obj_fileWriter=FileWriter()
-
-#instance to manage dataset generator program
-generator = DatasetGenerator(1000)
 
 def get_knapsack_list():
     knapsack_list = []
@@ -59,25 +53,25 @@ def run_metaheuristics(knapsack_list):
                 list_times = []
                 times_found_ideal = 0
                 
-                for it in range(num_iterations):
+                for it in range(param.args.iterations):
                     start_time= time() #initial time                        
                     #invocation execute metaheuristic
                     my_metaheuristic.execute(knapsack, random.seed(it)) 
                     elapsed_time = time() - start_time #final time
                     list_fitness.append (
-                        my_metaheuristic.my_best_solution.objetive
+                        my_metaheuristic.my_best_solution.objective
                     )
                     list_efos.append(my_metaheuristic.current_efos)
                     list_times.append(elapsed_time - start_time)
                     resto = (
-                        my_metaheuristic.my_best_solution.objetive - 
-                        knapsack.objetive
+                        my_metaheuristic.my_best_solution.objective - 
+                        knapsack.objective
                     )
                     if (resto < 1e-10 ): 
                         times_found_ideal += 1                    
                 line_result = util.get_line_result_format (
                     knapsack, [5], [5], times_found_ideal, 
-                    num_iterations, times
+                    param.args.iterations, times
                 )
                 obj_fileWriter.write_line(line_result)
     except OSError:
@@ -89,18 +83,24 @@ def run_metaheuristics(knapsack_list):
 
 def main ():
     knapsack_list = []
+    generator = DatasetGenerator(param.args)
     print("running...")
-    #generate dataset acording to arguments of subcomnad generate
+    #generate dataset according to arguments of subcomnad generate
     if param.is_generate():
-        print("generating dataset...")
-        #generator.generarDataset(param.args)
-        print("dataset generated.")
+        print("> generating dataset...")
+        generator.generate()
+        print("> dataset generated.")
     
-    print("\nrun algorithm")
-    knapsack_list = get_knapsack_list() #knapsack list
+    print("\n> run algorithms...")
+    #knapsack_list = get_knapsack_list()
     #run_metaheuristics(knapsack_list)
     for i in knapsack_list:
         print(i)
 
 if __name__ == '__main__':
     main()
+
+list = [2,[3,4]]
+if(list.__contains__():
+    print(list)
+

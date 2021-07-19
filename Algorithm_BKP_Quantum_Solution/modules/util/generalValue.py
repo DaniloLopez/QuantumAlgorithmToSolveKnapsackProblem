@@ -2,48 +2,44 @@
 
 #from modules.algorithms.metaheuristics.quantum_based.ibmQuantum import IbmQuantum
 #from modules.algorithms.metaheuristics.simple_state.hillClimbing import HillClimbing
-from modules.util.util import get_separator, get_project_root
+import os
+from pathlib import Path
 
 FILES = "files"
-DIR_FILES = str(get_project_root()) + get_separator() + FILES + get_separator()
+
+PROJECT_ROOT = Path(__file__).parent.parent.parent
+SEPARATOR = os.path.sep
+LINE_SEPARATOR = os.linesep
+DIR_FILES = str(PROJECT_ROOT) + SEPARATOR + FILES + SEPARATOR
 
 #DESCRIPTION
-DESCRIPTION_TEXT = "This program execute and analize a set of data with "\
+DESCRIPTION_TEXT = "This program execute and analyze a set of data with "\
     "information about a knapsack every file; the information of a file is "\
-    "read and with an algorithm that emaule the functionality of a quantum "\
+    "read and with an algorithm that emulate the functionality of a quantum "\
     "computer."
 EPILOG_TEXT="Author: Danilo López - dlopezs@unicauca.edu.co"
 
 #GLOBAL VARIABLES
 DATASET_FN = "dataset_fn"
-GENERATED_DATASET = "generated_dataset_complete"
+GENERATED_DATASET = "generated_dataset"
 NUM_ITERATIONS_STATIC = 20
-FOLDER_DATASET_FN = DIR_FILES + DATASET_FN + get_separator()
-FOLDER_DATASET_GENERATED = DIR_FILES + GENERATED_DATASET + get_separator()
+FOLDER_DATASET_FN = DIR_FILES + DATASET_FN + SEPARATOR
+FOLDER_DATASET_GENERATED = DIR_FILES + GENERATED_DATASET + SEPARATOR
+
+ERR_DUPLICATED_ARGUMENT = "Duplicated parameter arguments are not allowed."
 #METAHEURISTIC_LIST = [IbmQuantum(20)]
 
-FOLDER_DATASET_GEN_EASY = "easy"
-FOLDER_DATASET_GEN_MEDIUM = "medium"
-FOLDER_DATASET_GEN_HARD = "hard"
-
-# Name of algorithms executable
-EXEC_EASY_KP_GEN = "easy"
-EXEC_MEDIUM_KP_GEN = "medium"
-EXEC_HARD_KP_GEN = "hard"
-
-# Folder name of dataset
-FOLDER_EASY_INSTANCE = "easy"
-FOLDER_MEDIUM_INSTANCE = "medium"
-FOLDER_HARD_INSTANCE = "hard"
-
 #GLOBAL GENERAL VARIABLES 
+EASY = "easy"
+MEDIUM = "medium"
+HARD = "hard"
 ZERO_CHAR = "0"
 PROGRAM_NAME = "main"
 
 #VARIABLES FOR PARAMETERS MENU
 SUBCOMANDS = "subcomands"
 CMD_GENERATE = "generate"
-CMDH_GENERATE = "generate dataset "
+CMDH_GENERATE = "generate dataset."
 
 ARG_I = "-i"
 ARG_ITERATION = "--iterations"
