@@ -1,11 +1,11 @@
 # -*- coding=utf-8 -*-
 
-from Algorithm_BKP_Quantum_Solution.modules.util.generalValue import SEPARATOR
+from modules.util.generalValue import SEPARATOR
 import sys
 import os
 import numpy as np
 from os import scandir, getcwd
-import generalValue as general
+import modules.util.generalValue as general
 
 sys.path.append('../')
 from datetime import datetime
@@ -17,8 +17,10 @@ def get_info_time():
     return datetime.now().strftime("%d%m%Y_%H%M%S")
 
 def get_result_file_name():
-    return (get_path() + general.SEPARATOR + "solutions" + general.SEPARATOR +
-            "result_" + get_info_time() + ".txt")    
+    return (
+        get_path() + SEPARATOR + "solutions" + SEPARATOR + "result_" + 
+        get_info_time() + ".txt"
+    )    
 
 def fill_spaces(value, length):
     return str(value).ljust(length)[:length]
@@ -36,7 +38,7 @@ def get_line_header(iterations):
     return line
 
 def get_line_result_format(obj_kp, profits_solution, weights_solution, 
-                            num_exact_solution, num_iterations, times):    
+                            num_exact_solution, num_iterations, times):
     line =  fill_spaces(obj_kp.n_items(), 10)
     line += fill_spaces(obj_kp.capacity(), 11)
     line += fill_spaces(obj_kp.objective(), 17)
@@ -73,13 +75,14 @@ def get_line_result(obj_kp, profits_solution, weights_solution,
     return line
 
 def generate_full_name_file(id, type, difficult, nitems, range):
-    return (general.FOLDER_DATASET_GENERATED + general.SEPARATOR + difficult + 
-            general.SEPARATOR + "t" + str(type) + "_d" +str(difficult) + 
+    return (general.FOLDER_DATASET_GENERATED + SEPARATOR + difficult + 
+            SEPARATOR + "t" + str(type) + "_d" +str(difficult) + 
             "_n" + str(nitems) + "_r" + str(range) + ".txt")
 
-def build_commnad_line_generate(type, difficult, nitems, range, instance, S=1000):
+def build_commnad_line_generate(type, difficult, nitems, range, 
+                                instance, S=1000):
     """
-    type: 1=uncorr., 2=weakly corr., 3=strongly corr., 4=subset sum.
+    type: 1=uncorrelated., 2=weakly corr., 3=strongly corr., 4=subset sum.
     difficult: difficult.
     nitems: number of items.
     range: range of coefficients.

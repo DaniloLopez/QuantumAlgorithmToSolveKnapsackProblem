@@ -1,7 +1,6 @@
-#  usr/bin/env
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from modules.util.util import get_separator
 import os
 from modules.util.util import build_commnad_line_generate
 import modules.util.generalValue as general
@@ -30,17 +29,30 @@ class DatasetGenerator():
             raise Exception(general.ERR_DUPLICATED_ARGUMENT + " Review flag -r/--range")
 
     def _generate_type(self):
-        if sum(self.args.type) <= 10 and len(self.args) < 4 :
-            if self.args.type.__contains__(1) :
+        if sum(self.args.type) <= 10 and len(self.args) <= 4 :
+            if 1 in self.args.type :
                 self.generate_uncorrelated()
-            if self.args.type.__contains__(2) :
+            if 2 in self.args.type :
                 self.generate_weakly_correlation()
-            if self.args.type.__contains__(3) :
+            if 3 in self.args.type :
                 self.generate_strongly_correlation()
-            if self.args.type.__contains__(4) :
+            if 4 in self.args.type:
                 self.generate_subset_sum()
         else:
             raise Exception("Bad arguments for parameter -t/-T ")
+        
+    def _generate_difficult(self):
+        if sum(self.args.type) <= 6 and len(self.args) <= 4 :
+            if 1 in self.args.difficult :
+                pass
+            if 2 in self.args.difficult :
+                pass
+            if 3 in self.args.difficult :
+                pass
+            if 0 in self.args.difficult :
+                pass
+        else:
+            raise Exception("Bad arguments for parameter -d/-D ")
 
     def generate_difficult(self):
         """generate dataset low difficult"""

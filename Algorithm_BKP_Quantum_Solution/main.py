@@ -24,7 +24,7 @@ print(param)
 
 obj_fileWriter=FileWriter()
 
-def get_knapsack_list():
+def get_list_knapsack():
     knapsack_list = []
     for folder_name in list_folder_dataset_generated:
         root = general.FOLDER_DATASET_GENERATED + folder_name
@@ -42,10 +42,10 @@ def init_result_file():
     obj_fileWriter.write(util.get_line_header(param.iterations))
     obj_fileWriter.new_line()
 
-def run_metaheuristics(knapsack_list):
+def run_metaheuristics(knapsack_list, metaheuristic_list):
     try:        
         init_result_file()
-        for my_metaheuristic in general.METAHEURISTIC_LIST:
+        for my_metaheuristic in metaheuristic_list:
             for knapsack in knapsack_list:
                 times = []
                 list_fitness = []
@@ -82,25 +82,20 @@ def run_metaheuristics(knapsack_list):
 
 
 def main ():
-    knapsack_list = []
+    list_knapsack = []
     generator = DatasetGenerator(param.args)
     print("running...")
     #generate dataset according to arguments of subcomnad generate
     if param.is_generate():
         print("> generating dataset...")
         generator.generate()
-        print("> dataset generated.")
-    
+        print("> dataset generated.")    
     print("\n> run algorithms...")
-    #knapsack_list = get_knapsack_list()
-    #run_metaheuristics(knapsack_list)
-    for i in knapsack_list:
-        print(i)
+    list_knapsack = get_list_knapsack()
+    run_metaheuristics(list_knapsack, general.METAHEURISTIC_LIST)    
 
-if __name__ == '__main__':
+if __name__ == '__mains__':
     main()
 
-list = [2,[3,4]]
-if(list.__contains__():
-    print(list)
-
+list = [2,3,4,5]
+print(3 in list)
