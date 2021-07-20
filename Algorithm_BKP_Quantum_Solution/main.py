@@ -31,8 +31,8 @@ def get_list_knapsack():
         root = general.FOLDER_DATASET_GENERATED + folder_name
         for file in util.get_list_files_folder( root ):
             #read knapsack file
-            file_name = root + SEPARATOR + file
-            file_reader = FileReader(file_name)
+            full_file_name = root + SEPARATOR + file
+            file_reader = FileReader(full_file_name, file)
             knapsack = file_reader.get_knapsack()
             if knapsack is not None:
                 knapsack_list.append(knapsack)
@@ -57,26 +57,28 @@ def run_metaheuristics(knapsack_list, metaheuristic_list):
                 for it in range(param.args.iterations):
                     start_time= time() #initial time                        
                     #invocation execute metaheuristic
-                    my_metaheuristic.execute(knapsack, random.seed(it)) 
+                    my_metaheuristic.execute(knapsack, random.seed(it), False)
                     elapsed_time = time() - start_time #final time
                     list_fitness.append (
-                        my_metaheuristic.my_best_solution.objective
+                        my_metaheuristic.my_best_solution.fitness
                     )
                     list_efos.append(my_metaheuristic.current_efos)
                     list_times.append(elapsed_time - start_time)
                     substraction = (
-                        my_metaheuristic.my_best_solution.objective - 
+                        my_metaheuristic.my_best_solution.fitness - 
                         knapsack.objective
                     )
                     if substraction < 1e-10 : 
                         times_found_ideal += 1                    
-                print(
+                
+                line_result = (
                     util.get_line_result_format (
                         knapsack, [5], [5], times_found_ideal, 
-                        param.args.iterations, times    
+                        param.args.iterations, list_times
                     )
                 )
-                #obj_fileWriter.write_line(line_result)
+                
+                obj_fileWriter.write_line(line_result)
     except OSError:
         print("Execution error")
     finally:

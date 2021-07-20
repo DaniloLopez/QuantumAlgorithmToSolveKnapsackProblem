@@ -12,11 +12,9 @@ class DatasetGenerator():
 
     def generate(self):
         self.validate_arguments()
-        self.generate_type()
 
     def validate_arguments(self):
         self._validate_duplicate_arguments_type()
-        self._validate_type()
         
     def _validate_duplicate_arguments_type(self):
         if(len(set(self.args.type)) != len(self.args.type)):

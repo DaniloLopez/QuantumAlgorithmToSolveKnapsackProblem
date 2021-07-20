@@ -14,5 +14,5 @@ class Algorithm(ABC):
         self.my_aleatory = None
 
     @abstractmethod
-    def execute(self, the_knapsack, the_aleatory):
+    def execute(self, the_knapsack, the_aleatory, debug):
         pass

@@ -1,5 +1,0 @@
-Number of iterations: 20 
-n-items | capacity | objetive value | max profit | min profit | average profit | max capacity | min capacity | average capacity | exact solutions | NON exact solutions | success rate |   max time   |   min time   |   average time
-5         11         14               19           19           19.0           11             11              11.0               0                 20                    0.0%           0.03           0.00099921226500.006527864933
-5         8          12               10           10           10.0           6              6               6.0                0                 20                    0.0%           0.01           0.00199937820430.003050589561
-5         7          23               19           19           19.0           7              7               7.0                0                 20                    0.0%           0.11           0.00099921226500.009603190422

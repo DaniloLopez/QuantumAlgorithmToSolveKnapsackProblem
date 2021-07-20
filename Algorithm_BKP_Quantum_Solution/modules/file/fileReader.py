@@ -6,9 +6,10 @@ from modules.knapsack.item import Item
 
 class FileReader():
     """docstring for FileReader."""
-    def __init__(self, file_name, mode="r+"):
+    def __init__(self, full_file_name, short_file_name=None, mode="r+"):
         super(FileReader, self).__init__()
-        self.file_name = file_name
+        self.file_name = full_file_name
+        self.short_file_name = short_file_name
         self.mode = mode
         self.knapsack = None
         self.file = None
@@ -28,6 +29,7 @@ class FileReader():
             else:
                 self._set_objective_solution()
             self.file.close()
+            self.knapsack.file_name = self.short_file_name
 
     def _open_file(self):
         """open file with name file_name"""

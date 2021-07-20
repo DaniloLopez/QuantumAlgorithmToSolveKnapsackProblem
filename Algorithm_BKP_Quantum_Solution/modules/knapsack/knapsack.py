@@ -3,7 +3,7 @@
 class Knapsack():
     """docstring for Knapsack."""
 
-    def __init__(self, n, capacity):
+    def __init__(self, n, capacity, file_name=None):
         """ Information about of knapsack """
         self.n_items = n
         self.capacity = capacity
@@ -11,6 +11,7 @@ class Knapsack():
         self.objective = 0
         self.solution = []
         self.quantum_solution = []
+        self.file_name = file_name
 
     def is_equal_solution(self, list_solution):
         """compares solution"""
@@ -32,12 +33,15 @@ class Knapsack():
 
     def evaluate(self, dim):
         sum = 0
-        for i in range (self.n_items):
-            sum = sum + (dim[i] * self.items[i].value)
+        for i in range(self.n_items):
+            sum += dim[i] * self.items[i].value
         return sum
 
     def weight(self, index):
         return self.items[index].weight
+
+    def density(self, index):
+        return self.items[index].density
 
     #setters
     def add_item_to_item_list(self, item):

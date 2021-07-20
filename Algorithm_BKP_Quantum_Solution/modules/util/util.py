@@ -31,36 +31,34 @@ def get_list_files_folder(path = getcwd()):
 
 def get_line_header(iterations):
     line =f"Number of iterations: {iterations} \n"
-    line+="n-items | capacity | objective value | max profit | min profit | "
+    line+="knapsack            | n-items | capacity | objective value | max profit | min profit | "
     line+="average profit | max capacity | min capacity | average capacity | "
-    line+="exact solutions | NON exact solutions | success rate | "
-    line+="max time   |   min time   |   average time"
+    line+="success rate | max time   |   min time   |   average time"
     return line
 
 def get_line_result_format(obj_kp, profits_solution, weights_solution, 
                             num_exact_solution, num_iterations, times):
-    line =  fill_spaces(obj_kp.n_items(), 10)
-    line += fill_spaces(obj_kp.capacity(), 11)
-    line += fill_spaces(obj_kp.objective(), 17)
+    line =  fill_spaces(obj_kp.file_name, 22)
+    line +=  fill_spaces(obj_kp.n_items, 11)
+    line += fill_spaces(obj_kp.capacity, 11)
+    line += fill_spaces(obj_kp.objective, 17)
     line += fill_spaces(np.max(profits_solution), 13)
     line += fill_spaces(np.min(profits_solution), 13)
     line += fill_spaces(str(sum(profits_solution)/len(profits_solution)), 15)
     line += fill_spaces(np.max(weights_solution), 15)
     line += fill_spaces(np.min(weights_solution), 16)
     line += fill_spaces(sum(weights_solution) / len(weights_solution), 19)
-    line += fill_spaces(num_exact_solution, 18)
-    line += fill_spaces(num_iterations - num_exact_solution, 22)
     line += fill_spaces(str((num_exact_solution*100) / num_iterations)+"%", 17)
-    line += fill_spaces("{0:.4f}".format(max(times)), 15)
-    line += fill_spaces("{0:.4f}".format(min(times)), 15)
-    line += fill_spaces("{0:.4f}".format(sum(times)/len(times)), 14)
+    line += fill_spaces("{0:.4f}".format(max(times)/1000), 15)
+    line += fill_spaces("{0:.4f}".format(min(times)/10000), 15)
+    line += fill_spaces("{0:.4f}".format(sum(times)/100000/len(times)), 14)
     return line
     
 def get_line_result(obj_kp, profits_solution, weights_solution, 
                     num_exact_solution, num_iterations, times):    
-    line =  str(obj_kp.get_n_items() + " ")
-    line += str(obj_kp.get_capacity() + " ")
-    line += str(obj_kp.get_objective() + " ")
+    line =  str(obj_kp.n_items + " ")
+    line += str(obj_kp.capacity + " ")
+    line += str(obj_kp.objective + " ")
     line += str(np.max(profits_solution) + " ")
     line += str(np.min(profits_solution) + " ")
     line += str(np.max(weights_solution) + " ")

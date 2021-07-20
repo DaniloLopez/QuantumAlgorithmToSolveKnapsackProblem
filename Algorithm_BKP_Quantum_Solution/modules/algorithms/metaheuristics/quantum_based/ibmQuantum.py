@@ -21,7 +21,7 @@ class IbmQuantum(Metaheuristic):
         self.max_efos = max_efos
         self._M = 2000000
         
-    def execute(self, my_knapsack, my_aleatory):
+    def execute(self, my_knapsack, my_aleatory, debug=False):
         self.my_knapsack = my_knapsack
         self.my_aleatory = my_aleatory
 
@@ -38,12 +38,15 @@ class IbmQuantum(Metaheuristic):
         
         most_lightly = result['eigvecs'][0] #format result
         x = self._sample_most_likely(most_lightly)
+        #solution
         result_solution = x[:len(my_knapsack.get_profits())]
-        
         self.my_best_solution = Solution.init_owner(self)
+        self.my_best_solution.position = result_solution
+        self.my_best_solution.evaluate()
         v , w =  my_knapsack.calculate_knapsack_value_weight(result_solution)
-        print(result_solution , end="")
-        print(f" profit: {v}  weight: {w}\n")
+        if debug:            
+            print(result_solution , end="")
+            print(f" profit: {v}  weight: {w}\n")
 
     def _sample_most_likely(self, state_vector):
         if isinstance(state_vector, dict) or isinstance(state_vector, OrderedDict):

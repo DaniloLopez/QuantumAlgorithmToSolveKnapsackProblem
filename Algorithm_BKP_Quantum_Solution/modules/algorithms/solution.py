@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # coding=utf-8
 
+import operator
+
 class Solution():
     """docstring for Solution."""
 
@@ -25,6 +27,9 @@ class Solution():
         obj_solution.my_container = solution.my_container
         return obj_solution
 
+    def quantum_initialization(self):
+         pass
+
     def random_initialization(self):
         selected = []
         unselected = []
@@ -36,12 +41,31 @@ class Solution():
         selected = []
         unselected = []
         my_weight = self._define_selected_unselected_list(selected, unselected)
+        my_weight = (
+            self._turn_off_random(selected, my_weight) 
+            if self.my_container.my_aleatory.random() < 0.2 
+            else self._turn_off_density(selected, my_weight)
+        )
+        my_weight = self._leave_only_valid_unselected_items(my_weight)
+        my_weight = self._turn_off_random(selected, my_weight)
+        my_weight = self._complete(unselected, my_weight)
+        self.evaluate()
 
     def calculate_weight(self):
-        pass
+        self.weight = 0.0
+        for i in range(len(self.position)):
+            if(self.position[i] == 1):
+                self.weight += self.my_container.my_knapsack.weight(i)
         
     def evaluate(self):
-        pass
+        self.my_container.current_efos += 1 
+        self.calculate_weight();
+        if self.weight > self.my_container.my_knapsack.capacity :
+            self.fitness = 0
+        else:
+            self.fitness = self.my_container.my_knapsack.evaluate(
+                self.position
+            )
 
     def modify(self, value):
         pass
@@ -50,7 +74,7 @@ class Solution():
         selected = []
         unselected = []
         my_weight = 0.0
-        for i in range(self.position.size()):
+        for i in range(len(self.position)):
             if(self.position[i] == 1):
                 selected.append(i)
                 my_weight += self.my_container.my_knapsack.weight(i)
@@ -84,7 +108,31 @@ class Solution():
             my_weight += self.my_container.my_knapsack.weight(pos_turn_on)
         return my_weight
 
+    def _turn_off_random(self, selected, my_weight):
+        pos = self.my_container.my_aleatory.randint(0, len(self.position))
+        pos_turn_off = selected[pos]
+        del(selected[pos])
+        self.position[pos_turn_off] = 0
+        my_weight -= self.my_container.my_knapsack.weight(pos_turn_off)
+        return my_weight
 
+    def _turn_off_density(self, selected, my_weight):
+        if len(selected) == 0:
+            return
+        by_density = dict()
+        for pos_sel in selected:
+            den = self.my_container.my_knapsack.density(pos_sel)
+            by_density[pos_sel] = den
+        by_density = sorted(by_density.items(), key=operator.itemgetter(1))
+        restricted_list_size = len(by_density) / 2
+        if(restricted_list_size == 0): 
+            restricted_list_size = 1
+        pos  = self.my_container.my_aleatory.ranint(0, len(restricted_list_size))
+        pos_turn_off = by_density.keys()[pos]
+        del(selected[pos_turn_off])
+        self.position[pos_turn_off] = 0
+        my_weight -= self.my_container.my_knapsack.weight(pos_turn_off)
+        return my_weight
 
     #override
     def __str__(self):
