@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from modules.pattern.singleton import singleton
 from abc import ABC, abstractmethod
-
 
 class Parameter(ABC):
     """docstring for Parameter."""
@@ -19,3 +19,7 @@ class Parameter(ABC):
     @abstractmethod
     def is_generate(self):
         pass
+
+    @abstractmethod
+    def get_arguments(self):
+        return self.args

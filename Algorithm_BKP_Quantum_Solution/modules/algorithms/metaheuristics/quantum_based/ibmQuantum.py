@@ -6,10 +6,12 @@ import numpy as np
 import math
 from qiskit.quantum_info import Pauli
 from qiskit.aqua.operators import WeightedPauliOperator
-from collections import OrderedDict
-from modules.algorithms.metaheuristics.metaheuristic import Metaheuristic
 from qiskit.aqua.algorithms import ExactEigensolver
 from qiskit.aqua.input import EnergyInput
+
+from collections import OrderedDict
+from modules.algorithms.metaheuristics.metaheuristic import Metaheuristic
+from modules.algorithms.solution import Solution
 
 class IbmQuantum(Metaheuristic):
     """docstring for IbmQuantum."""
@@ -25,8 +27,11 @@ class IbmQuantum(Metaheuristic):
 
         #get isntances of Pauli operator for ExactEigensolver      
         qubitOp, offset = self._get_knapsack_qubitops(
-            self.my_knapsack.profits, self.my_knapsack.weigths, 
-            self.my_knapsack.capacity, self._M )
+            [it.value for it in self.my_knapsack.items], 
+            [it.weight for it in self.my_knapsack.items], 
+            self.my_knapsack.capacity, 
+            self._M 
+        )
         EnergyInput(qubitOp)
         ee = ExactEigensolver(qubitOp, k=1) #instance of exactEigensolver        
         result = ee.run() #Run quantum algorithm
@@ -34,6 +39,8 @@ class IbmQuantum(Metaheuristic):
         most_lightly = result['eigvecs'][0] #format result
         x = self._sample_most_likely(most_lightly)
         result_solution = x[:len(my_knapsack.get_profits())]
+        
+        self.my_best_solution = Solution.init_owner(self)
         v , w =  my_knapsack.calculate_knapsack_value_weight(result_solution)
         print(result_solution , end="")
         print(f" profit: {v}  weight: {w}\n")

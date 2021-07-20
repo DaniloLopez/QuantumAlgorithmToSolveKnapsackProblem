@@ -1,18 +1,18 @@
 # -*- coding=utf-8 -*-
 
-#from modules.algorithms.metaheuristics.quantum_based.ibmQuantum import IbmQuantum
+from modules.algorithms.metaheuristics.quantum_based.ibmQuantum import IbmQuantum
 #from modules.algorithms.metaheuristics.simple_state.hillClimbing import HillClimbing
 import os
 from pathlib import Path
 
+#PROJECT VARIABLES
 FILES = "files"
-
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 SEPARATOR = os.path.sep
 LINE_SEPARATOR = os.linesep
 DIR_FILES = str(PROJECT_ROOT) + SEPARATOR + FILES + SEPARATOR
 
-#DESCRIPTION
+#DESCRIPTION MENU HELP
 DESCRIPTION_TEXT = "This program execute and analyze a set of data with "\
     "information about a knapsack every file; the information of a file is "\
     "read and with an algorithm that emulate the functionality of a quantum "\
@@ -27,7 +27,7 @@ FOLDER_DATASET_FN = DIR_FILES + DATASET_FN + SEPARATOR
 FOLDER_DATASET_GENERATED = DIR_FILES + GENERATED_DATASET + SEPARATOR
 
 ERR_DUPLICATED_ARGUMENT = "Duplicated parameter arguments are not allowed."
-#METAHEURISTIC_LIST = [IbmQuantum(20)]
+LIST_METAHEURISTICS = [IbmQuantum(20)]
 
 #GLOBAL GENERAL VARIABLES 
 EASY = "easy"

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/python
 
-from modules.util import util
+from modules.util.generalValue import LINE_SEPARATOR
 
 class FileWriter:
     """class """
@@ -29,6 +29,6 @@ class FileWriter:
 
     def new_line(self):
         """new line"""
-        self.file.write(util.get_line_separator())
+        self.file.write(LINE_SEPARATOR)
     
     

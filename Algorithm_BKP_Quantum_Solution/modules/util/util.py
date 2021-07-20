@@ -79,7 +79,7 @@ def generate_full_name_file(id, type, difficult, nitems, range):
             SEPARATOR + "t" + str(type) + "_d" +str(difficult) + 
             "_n" + str(nitems) + "_r" + str(range) + ".txt")
 
-def build_commnad_line_generate(type, difficult, nitems, range, 
+def build_commnad_line_text_generate(type, difficult, nitems, range, 
                                 instance, S=1000):
     """
     type: 1=uncorrelated., 2=weakly corr., 3=strongly corr., 4=subset sum.

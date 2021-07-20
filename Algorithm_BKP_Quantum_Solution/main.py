@@ -2,6 +2,7 @@
 #!/usr/bin/env python3
 
 #necessary packages
+from modules.util.generalValue import SEPARATOR
 import random
 import numpy as np
 import modules.util.util as util
@@ -30,7 +31,7 @@ def get_list_knapsack():
         root = general.FOLDER_DATASET_GENERATED + folder_name
         for file in util.get_list_files_folder( root ):
             #read knapsack file
-            file_name = root + util.get_separator() + file
+            file_name = root + SEPARATOR + file
             file_reader = FileReader(file_name)
             knapsack = file_reader.get_knapsack()
             if knapsack is not None:
@@ -63,17 +64,19 @@ def run_metaheuristics(knapsack_list, metaheuristic_list):
                     )
                     list_efos.append(my_metaheuristic.current_efos)
                     list_times.append(elapsed_time - start_time)
-                    resto = (
+                    substraction = (
                         my_metaheuristic.my_best_solution.objective - 
                         knapsack.objective
                     )
-                    if (resto < 1e-10 ): 
+                    if substraction < 1e-10 : 
                         times_found_ideal += 1                    
-                line_result = util.get_line_result_format (
-                    knapsack, [5], [5], times_found_ideal, 
-                    param.args.iterations, times
+                print(
+                    util.get_line_result_format (
+                        knapsack, [5], [5], times_found_ideal, 
+                        param.args.iterations, times    
+                    )
                 )
-                obj_fileWriter.write_line(line_result)
+                #obj_fileWriter.write_line(line_result)
     except OSError:
         print("Execution error")
     finally:
@@ -92,10 +95,7 @@ def main ():
         print("> dataset generated.")    
     print("\n> run algorithms...")
     list_knapsack = get_list_knapsack()
-    run_metaheuristics(list_knapsack, general.METAHEURISTIC_LIST)    
+    run_metaheuristics(list_knapsack, general.LIST_METAHEURISTICS)    
 
-if __name__ == '__mains__':
+if __name__ == '__main__':
     main()
-
-list = [2,3,4,5]
-print(3 in list)

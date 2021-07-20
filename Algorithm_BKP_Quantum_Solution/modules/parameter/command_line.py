@@ -5,7 +5,6 @@ from modules.parameter.parameter import Parameter
 import argparse
 import modules.util.generalValue as general
 
-
 class CommandLineParameter(Parameter):
     """docstring for parameters."""
 
@@ -33,6 +32,9 @@ class CommandLineParameter(Parameter):
     #override abstract methods
     def is_generate(self):
         return self.args.generate
+
+    def get_arguments(self):
+        return self.args
     
     #private methods
     def _init_parser_arguments(self):        

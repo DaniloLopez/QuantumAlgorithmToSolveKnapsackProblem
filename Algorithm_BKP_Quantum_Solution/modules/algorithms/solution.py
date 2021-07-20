@@ -33,7 +33,9 @@ class Solution():
         self.evaluate()
     
     def tweak(self):
-        pass
+        selected = []
+        unselected = []
+        my_weight = self._define_selected_unselected_list(selected, unselected)
 
     def calculate_weight(self):
         pass

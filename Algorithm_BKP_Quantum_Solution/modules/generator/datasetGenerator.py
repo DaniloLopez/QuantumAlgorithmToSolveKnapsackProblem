@@ -2,22 +2,22 @@
 # -*- coding: utf-8 -*-
 
 import os
-from modules.util.util import build_commnad_line_generate
+import modules.util.util as util
 import modules.util.generalValue as general
 
 class DatasetGenerator():
 
     def __init__(self, args):
-        self.args = args
+        self.args = args            
+
+    def generate(self):
         self.validate_arguments()
+        self.generate_type()
 
     def validate_arguments(self):
         self._validate_duplicate_arguments_type()
         self._validate_type()
-
-    def generate(self):
-        self.generate_type()
-
+        
     def _validate_duplicate_arguments_type(self):
         if(len(set(self.args.type)) != len(self.args.type)):
             raise Exception(general.ERR_DUPLICATED_ARGUMENT + " Review flag -t/--type")
@@ -64,5 +64,11 @@ class DatasetGenerator():
         for type in self.args.type :
             for nitems in range(self.args.nitems[0], self.args.nitems[1]+1):
                 for range in range(self.args.range[0], self.args.range[1]):
-                    file_name = build_commnad_line_generate(type, difficult, nitems, range, 3)
+                    file_name = util.build_commnad_line_text_generate(
+                        type, 
+                        difficult, 
+                        nitems, 
+                        range, 
+                        3
+                    )
                     os.system(difficult + " " + file_name)
