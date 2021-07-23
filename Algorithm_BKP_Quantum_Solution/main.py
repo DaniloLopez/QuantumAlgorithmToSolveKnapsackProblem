@@ -43,10 +43,14 @@ def init_result_file():
     obj_fileWriter.write(util.get_line_header(param.iterations))
     obj_fileWriter.new_line()
 
-def run_metaheuristics(knapsack_list, metaheuristic_list):
+def run_metaheuristics(knapsack_list, metaheuristic_list, debug=False, deep_debug=False):
     try:        
         init_result_file()
         for my_metaheuristic in metaheuristic_list:
+            if debug:
+                print("Algorithm: ", end="")
+                print(my_metaheuristic)
+                print_list_knapsack(knapsack_list)
             for knapsack in knapsack_list:
                 times = []
                 list_fitness = []
@@ -57,7 +61,7 @@ def run_metaheuristics(knapsack_list, metaheuristic_list):
                 for it in range(param.args.iterations):
                     start_time= time() #initial time                        
                     #invocation execute metaheuristic
-                    my_metaheuristic.execute(knapsack, random.seed(it), False)
+                    my_metaheuristic.execute(knapsack, random.seed(it), deep_debug)
                     elapsed_time = time() - start_time #final time
                     list_fitness.append (
                         my_metaheuristic.my_best_solution.fitness
@@ -85,19 +89,30 @@ def run_metaheuristics(knapsack_list, metaheuristic_list):
         print("Execution finished")
         obj_fileWriter.close()
 
+def generate_dataset():
+    """Generate dataset according to arguments of subcomnad generate"""
+    generator = DatasetGenerator(param.args)
+    print("> generating dataset...")
+    generator.generate()
+    print("> dataset generated.")    
+
+def print_list_knapsack(list_knapsack):
+    print("------------------------------------------------------\nknapsacks:")
+    for i in list_knapsack:
+        print(str(i))
+    print("------------------------------------------------------")
 
 def main ():
     list_knapsack = []
-    generator = DatasetGenerator(param.args)
     print("running...")
-    #generate dataset according to arguments of subcomnad generate
+    
     if param.is_generate():
-        print("> generating dataset...")
-        generator.generate()
-        print("> dataset generated.")    
+        generate_dataset()    
+        
+    list_knapsack = get_list_knapsack() #extract dataset from files 
+    
     print("\n> run algorithms...")
-    list_knapsack = get_list_knapsack()
-    run_metaheuristics(list_knapsack, general.LIST_METAHEURISTICS)    
+    run_metaheuristics(list_knapsack, general.LIST_METAHEURISTICS, debug=True)
 
 if __name__ == '__main__':
     main()

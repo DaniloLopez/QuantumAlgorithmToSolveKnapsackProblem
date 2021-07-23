@@ -18,6 +18,7 @@ class IbmQuantum(Metaheuristic):
     
     def __init__(self, max_efos):
         super(IbmQuantum, self).__init__()
+        print(str(super))
         self.max_efos = max_efos
         self._M = 2000000
         
@@ -25,7 +26,7 @@ class IbmQuantum(Metaheuristic):
         self.my_knapsack = my_knapsack
         self.my_aleatory = my_aleatory
 
-        #get isntances of Pauli operator for ExactEigensolver      
+        #get instances of Pauli operator for ExactEigensolver      
         qubitOp, offset = self._get_knapsack_qubitops(
             [it.value for it in self.my_knapsack.items], 
             [it.weight for it in self.my_knapsack.items], 
@@ -43,10 +44,10 @@ class IbmQuantum(Metaheuristic):
         self.my_best_solution = Solution.init_owner(self)
         self.my_best_solution.position = result_solution
         self.my_best_solution.evaluate()
-        v , w =  my_knapsack.calculate_knapsack_value_weight(result_solution)
+        v , w =  self.my_knapsack.calculate_knapsack_value_weight(result_solution)
         if debug:            
             print(result_solution , end="")
-            print(f" profit: {v}  weight: {w}\n")
+            print(f" profit: {v}  weight: {w}\n", end="\n")
 
     def _sample_most_likely(self, state_vector):
         if isinstance(state_vector, dict) or isinstance(state_vector, OrderedDict):
@@ -174,7 +175,7 @@ class IbmQuantum(Metaheuristic):
         return WeightedPauliOperator(paulis=pauli_list), shift
     
     def __str__(self):
-        return "quantum"
+        return "IBM Quantum Algorithm"
 
     def __cmp__(self, obj_quantum):
         pass
