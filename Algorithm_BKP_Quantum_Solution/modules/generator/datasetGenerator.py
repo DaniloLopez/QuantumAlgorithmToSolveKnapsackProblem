@@ -18,13 +18,21 @@ class DatasetGenerator():
         
     def _validate_duplicate_arguments_type(self):
         if(len(set(self.args.type)) != len(self.args.type)):
-            raise Exception(general.ERR_DUPLICATED_ARGUMENT + " Review flag -t/--type")
+            raise Exception(
+                general.ERR_DUPLICATED_ARGUMENT + " Review flag -t/--type"
+            )
         if(len(set(self.args.difficult)) != len(self.args.difficult)):
-            raise Exception(general.ERR_DUPLICATED_ARGUMENT + " Review flag -d/--difficult")
+            raise Exception(
+                general.ERR_DUPLICATED_ARGUMENT + " Review flag -d/--difficult"
+            )
         if(len(set(self.args.nitems)) != len(self.args.nitems)):
-            raise Exception(general.ERR_DUPLICATED_ARGUMENT + " Review flag -n/--nitem")
+            raise Exception(
+                general.ERR_DUPLICATED_ARGUMENT + " Review flag -n/--nitem"
+            )
         if(len(set(self.args.range)) != len(self.args.range)):
-            raise Exception(general.ERR_DUPLICATED_ARGUMENT + " Review flag -r/--range")
+            raise Exception(
+                general.ERR_DUPLICATED_ARGUMENT + " Review flag -r/--range"
+            )
 
     def _generate_type(self):
         if sum(self.args.type) <= 10 and len(self.args) <= 4 :
@@ -62,11 +70,7 @@ class DatasetGenerator():
         for type in self.args.type :
             for nitems in range(self.args.nitems[0], self.args.nitems[1]+1):
                 for range in range(self.args.range[0], self.args.range[1]):
-                    file_name = util.build_commnad_line_text_generate(
-                        type, 
-                        difficult, 
-                        nitems, 
-                        range, 
-                        3
+                    file_name = util.build_commnad_line_text_generate (
+                        type, difficult, nitems, range, 3
                     )
                     os.system(difficult + " " + file_name)

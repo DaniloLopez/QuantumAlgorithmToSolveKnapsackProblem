@@ -7,7 +7,7 @@ class Algorithm(ABC):
     """docstring for Algorithm."""
 
     def __init__(self):
-        self.max_efos = 5
+        self.max_efos = 0
         self.current_efos = 0
         self.my_best_solution = None
         self.my_knapsack = None
