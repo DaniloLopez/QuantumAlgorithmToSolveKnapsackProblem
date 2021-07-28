@@ -9,9 +9,3 @@ class Metaheuristic(Algorithm):
     def __init__(self):
         super(Metaheuristic, self).__init__()
         self.curve = []
-
-    def get_curve(self):
-        return self.curve
-
-    def set_curve(self, value):
-        self.curve = value
