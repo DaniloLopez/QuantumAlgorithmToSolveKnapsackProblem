@@ -3,11 +3,11 @@
 from modules.pattern.singleton import singleton
 from abc import ABC, abstractmethod
 
-class Parameter(ABC):
-    """docstring for Parameter."""
+class Arguments(ABC):
+    """docstring for Arguments."""
 
     def __init__(self):
-        super(Parameter, self).__init__()
+        super(Arguments, self).__init__()
         self.iterations = None
         self.type = None
         self.difficult = None
@@ -15,6 +15,7 @@ class Parameter(ABC):
         self.range = None
         self.file = None
         self.folder = None
+        self.debug = None
     
     @abstractmethod
     def is_generate(self):

@@ -43,7 +43,7 @@ CMDH_GENERATE = "generate dataset."
 
 ARG_I = "-i"
 ARG_ITERATION = "--iterations"
-ARGH_ITERATION = "Number of iterations to run each file with a knapsack"
+ARGH_ITERATION = "Number of iterations to run each file with a knapsack."
 
 ARG_T = "-t"
 ARG_TYPE = "--type"
@@ -56,7 +56,7 @@ ARGH_DIFFICULT = "Indicate difficult of generated dataset (1=Easy, 2=Medium, "\
 
 ARG_N = "-n"
 ARG_NITEMS = "--nitems"
-ARGH_NITEMS = "Indicate quantity o items stored in knapsack"
+ARGH_NITEMS = "Indicate quantity o items stored in knapsack."
 
 ARG_R = "-r"
 ARG_RANGE = "--range"
@@ -66,16 +66,20 @@ ARG_G = "-g"
 ARG_GENERATE = "--generate"
 ARGH_GENERATE = "To generate dataset according to input parameters.\nT=Type "\
     + ARGH_TYPE + "\nD=Difficult " + ARGH_DIFFICULT + "\nN=N_Items "\
-    + ARGH_NITEMS + "\nR=Range " + ARGH_RANGE
+    + ARGH_NITEMS + "\nR=Range " + ARGH_RANGE + "."
 
 ARG_FL = "-fl"
 ARG_FILE = "--file"
 ARGH_FILE="Indicate file with content of a knapsack to make evaluation.\n"\
     "Default root folder where the dataset is stored is "\
-    "[rootProject/files/folder] or provide the full address"
+    "[rootProject/files/folder] or provide the full address."
 
 ARG_FD = "-fd"
 ARG_FOLDER = "--folder"
 ARGH_FOLDER = "Indicate folder with knapsack files to make evaluation."\
     "Default root folder is [rootProject/files/folder] or provide the "\
-    "full address "
+    "full address."
+
+ARG_DB = "-d"
+ARG_DEBUG = "--debug"
+ARGH_DEBUG = "If this flag is sent, debug mode will be enabled."

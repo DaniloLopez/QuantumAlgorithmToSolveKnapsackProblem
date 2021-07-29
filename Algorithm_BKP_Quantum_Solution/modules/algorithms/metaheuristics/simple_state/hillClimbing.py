@@ -14,8 +14,6 @@ class HillClimbing(Metaheuristic):
     def execute(self, the_knapsack, the_aleatory):
         self.my_knapsack = the_knapsack
         self.my_aleatory = the_aleatory
-        self.current_efos = 0
-        self.curve = []
 
         #Hill Climbing
         s = Solution.init_owner(self)

@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding=utf-8 -*-
 
-from modules.parameter.parameter import Parameter
+from modules.parameter.arguments import Arguments
 import argparse
 import modules.util.generalValue as general
 
-class CommandLineParameter(Parameter):
-    """docstring for parameters."""
+class CommandLineArguments(Arguments):
+    """docstring for CommandLineArguments."""
 
     def __init__(self, description="", epilog=""):
-        super(CommandLineParameter, self).__init__()
+        super(CommandLineArguments, self).__init__()
         self.description = description
         self.epilog = epilog
         #parser
@@ -25,7 +25,7 @@ class CommandLineParameter(Parameter):
         self.parser_generate = None
         self._init_parser_generate()
         self._set_subcomands()
-        #init variables        
+        #init variables
         self.args = self.parser.parse_args()
         self._init_variables()
 
@@ -37,13 +37,19 @@ class CommandLineParameter(Parameter):
         return self.args
     
     #private methods
-    def _init_parser_arguments(self):        
+    def _init_parser_arguments(self):
         self.parser.add_argument(
             general.ARG_I,
             general.ARG_ITERATION,
             default=general.NUM_ITERATIONS_STATIC,
             type=int,
             help=general.ARGH_ITERATION
+        )
+        self.parser.add_argument(
+            general.ARG_DB,
+            general.ARG_DEBUG,            
+            action="store_true",
+            help=general.ARGH_DEBUG
         )
         self.group_file_folder.add_argument(
             general.ARG_FL,
@@ -56,12 +62,10 @@ class CommandLineParameter(Parameter):
             general.ARG_FOLDER,
             default=None,
             help=general.ARGH_FOLDER
-        )
+        )        
 
     def _init_parser_generate(self):
-        self.parser_generate = argparse.ArgumentParser(
-            add_help=False
-        )
+        self.parser_generate = argparse.ArgumentParser(add_help=False)
         self.parser_generate.add_argument(
             general.ARG_T,
             general.ARG_TYPE,
@@ -107,7 +111,7 @@ class CommandLineParameter(Parameter):
         )
 
     def _init_variables(self):
-        self.iterations = self.args.iterations        
+        self.iterations = self.args.iterations
         self.file = self.args.file
         self.folder = self.args.folder        
         if(self.args.generate):
@@ -115,6 +119,7 @@ class CommandLineParameter(Parameter):
            self.difficult = self.args.difficult
            self.nitems = self.args.nitems
            self.range = self.args.range
+        self.debug = self.args.debug
         print(self.args)
 
     def __str__(self):

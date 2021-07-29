@@ -10,7 +10,7 @@ import modules.util.generalValue as general
 from modules.file.fileReader import FileReader
 from time import time
 from os import listdir, path
-from modules.parameter.command_line import CommandLineParameter
+from modules.parameter.command_line import CommandLineArguments
 from os import listdir
 from modules.file.fileWriter import FileWriter
 from modules.generator.datasetGenerator import DatasetGenerator
@@ -20,7 +20,7 @@ ROOT_DIR = path.dirname(path.abspath(__file__))
 # listar las carpetas contenidas en el directorio raiz
 list_folder_dataset_generated = listdir(general.FOLDER_DATASET_GENERATED)
 
-param = CommandLineParameter(general.DESCRIPTION_TEXT, general.EPILOG_TEXT)
+param = CommandLineArguments(general.DESCRIPTION_TEXT, general.EPILOG_TEXT)
 print(param)
 
 obj_fileWriter=FileWriter()
@@ -84,9 +84,9 @@ def run_metaheuristics(knapsack_list, metaheuristic_list, debug=False, deep_debu
                 
                 obj_fileWriter.write_line(line_result)
     except OSError:
-        print("Execution error")
+        print("Execution error.")
     finally:
-        print("Execution finished")
+        print("Execution finished.")
         obj_fileWriter.close()
 
 def generate_dataset():
@@ -104,15 +104,17 @@ def print_list_knapsack(list_knapsack):
 
 def main ():
     list_knapsack = []
-    print("running...")
-    
-    if param.is_generate():
-        generate_dataset()    
-        
-    list_knapsack = get_list_knapsack() #extract dataset from files 
-    
-    print("\n> run algorithms...")
-    run_metaheuristics(list_knapsack, general.LIST_METAHEURISTICS, debug=True)
+    print("running...")    
+    if param.is_generate(): #validate option generate
+        generate_dataset()
+    list_knapsack = get_list_knapsack() #extract dataset from files     
+    print("\n> run algorithms... ")
+    run_metaheuristics(
+        list_knapsack, 
+        general.LIST_METAHEURISTICS, 
+        debug=param.debug,
+        deep_debug=param.debug
+    )
 
 if __name__ == '__main__':
     main()
