@@ -1,6 +1,7 @@
 # -*- coding=utf-8 -*-
 
-from modules.algorithms.metaheuristics.quantum_based.ibmQuantum import IbmQuantum
+from modules.algorithms.metaheuristics.simple_state.hillClimbing import HillClimbing
+#from modules.algorithms.metaheuristics.quantum_based.ibmQuantum import IbmQuantum
 #from modules.algorithms.metaheuristics.simple_state.hillClimbing import HillClimbing
 import os
 from pathlib import Path
@@ -27,7 +28,7 @@ FOLDER_DATASET_FN = DIR_FILES + DATASET_FN + SEPARATOR
 FOLDER_DATASET_GENERATED = DIR_FILES + GENERATED_DATASET + SEPARATOR
 
 ERR_DUPLICATED_ARGUMENT = "Duplicated parameter arguments are not allowed."
-LIST_METAHEURISTICS = [IbmQuantum(20)]
+LIST_METAHEURISTICS = [HillClimbing(20)]
 
 #GLOBAL GENERAL VARIABLES 
 EASY = "easy"

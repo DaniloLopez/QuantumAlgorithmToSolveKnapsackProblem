@@ -11,14 +11,16 @@ class HillClimbing(Metaheuristic):
         super(HillClimbing, self).__init__()
         self.max_efos = max_efos
         
-    def execute(self, the_knapsack, the_aleatory):
+    def execute(self, the_knapsack, the_aleatory, debug=False):
         self.my_knapsack = the_knapsack
         self.my_aleatory = the_aleatory
-
+        self.current_efos = 0
         #Hill Climbing
         s = Solution.init_owner(self)
         s.random_initialization()
         self.curve.append(s.fitness)
+        if debug: 
+            print("position: " + str(s.position))
 
         while self.current_efos < self.max_efos and abs(s.fitness - self.my_knapsack.objective) > 1e-10:
             r = Solution.init_solution(s)

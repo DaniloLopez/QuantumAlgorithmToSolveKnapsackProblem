@@ -1,5 +1,8 @@
 {
     "editor.rulers": [
         79, 120
+    ],
+    "cSpell.words": [
+        "Qiskit"
     ]
 }

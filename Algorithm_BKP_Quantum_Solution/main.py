@@ -5,6 +5,7 @@
 from modules.util.generalValue import SEPARATOR
 import random
 import numpy as np
+import sys
 import modules.util.util as util
 import modules.util.generalValue as general
 from modules.file.fileReader import FileReader
@@ -58,10 +59,12 @@ def run_metaheuristics(knapsack_list, metaheuristic_list, debug=False, deep_debu
                 list_times = []
                 times_found_ideal = 0
                 
+                
                 for it in range(param.args.iterations):
+                    random.seed(it)
                     start_time= time() #initial time                        
                     #invocation execute metaheuristic
-                    my_metaheuristic.execute(knapsack, random.seed(it), deep_debug)
+                    my_metaheuristic.execute(knapsack, random, deep_debug)
                     elapsed_time = time() - start_time #final time
                     list_fitness.append (
                         my_metaheuristic.my_best_solution.fitness
@@ -83,8 +86,11 @@ def run_metaheuristics(knapsack_list, metaheuristic_list, debug=False, deep_debu
                 )
                 
                 obj_fileWriter.write_line(line_result)
-    except OSError:
-        print("Execution error.")
+    except OSError as err:
+        print("OS error: {0}".format(err))
+    except:
+        print("Unexpected error:", sys.exc_info()[0])
+        raise
     finally:
         print("Execution finished.")
         obj_fileWriter.close()
