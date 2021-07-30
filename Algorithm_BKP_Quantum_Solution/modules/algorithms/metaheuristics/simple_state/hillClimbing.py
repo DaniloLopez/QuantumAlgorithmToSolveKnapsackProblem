@@ -18,16 +18,14 @@ class HillClimbing(Metaheuristic):
         #Hill Climbing
         s = Solution.init_owner(self)
         s.random_initialization()
-        self.curve.append(s.fitness)
-        if debug: 
-            print("position: " + str(s.position))
-
+        self.curve.append(s.fitness)        
         while self.current_efos < self.max_efos and abs(s.fitness - self.my_knapsack.objective) > 1e-10:
             r = Solution.init_solution(s)
             r.tweak()
-
             if r.fitness > s.fitness:
                 s = Solution.init_solution(r)
+                if debug and abs(s.fitness - self.my_knapsack.objective) < 1e-10:                      
+                    print("\t\tposition: " + str(s.position) + "   fitness: " + str(s.fitness)+ "  weight:   " + str(s.weight))
             self.curve.append(s.fitness)
 
             if abs(s.fitness - self.my_knapsack.objective) < 1e-10:

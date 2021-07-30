@@ -47,19 +47,19 @@ def init_result_file():
 def run_metaheuristics(knapsack_list, metaheuristic_list, debug=False, deep_debug=False):
     try:        
         init_result_file()
+        if debug:                
+            print("Algorithm: ")            
         for my_metaheuristic in metaheuristic_list:
-            if debug:
-                print("Algorithm: ", end="")
+            if debug:           
+                print("-------------------+----------------------------------")     
                 print(my_metaheuristic)
-                print_list_knapsack(knapsack_list)
             for knapsack in knapsack_list:
-                times = []
+                if debug:
+                    print("\n\t" + str(knapsack))
                 list_fitness = []
                 list_efos = []
                 list_times = []
                 times_found_ideal = 0
-                
-                
                 for it in range(param.args.iterations):
                     random.seed(it)
                     start_time= time() #initial time                        
@@ -70,7 +70,7 @@ def run_metaheuristics(knapsack_list, metaheuristic_list, debug=False, deep_debu
                         my_metaheuristic.my_best_solution.fitness
                     )
                     list_efos.append(my_metaheuristic.current_efos)
-                    list_times.append(elapsed_time - start_time)
+                    list_times.append(elapsed_time)
                     substraction = (
                         my_metaheuristic.my_best_solution.fitness - 
                         knapsack.objective
@@ -110,14 +110,14 @@ def print_list_knapsack(list_knapsack):
 
 def main ():
     list_knapsack = []
-    print("running...")    
+    print("running...")
     if param.is_generate(): #validate option generate
         generate_dataset()
-    list_knapsack = get_list_knapsack() #extract dataset from files     
+    list_knapsack = get_list_knapsack() #extract dataset from files
     print("\n> run algorithms... ")
     run_metaheuristics(
-        list_knapsack, 
-        general.LIST_METAHEURISTICS, 
+        list_knapsack,
+        general.LIST_METAHEURISTICS,
         debug=param.debug,
         deep_debug=param.debug
     )

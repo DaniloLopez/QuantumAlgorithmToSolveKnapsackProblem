@@ -45,9 +45,9 @@ class IbmQuantum(Metaheuristic):
         v , w =  self.my_knapsack.calculate_knapsack_value_weight(
             result_solution
         )
-        if debug:            
-            print(result_solution , end="")
-            print(f" profit: {v}  weight: {w}\n")
+        if debug:
+            print("\t\tq_solution: " + str(result_solution) , end="")
+            print(f"   value: {v}    weight: {w}")
 
     def _sample_most_likely(self, state_vector):
         if isinstance(state_vector, dict) or isinstance(

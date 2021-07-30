@@ -2,6 +2,7 @@
 # coding=utf-8
 
 import operator
+import modules.util.generalValue as general
 
 class Solution():
     """docstring for Solution."""
@@ -42,15 +43,19 @@ class Solution():
     
     def tweak(self):
         selected = []
-        unselected = []
+        unselected = []        
         my_weight = self._define_selected_unselected_list(selected, unselected)
+        #operador terciario que se evalua según la probabilidad escogida
         my_weight = (
             self._turn_off_random(selected, my_weight) 
-            if self.my_container.my_aleatory.random() < 0.2 
+            if self.my_container.my_aleatory.random() < general.ZERO_DOT_TWO
             else self._turn_off_density(selected, my_weight)
         )
-        my_weight = self._leave_only_valid_unselected_items(my_weight)
-        my_weight = self._turn_off_random(selected, my_weight)
+        self._leave_only_valid_unselected_items(
+            unselected, 
+            my_weight
+        )
+        my_weight = self._turn_on_random(unselected, my_weight)
         my_weight = self._complete(unselected, my_weight)
         self.evaluate()
 
@@ -99,7 +104,7 @@ class Solution():
         free_space = self.my_container.my_knapsack.capacity - my_weight
         for i in range(len(unselected)-1, -1, -1):
             if self.my_container.my_knapsack.weight(unselected[i])>free_space:
-                del unselected[i]
+                unselected.pop(i)
     
     def _turn_on_random(self, unselected, my_weight):
         """Escoger aleatoriamente un elemento de la lista de no seleccionados, 
@@ -108,33 +113,35 @@ class Solution():
         if unselected:
             pos = self.my_container.my_aleatory.randint(0, len(unselected)-1)
             pos_turn_on = unselected[pos]
-            del unselected[pos]
+            unselected.pop(pos)
             self.position[pos_turn_on] = 1
             my_weight += self.my_container.my_knapsack.weight(pos_turn_on)
         return my_weight
 
     def _turn_off_random(self, selected, my_weight):
-        pos = self.my_container.my_aleatory.randint(0, len(self.position))
+        pos = self.my_container.my_aleatory.randint(0, len(selected)-1)
         pos_turn_off = selected[pos]
-        del(selected[pos])
+        selected.pop(pos)
         self.position[pos_turn_off] = 0
         my_weight -= self.my_container.my_knapsack.weight(pos_turn_off)
         return my_weight
 
     def _turn_off_density(self, selected, my_weight):
-        if len(selected) == 0:
+        if not selected:
             return
         by_density = dict()
         for pos_sel in selected:
             den = self.my_container.my_knapsack.density(pos_sel)
             by_density[pos_sel] = den
+        #here variable density is changed to tuple
         by_density = sorted(by_density.items(), key=operator.itemgetter(1))
-        restricted_list_size = len(by_density) / 2
+        #elitism operation
+        restricted_list_size = int(len(by_density) / 2)
         if(restricted_list_size == 0): 
             restricted_list_size = 1
-        pos  = self.my_container.my_aleatory.ranint(0, len(restricted_list_size))
-        pos_turn_off = by_density.keys()[pos]
-        del(selected[pos_turn_off])
+        pos  = self.my_container.my_aleatory.randint(0, restricted_list_size-1)
+        pos_turn_off = by_density[pos][0]
+        selected.remove(pos_turn_off)
         self.position[pos_turn_off] = 0
         my_weight -= self.my_container.my_knapsack.weight(pos_turn_off)
         return my_weight
