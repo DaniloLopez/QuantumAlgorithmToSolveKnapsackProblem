@@ -9,3 +9,6 @@ class Metaheuristic(Algorithm):
     def __init__(self):
         super(Metaheuristic, self).__init__()
         self.curve = []
+
+    def __str__(self) -> str:
+        return super().__str__() + ".Metaheuristic"

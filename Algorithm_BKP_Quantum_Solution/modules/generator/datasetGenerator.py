@@ -7,8 +7,8 @@ import modules.util.generalValue as general
 
 class DatasetGenerator():
 
-    def __init__(self, args):
-        self.args = args            
+    def __init__(self):
+        super(DatasetGenerator, self).__init__()          
 
     def generate(self):
         self.validate_arguments()

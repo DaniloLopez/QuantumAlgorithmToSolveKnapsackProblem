@@ -4,6 +4,7 @@
 # useful additional packages 
 import numpy as np
 import math
+import modules.util.util as util
 from qiskit.quantum_info import Pauli
 from qiskit.aqua.operators import WeightedPauliOperator
 from qiskit.aqua.algorithms import ExactEigensolver
@@ -24,8 +25,8 @@ class IbmQuantum(Metaheuristic):
     def execute(self, my_knapsack, my_aleatory, debug=False):
         self.my_knapsack = my_knapsack
         self.my_aleatory = my_aleatory
-
-        #get instances of Pauli operator for ExactEigensolver      
+        self.current_efos = 0                
+        #get instances of Pauli operator for ExactEigensolver
         qubitOp, offset = self._get_knapsack_qubitops(
             [it.value for it in self.my_knapsack.items], 
             [it.weight for it in self.my_knapsack.items], 
@@ -39,15 +40,15 @@ class IbmQuantum(Metaheuristic):
         x = self._sample_most_likely(most_lightly)
         #solution
         result_solution = x[:len(self.my_knapsack.get_profits())]
+
+        #init solution object
         self.my_best_solution = Solution.init_owner(self)
         self.my_best_solution.position = result_solution
         self.my_best_solution.evaluate()
-        v , w =  self.my_knapsack.calculate_knapsack_value_weight(
-            result_solution
-        )
-        if debug:
-            print("\t\tq_solution: " + str(result_solution) , end="")
-            print(f"   value: {v}    weight: {w}")
+        out = "\t\tq_solution: " + str(result_solution) + " weight: " +\
+            str(self.my_best_solution.weight) + " fitness: " +\
+            str(self.my_best_solution.fitness)
+        util.if_print_text(out, debug)        
 
     def _sample_most_likely(self, state_vector):
         if isinstance(state_vector, dict) or isinstance(
@@ -71,7 +72,7 @@ class IbmQuantum(Metaheuristic):
     def _get_knapsack_qubitops(self, values, weights, w_max):
         ysize = int(math.log(w_max + 1, 2))
         n = len(values)
-        num_values = n + ysize;
+        num_values = n + ysize
         pauli_list = []
         shift = 0
         
@@ -177,8 +178,7 @@ class IbmQuantum(Metaheuristic):
             shift -= 0.5 * values[i]
         return WeightedPauliOperator(paulis=pauli_list), shift
     
-    def __str__(self):
-        return "IBM Quantum Algorithm - Qiskit"
+    def __str__(self) -> str:
+        return super().__str__() + ".IBM_Quantum_Algorithm__Qiskit"
 
-    def __cmp__(self, obj_quantum):
-        pass
+        

@@ -3,10 +3,11 @@
 import copy
 from modules.knapsack.knapsack import Knapsack
 from modules.knapsack.item import Item
+import modules.util.generalValue as general
 
 class FileReader():
     """docstring for FileReader."""
-    def __init__(self, full_file_name, short_file_name=None, mode="r+"):
+    def __init__(self, full_file_name, short_file_name=None, mode=general.CHAR_R_PLUS):
         super(FileReader, self).__init__()
         self.file_name = full_file_name
         self.short_file_name = short_file_name

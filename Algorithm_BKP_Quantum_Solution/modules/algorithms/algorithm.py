@@ -16,3 +16,6 @@ class Algorithm(ABC):
     @abstractmethod
     def execute(self, the_knapsack, the_aleatory, debug):
         pass
+
+    def __str__(self) -> str:
+        return "Algorithm"

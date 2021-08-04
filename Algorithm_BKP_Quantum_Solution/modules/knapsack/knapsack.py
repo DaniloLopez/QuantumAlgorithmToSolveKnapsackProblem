@@ -66,8 +66,9 @@ class Knapsack():
     # toString
     def __str__(self):
         """ to_string function to print information from a knapsack instance"""
-        str = f"Number of items: {self.n_items}  "
-        str += f"Capacity: {self.capacity}  "
-        str += f"Objective {self.objective}  "
-        str += f"Solution {self.solution}  "
-        return str
+        line = "{ \"FILE_NAME\": " + str(self.file_name) +\
+            ",    \"N_ITEM\": " + str(self.n_items) +\
+            ",    \"CAPACITY\": " + str(self.capacity) +\
+            ",    \"OBJECTIVE\": " + str(self.objective) +\
+            ",    \"SOLUTION\": " + str(self.solution) + " }"
+        return line

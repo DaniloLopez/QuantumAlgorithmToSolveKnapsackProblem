@@ -15,6 +15,8 @@ from modules.parameter.command_line import CommandLineArguments
 from os import listdir
 from modules.file.fileWriter import FileWriter
 from modules.generator.datasetGenerator import DatasetGenerator
+from modules.algorithms.metaheuristics.simple_state.hillClimbing import HillClimbing
+from modules.algorithms.metaheuristics.quantum_based.ibmQuantum import IbmQuantum
 
 ROOT_DIR = path.dirname(path.abspath(__file__)) 
 
@@ -47,15 +49,11 @@ def init_result_file():
 def run_metaheuristics(knapsack_list, metaheuristic_list, debug=False, deep_debug=False):
     try:        
         init_result_file()
-        if debug:                
-            print("Algorithm: ")            
         for my_metaheuristic in metaheuristic_list:
-            if debug:           
-                print("-------------------+----------------------------------")     
-                print(my_metaheuristic)
+            util.if_print_text(my_metaheuristic, debug)
+            obj_fileWriter.write_line(str(my_metaheuristic))
             for knapsack in knapsack_list:
-                if debug:
-                    print("\n\t" + str(knapsack))
+                util.if_print_text("\n\t" + str(knapsack), debug)
                 list_fitness = []
                 list_efos = []
                 list_times = []
@@ -70,29 +68,32 @@ def run_metaheuristics(knapsack_list, metaheuristic_list, debug=False, deep_debu
                         my_metaheuristic.my_best_solution.fitness
                     )
                     list_efos.append(my_metaheuristic.current_efos)
-                    list_times.append(elapsed_time)
+                    list_times.append(elapsed_time)                    
                     substraction = (
                         my_metaheuristic.my_best_solution.fitness - 
                         knapsack.objective
                     )
                     if substraction < 1e-10 : 
-                        times_found_ideal += 1                    
-                
-                line_result = (
+                        times_found_ideal += 1
+                obj_fileWriter.write_line(
                     util.get_line_result_format (
-                        knapsack, [5], [5], times_found_ideal, 
-                        param.args.iterations, list_times
+                        knapsack, 
+                        list_fitness, 
+                        list_efos, 
+                        list_times, 
+                        times_found_ideal, 
+                        param.args.iterations,
+                        my_metaheuristic.my_best_solution
                     )
                 )
-                
-                obj_fileWriter.write_line(line_result)
+                util.if_print_text("\t" + str(my_metaheuristic.my_best_solution), debug)
+            print("")
     except OSError as err:
         print("OS error: {0}".format(err))
     except:
         print("Unexpected error:", sys.exc_info()[0])
         raise
-    finally:
-        print("Execution finished.")
+    finally:        
         obj_fileWriter.close()
 
 def generate_dataset():
@@ -109,18 +110,24 @@ def print_list_knapsack(list_knapsack):
     print("------------------------------------------------------")
 
 def main ():
+    max_efos = 10000
     list_knapsack = []
-    print("running...")
+    list_metaheuristics = [
+        HillClimbing(max_efos), 
+        IbmQuantum(max_efos)
+    ]
+    print("<> running...")
     if param.is_generate(): #validate option generate
         generate_dataset()
-    list_knapsack = get_list_knapsack() #extract dataset from files
-    print("\n> run algorithms... ")
+    list_knapsack = get_list_knapsack() #extract dataset from files    
+    print("<><> run algorithms...\n")
     run_metaheuristics(
         list_knapsack,
-        general.LIST_METAHEURISTICS,
+        list_metaheuristics,
         debug=param.debug,
         deep_debug=param.debug
     )
+    print("execution finished.")
 
 if __name__ == '__main__':
     main()

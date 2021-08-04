@@ -1,4 +1,8 @@
-algoritmos para generar instancias de prueba
+# IKP.0.0.2-13072021
 
-fuente:
-http://hjemmesider.diku.dk/~pisinger/codes.html
+> Algoritmos para generar instancias de prueba
+
+
+## Fuente
+
+* http://hjemmesider.diku.dk/~pisinger/codes.html

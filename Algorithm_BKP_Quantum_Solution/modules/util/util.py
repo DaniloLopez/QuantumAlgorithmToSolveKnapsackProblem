@@ -29,31 +29,28 @@ def get_list_files_folder(path = getcwd()):
     """list existing files in a given path"""
     return [arch.name for arch in scandir(path) if arch.is_file()]
 
-def get_line_header(iterations):
-    line =f"Number of iterations: {iterations} \n"
-    line+="knapsack            | n-items | capacity | objective value | max profit | min profit | "
-    line+="average profit | max capacity | min capacity | average capacity | "
-    line+="success rate | max time   |   min time   |   average time"
+def get_line_header(iterations) -> str:
+    return f"Number of iterations: {iterations} \n"
+
+def get_attr_value(attr, value, init=False):
+    line = "\"" if init else ",    \""    
+    return line + attr + "\": " + str(value)
+
+def get_line_result_format(knapsack, list_fitness, list_efos, list_times, 
+                        times_found_ideal, iterations, best_solution):
+    line = "\t\"knapsack\": "
+    line += str(knapsack)
+    line += "\n\t\"best_solution\": "
+    line += str(best_solution)
+    line += "\n\t\"metadata\": {"
+    line += get_attr_value("TIMES_FOUND_IDEAL", times_found_ideal, init=True)
+    line += get_attr_value("FITNESS_LIST", list_fitness)
+    line += get_attr_value("EFOS_LIST", list_efos)
+    line += get_attr_value("AVERAGE_TIME", str(round((sum(list_times) * 100) / iterations, 2)))    
+    line += " }"
+    
     return line
 
-def get_line_result_format(obj_kp, profits_solution, weights_solution, 
-                            num_exact_solution, num_iterations, times):
-    line =  fill_spaces(obj_kp.file_name, 22)
-    line +=  fill_spaces(obj_kp.n_items, 11)
-    line += fill_spaces(obj_kp.capacity, 11)
-    line += fill_spaces(obj_kp.objective, 17)
-    line += fill_spaces(np.max(profits_solution), 13)
-    line += fill_spaces(np.min(profits_solution), 13)
-    line += fill_spaces(str(sum(profits_solution)/len(profits_solution)), 15)
-    line += fill_spaces(np.max(weights_solution), 15)
-    line += fill_spaces(np.min(weights_solution), 16)
-    line += fill_spaces(sum(weights_solution) / len(weights_solution), 19)
-    line += fill_spaces(str((num_exact_solution*100) / num_iterations)+"%", 17)
-    line += fill_spaces("{0:.4f}".format(max(times)/1000), 15)
-    line += fill_spaces("{0:.4f}".format(min(times)/10000), 15)
-    line += fill_spaces("{0:.4f}".format(sum(times)/100000/len(times)), 14)
-    return line
-    
 def get_line_result(obj_kp, profits_solution, weights_solution, 
                     num_exact_solution, num_iterations, times):    
     line =  str(obj_kp.n_items + " ")
@@ -90,3 +87,7 @@ def build_commnad_line_text_generate(type, difficult, nitems, range,
     return (str(id.n_items) + " " + str(id.range) + " " + str(id.type_corr) + 
             " " + str(instance) + " " + str(S) + " " + 
             generate_full_name_file(type, difficult, nitems, range))
+
+def if_print_text(object, condition=True):
+    if condition:
+        print(object)

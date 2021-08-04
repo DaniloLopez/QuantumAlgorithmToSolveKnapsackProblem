@@ -32,7 +32,7 @@ class Solution():
         return obj_solution
 
     def quantum_initialization(self):
-         pass
+         self.evaluate()
 
     def random_initialization(self):
         selected = []
@@ -59,21 +59,23 @@ class Solution():
         my_weight = self._complete(unselected, my_weight)
         self.evaluate()
 
-    def calculate_weight(self):
+    def calculate_weight_solution(self):
         self.weight = 0.0
         for i in range(len(self.position)):
             if(self.position[i] == 1):
                 self.weight += self.my_container.my_knapsack.weight(i)
         
-    def evaluate(self):
-        self.my_container.current_efos += 1 
-        self.calculate_weight();
-        if self.weight > self.my_container.my_knapsack.capacity :
-            self.fitness = 0
-        else:
-            self.fitness = self.my_container.my_knapsack.evaluate(
+    def calculate_fitness_solution(self, weight):
+        self.fitness = 0\
+            if weight > self.my_container.my_knapsack.capacity\
+            else self.my_container.my_knapsack.evaluate(
                 self.position
             )
+
+    def evaluate(self):
+        self.my_container.current_efos += 1 
+        self.calculate_weight_solution()
+        self.calculate_fitness_solution(self.weight)
 
     def modify(self, value):
         pass
@@ -148,7 +150,6 @@ class Solution():
 
     #override
     def __str__(self):
-        return (f"p: {self.position} f: {self.fitness} w: {self.weight} con: {self.my_container}")
-        
-    def __cmp__(self, other = None):
-        pass
+        return "{ \"WEIGHT\": " + str(self.weight) +\
+                ",    \"FITNESS\": " + str(self.fitness) +\
+                ",    \"SOLUTION_FOUND\": "+ str(self.position) + " }"
