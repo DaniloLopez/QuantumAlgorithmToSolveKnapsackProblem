@@ -54,7 +54,6 @@ class Knapsack():
     def get_weights(self):
         return [p.weight for p in self.items]
 
-    # metodo para comparar objetos
     def __cmp__(self, other):
         if self.n_items == other.n_items:
             return 1 if self.capacity > other.capacity else -1
@@ -63,7 +62,6 @@ class Knapsack():
         else:
             return 1    
 
-    # toString
     def __str__(self):
         """ to_string function to print information from a knapsack instance"""
         line = "{ \"FILE_NAME\": " + str(self.file_name) +\

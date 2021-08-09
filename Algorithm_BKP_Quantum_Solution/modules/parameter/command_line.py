@@ -17,7 +17,7 @@ class CommandLineArguments(Arguments):
             prog=general.PROGRAM_NAME,
             description=self.description,
             epilog=self.epilog
-        )
+            )
         #group for option File and Folder. Mutually exclusive in Parser
         self.group_file_folder =  self.parser.add_mutually_exclusive_group()
         self._init_parser_arguments()        
@@ -44,25 +44,25 @@ class CommandLineArguments(Arguments):
             default=general.NUM_ITERATIONS_STATIC,
             type=int,
             help=general.ARGH_ITERATION
-        )
+            )
         self.parser.add_argument(
             general.ARG_DB,
             general.ARG_DEBUG,            
             action="store_true",
             help=general.ARGH_DEBUG
-        )
+            )
         self.group_file_folder.add_argument(
             general.ARG_FL,
             general.ARG_FILE,
             default=None,
             help=general.ARGH_FILE
-        )
+            )
         self.group_file_folder.add_argument(
             general.ARG_FD,
             general.ARG_FOLDER,
             default=None,
             help=general.ARGH_FOLDER
-        )        
+            )        
 
     def _init_parser_generate(self):
         self.parser_generate = argparse.ArgumentParser(add_help=False)
@@ -73,7 +73,7 @@ class CommandLineArguments(Arguments):
             type=int,
             required=True,
             help=general.ARGH_TYPE
-        )
+            )
         self.parser_generate.add_argument(
             general.ARG_D,
             general.ARG_DIFFICULT,
@@ -81,7 +81,7 @@ class CommandLineArguments(Arguments):
             type=int,
             required=True,
             help=general.ARGH_DIFFICULT
-        )
+            )
         self.parser_generate.add_argument(
             general.ARG_N,
             general.ARG_NITEMS,
@@ -89,7 +89,7 @@ class CommandLineArguments(Arguments):
             type=int,
             required=True,
             help=general.ARGH_NITEMS
-        )
+            )
         self.parser_generate.add_argument(
             general.ARG_R,
             general.ARG_RANGE,
@@ -97,18 +97,18 @@ class CommandLineArguments(Arguments):
             type=int,
             required=True,
             help=general.ARGH_RANGE
-        )
+            )
 
     def _set_subcomands(self):
         subparser_generate = self.parser.add_subparsers(            
             title=general.SUBCOMANDS,
             dest=general.CMD_GENERATE
-        )
+            )
         self.command_generate = subparser_generate.add_parser(
             general.CMD_GENERATE,
             help=general.CMDH_GENERATE,
             parents=[self.parser_generate]
-        )
+            )
 
     def _init_variables(self):
         self.iterations = self.args.iterations

@@ -6,7 +6,7 @@ import modules.util.util as util
 import modules.util.generalValue as general
 
 class DatasetGenerator():
-
+    """docstring for DatasetGenerator."""
     def __init__(self):
         super(DatasetGenerator, self).__init__()          
 

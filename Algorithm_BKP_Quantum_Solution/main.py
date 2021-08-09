@@ -75,6 +75,7 @@ def run_metaheuristics(knapsack_list, metaheuristic_list, debug=False, deep_debu
                     )
                     if substraction < 1e-10 : 
                         times_found_ideal += 1
+                        
                 obj_fileWriter.write_line(
                     util.get_line_result_format (
                         knapsack, 
@@ -112,10 +113,7 @@ def print_list_knapsack(list_knapsack):
 def main ():
     max_efos = 10000
     list_knapsack = []
-    list_metaheuristics = [
-        HillClimbing(max_efos), 
-        IbmQuantum(max_efos)
-    ]
+    list_metaheuristics = [HillClimbing(max_efos), IbmQuantum(max_efos)]
     print("<> running...")
     if param.is_generate(): #validate option generate
         generate_dataset()

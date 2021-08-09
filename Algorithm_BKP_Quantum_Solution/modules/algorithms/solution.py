@@ -78,7 +78,17 @@ class Solution():
         self.calculate_fitness_solution(self.weight)
 
     def modify(self, value):
-        pass
+        binary=[]
+        #binary = Convert.ToString(value, 2)
+        self.weight = 0
+        j = 0
+        for i in range(len(binary)):            
+            self.position[j] = int(binary[i])
+            if self.position[j] == 1:
+                self.weight += self.my_container.my_knapsack.weight(j)
+            j += 1            
+        self.evaluate()
+        
 
     def _define_selected_unselected_list(self, selected, unselected):
         selected.clear()

@@ -84,9 +84,10 @@ class FileReader():
                 bin, "0", self.knapsack.n_items
             )
             v, w = self.knapsack.calculate_knapsack_value_weight(temp_solution)
+            print("solution: " + str(temp_solution) + "value: " + str(v) + " weight: " + str(w))
             if(w <= self.knapsack.capacity and v >= best_value):
                 best_value,best_weight=v, w
-                best_result = temp_solution
+                best_result = temp_solution            
         return best_value, best_result
 
     def _complete_text_right(self, text, char, length):
