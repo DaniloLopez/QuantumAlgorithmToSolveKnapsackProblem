@@ -25,10 +25,11 @@ class FileReader():
         if self.file:
             self._read_initial_values_knapsack()
             line = self.file.readline()
-            if line:
-                self._read_objective_solution(line)
-            else:
-                self._set_objective_solution()
+            #if line:
+             #   self._read_objective_solution(line)
+            #else:
+            #asegurarse de calcular siemre la solucion
+            self._set_objective_solution()
             self.file.close()
             self.knapsack.file_name = self.short_file_name
 
