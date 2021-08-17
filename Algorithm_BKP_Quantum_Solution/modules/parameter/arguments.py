@@ -22,5 +22,13 @@ class Arguments(ABC):
         pass
 
     @abstractmethod
+    def is_debug_enable(self):
+        pass
+
+    @abstractmethod
     def get_arguments(self):
-        return self.args
+        pass
+
+    @abstractmethod
+    def get_iterations(self):
+        pass

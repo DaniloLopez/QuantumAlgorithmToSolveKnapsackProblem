@@ -25,11 +25,10 @@ class FileReader():
         if self.file:
             self._read_initial_values_knapsack()
             line = self.file.readline()
-            #if line:
-             #   self._read_objective_solution(line)
-            #else:
-            #asegurarse de calcular siemre la solucion
-            self._set_objective_solution()
+            if line:
+                self._read_objective_solution(line)
+            else:  
+                self._set_objective_solution()          
             self.file.close()
             self.knapsack.file_name = self.short_file_name
 
@@ -85,7 +84,11 @@ class FileReader():
                 bin, "0", self.knapsack.n_items
             )
             v, w = self.knapsack.calculate_knapsack_value_weight(temp_solution)
-            print("solution: " + str(temp_solution) + "value: " + str(v) + " weight: " + str(w))
+            print(
+                "solution: " + str(temp_solution) + " " +
+                "value: " + str(v) + " " +
+                "weight: " + str(w)
+            )
             if(w <= self.knapsack.capacity and v >= best_value):
                 best_value,best_weight=v, w
                 best_result = temp_solution            

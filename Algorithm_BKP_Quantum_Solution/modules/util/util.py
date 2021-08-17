@@ -2,13 +2,12 @@
 
 from modules.util.generalValue import SEPARATOR
 import sys
+sys.path.append('../')
 import os
 import numpy as np
 from os import scandir, getcwd
-import modules.util.generalValue as general
-
-sys.path.append('../')
 from datetime import datetime
+import modules.util.generalValue as general
 
 def get_path():
     return os.getcwd()

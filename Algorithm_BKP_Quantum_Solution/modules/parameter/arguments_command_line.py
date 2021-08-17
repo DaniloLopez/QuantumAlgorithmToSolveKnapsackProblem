@@ -5,13 +5,13 @@ from modules.parameter.arguments import Arguments
 import argparse
 import modules.util.generalValue as general
 
-class CommandLineArguments(Arguments):
-    """docstring for CommandLineArguments."""
+class ArgumentsCommandLine(Arguments):
+    """docstring for ArgumentsCommandLine."""
 
-    def __init__(self, description="", epilog=""):
-        super(CommandLineArguments, self).__init__()
-        self.description = description
-        self.epilog = epilog
+    def __init__(self, description_help="", epilog_help=""):
+        super(ArgumentsCommandLine, self).__init__()
+        self.description = description_help
+        self.epilog = epilog_help
         #parser
         self.parser = argparse.ArgumentParser(
             prog=general.PROGRAM_NAME,
@@ -32,10 +32,13 @@ class CommandLineArguments(Arguments):
     #override abstract methods
     def is_generate(self):
         return self.args.generate
-
     def get_arguments(self):
         return self.args
-    
+    def get_iterations(self):
+        return self.args.iterations
+    def is_debug_enable(self):
+        return self.args.debug
+
     #private methods
     def _init_parser_arguments(self):
         self.parser.add_argument(
@@ -103,12 +106,12 @@ class CommandLineArguments(Arguments):
         subparser_generate = self.parser.add_subparsers(            
             title=general.SUBCOMANDS,
             dest=general.CMD_GENERATE
-            )
+        )
         self.command_generate = subparser_generate.add_parser(
             general.CMD_GENERATE,
             help=general.CMDH_GENERATE,
             parents=[self.parser_generate]
-            )
+        )
 
     def _init_variables(self):
         self.iterations = self.args.iterations
