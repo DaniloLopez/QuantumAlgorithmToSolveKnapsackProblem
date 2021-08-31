@@ -3,7 +3,6 @@
 
 from modules.algorithms.solution import Solution
 from modules.algorithms.metaheuristics.metaheuristic import Metaheuristic
-import modules.util.util as util
 
 class HillClimbing(Metaheuristic):
     """docstring for HillClimbing."""

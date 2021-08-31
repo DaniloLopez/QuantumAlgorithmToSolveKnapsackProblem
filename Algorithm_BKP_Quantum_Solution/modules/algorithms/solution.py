@@ -51,10 +51,7 @@ class Solution():
             if self.my_container.my_aleatory.random() < general.ZERO_DOT_TWO
             else self._turn_off_density(selected, my_weight)
         )
-        self._leave_only_valid_unselected_items(
-            unselected, 
-            my_weight
-        )
+        self._leave_only_valid_unselected_items(unselected, my_weight)
         my_weight = self._turn_on_random(unselected, my_weight)
         my_weight = self._complete(unselected, my_weight)
         self.evaluate()
@@ -66,11 +63,9 @@ class Solution():
                 self.weight += self.my_container.my_knapsack.weight(i)
         
     def calculate_fitness_solution(self, weight):
-        self.fitness = 0\
-            if weight > self.my_container.my_knapsack.capacity\
-            else self.my_container.my_knapsack.evaluate(
-                self.position
-            )
+        self.fitness = self.my_container.my_knapsack.evaluate(self.position)
+        if weight > self.my_container.my_knapsack.capacity:
+            self.fitness = 0
 
     def evaluate(self):
         self.my_container.current_efos += 1 

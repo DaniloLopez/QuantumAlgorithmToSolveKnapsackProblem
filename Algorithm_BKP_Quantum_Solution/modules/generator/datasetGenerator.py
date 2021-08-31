@@ -96,9 +96,10 @@ class DatasetGenerator(Generator):
     
     def _generate(self, difficult):
         for type in self.args.type :
-            for nitems in range(self.args.nitems[0], self.args.nitems[1]+1):
-                for range in range(self.args.range[0], self.args.range[1]):
-                    file_name = util.build_commnad_line_text_generate (
-                        type, difficult, nitems, range, 3
-                    )
-                    os.system(difficult + " " + file_name)
+                for nitems in range(self.args.nitems[0], self.args.nitems[1]+1):
+                    for range in range(self.args.range[0], self.args.range[1]):
+                        file_name = util.build_commnad_line_text_generate (
+                            type, difficult, nitems, range, 3
+                        )
+                        os.system(difficult + " " + file_name)
+                        

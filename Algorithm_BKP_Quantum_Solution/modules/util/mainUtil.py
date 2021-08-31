@@ -71,13 +71,8 @@ class MainUtil():
                         random.seed(it)                        
                         start_time= time() # initial time record
                         # invocation execute metaheuristic
-                        my_metaheuristic.execute(
-                            knapsack, 
-                            random, 
-                            deep_debug
-                        )
+                        my_metaheuristic.execute(knapsack, random, deep_debug)
                         elapsed_time = time() - start_time # end time record
-                        
                         list_fitness.append (
                             my_metaheuristic.my_best_solution.fitness
                         )
