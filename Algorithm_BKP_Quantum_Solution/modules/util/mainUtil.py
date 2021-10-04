@@ -105,14 +105,17 @@ class MainUtil():
             self.obj_fileWriter.close()
 
     def generate_dataset(self, arguments):
-        """Generate dataset according to arguments of subcomnad generate"""
+        """Generate dataset according to arguments of subcomand generate"""        
         generator = DatasetGenerator(arguments)
-        print("> generating dataset...")
+        # generating dataset...
         generator.generate()
-        print("> dataset generated.")    
-
-    def print_list_knapsack(self, list_knapsack):
-        print("--------------------------------------------------\nknapsacks:")
-        for i in list_knapsack:
-            print(str(i))
         print("--------------------------------------------------------------")
+        print("------- ::: DATASET GENERATED ::: ----------------------------")
+        print("--------------------------------------------------------------")
+
+    def print_list(self, list):
+        print("--------------------------------------------------------------")
+        print("----- [[ printing list: length->" +list.size()+ " ]] -----")
+        for i in list:
+            print(str(i))
+        print("----- END LIST -----------------------------------------------")
