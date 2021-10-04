@@ -1,6 +1,6 @@
 from os import listdir
 from modules.file.fileWriter import FileWriter
-from modules.parameter.arguments_command_line import ArgumentsCommandLine
+from modules.util.arguments.arguments_command_line import ArgumentsCommandLine
 from modules.generator.datasetGenerator import DatasetGenerator
 import modules.util.generalValue as general
 from time import time
@@ -40,13 +40,9 @@ class MainUtil():
         return knapsack_list
 
     def init_result_file(self):
-        self.obj_fileWriter.open(
-            util.get_result_file_name()
-        )
+        self.obj_fileWriter.open(util.get_result_file_name())
         self.obj_fileWriter.write(
-            util.get_line_header(
-                self.arguments.get_iterations()
-            )
+            util.get_line_header(self.arguments.get_iterations())
         )
         self.obj_fileWriter.new_line()
 

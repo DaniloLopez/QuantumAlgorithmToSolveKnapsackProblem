@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-
-from modules.pattern.singleton import singleton
 from abc import ABC, abstractmethod
 
 class Arguments(ABC):

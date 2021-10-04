@@ -1,7 +1,4 @@
-#!/usr/bin/env python3
-# -*- coding=utf-8 -*-
-
-from modules.parameter.arguments import Arguments
+from modules.util.arguments import Arguments
 import argparse
 import modules.util.generalValue as general
 

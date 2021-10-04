@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# coding=utf-8
-
 from abc import ABC, abstractmethod
 
 class Algorithm(ABC):
@@ -12,6 +9,7 @@ class Algorithm(ABC):
         self.my_best_solution = None
         self.my_knapsack = None
         self.my_aleatory = None
+        self.population = []
 
     @abstractmethod
     def execute(self, the_knapsack, the_aleatory, debug):

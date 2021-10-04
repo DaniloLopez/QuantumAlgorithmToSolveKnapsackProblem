@@ -1,12 +1,12 @@
 from modules.algorithms.solution import Solution
-from modules.algorithms.metaheuristics.slime_mould.slimeMouldSolution import SlimeMouldSolution
+from modules.algorithms.metaheuristics.population.slime_mould.slimeMouldSolution import SlimeMouldSolution
 from modules.algorithms.metaheuristics.metaheuristic import Metaheuristic
 
 class SlimeMould(Metaheuristic):
     """docstring for SlimeMould."""
     
     def __init__(self, max_efos):
-        super(SlimeMould, self).__init__()        
+        super(SlimeMould, self).__init__()
         self.max_efos = max_efos
     
     def execute(self, the_knapsack, the_aleatory, debug):

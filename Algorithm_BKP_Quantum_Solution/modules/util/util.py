@@ -1,5 +1,3 @@
-# -*- coding=utf-8 -*-
-
 from modules.util.generalValue import SEPARATOR
 import sys
 sys.path.append('../')

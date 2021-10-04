@@ -13,30 +13,37 @@ ROOT_DIR = path.dirname(path.abspath(__file__))
 
 def main ():
     print("<> running...")
-    mu = MainUtil()
+    mainUtil = MainUtil()
     max_efos = 10000
     list_knapsack = []
     list_metaheuristics = [HillClimbing(max_efos), IbmQuantum(max_efos)]
     
-    #extract dataset from files
+    # ************************************************************************
+    # generate dataset or extract it from files
+    # ************************************************************************
+    # set default path for generate dataset
     folder_dataset = general.FOLDER_DATASET_GENERATED
-    if(mu.arguments.is_generate()):
-         dataset_generator = DatasetGenerator(mu.arguments)    
+    # generate flag is present
+    if(mainUtil.arguments.is_generate()):
+         dataset_generator = DatasetGenerator(mainUtil.arguments)    
          folder_dataset = dataset_generator.generate()
-    list_knapsack = mu.get_knapsack_list(folder_dataset)
+    # get list of knapsack
+    list_knapsack = mainUtil.get_knapsack_list(folder_dataset)
     print(folder_dataset)
-    mu.print_list_knapsack(list_knapsack)
+    mainUtil.print_list_knapsack(list_knapsack)
 
-    mu.init_result_file()
+    # ************************************************************************
+    # run metaheuristic list for every knapsack in knapsack problem list
+    # ************************************************************************
+    mainUtil.init_result_file()
     print("<><> run algorithms...")
-    mu.run_metaheuristics(
+    mainUtil.run_metaheuristics(
         list_knapsack,
         list_metaheuristics,
-        debug = mu.arguments.is_debug_enable(),
-        deep_debug = mu.arguments.is_debug_enable()
+        debug = mainUtil.arguments.is_debug_enable(),
+        deep_debug = mainUtil.arguments.is_debug_enable()
     )
     print("<> execution finished.")
 
 if __name__ == '__main__':
     main()
-
