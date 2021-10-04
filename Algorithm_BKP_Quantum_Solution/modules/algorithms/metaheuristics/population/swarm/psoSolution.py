@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # coding=utf-8
-
-from algorithms.metaheuristics import Metaheuristic
-
+from algorithms.solution import Solution
 
 class PsoSolution(Solution):
     def __init__(self):

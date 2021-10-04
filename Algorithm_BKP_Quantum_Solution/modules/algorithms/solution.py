@@ -120,7 +120,7 @@ class Solution():
         if unselected:
             pos = self.my_container.my_aleatory.randint(0, len(unselected)-1)
             pos_turn_on = unselected[pos]
-            unselected.pop(pos)
+            unselected.pop(pos) #delete item from unselected list
             self.position[pos_turn_on] = 1
             my_weight += self.my_container.my_knapsack.weight(pos_turn_on)
         return my_weight

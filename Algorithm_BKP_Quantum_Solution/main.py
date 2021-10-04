@@ -6,7 +6,7 @@ from modules.util.mainUtil import MainUtil
 import modules.util.generalValue as general
 from modules.generator.datasetGenerator import DatasetGenerator
 from modules.algorithms.metaheuristics.simple_state.hillClimbing import HillClimbing
-from modules.algorithms.metaheuristics.quantum_based.ibmQuantum import IbmQuantum
+from modules.algorithms.metaheuristics.quantum.ibmQuantum import IbmQuantum
 
 #root path of the project
 ROOT_DIR = path.dirname(path.abspath(__file__))

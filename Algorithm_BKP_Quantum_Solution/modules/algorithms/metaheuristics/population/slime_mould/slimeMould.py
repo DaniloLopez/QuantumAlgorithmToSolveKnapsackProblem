@@ -1,4 +1,5 @@
-from modules.algorithms.metaheuristics.slime_mould_based.slimeMouldSolution import SlimeMouldSolution
+from modules.algorithms.solution import Solution
+from modules.algorithms.metaheuristics.slime_mould.slimeMouldSolution import SlimeMouldSolution
 from modules.algorithms.metaheuristics.metaheuristic import Metaheuristic
 
 class SlimeMould(Metaheuristic):
@@ -12,7 +13,15 @@ class SlimeMould(Metaheuristic):
         self.my_knapsack = the_knapsack
         self.my_aleatory = the_aleatory
         self.current_efos = 0
+        
+        listSolution = []        
         s = SlimeMouldSolution.init_owner(self)
         s.random_initialization()
+
+
         self.curve.append(s.fitness)
-        while self.current_efos < self.max_efos and abs(s.fitness - self.my_knapsack.objective) > 1e-10:
+        while self.current_efos < self.max_efos:
+            r = Solution.init_solution(s)
+
+    def _getBestFitness(listSolution):
+        pass

@@ -27,9 +27,21 @@ class SlimeMouldSolution(Solution):
         obj_solution.my_container = solution.my_container
         return obj_solution
 
-    def random_initialization(self):
+    def initialization_phase(self):
         selected = []
         unselected = []
         my_weight = self._define_selected_unselected_list(selected, unselected)
         my_weight = self._complete(unselected, my_weight)
         self.evaluate()
+
+    def gaussianPerturbation(self):
+        pass
+
+    def penalizationFunction(self):
+        pass
+
+    def repairAlgorithm(self):
+        pass
+
+    def improvementAlgorithm(self):
+        pass
