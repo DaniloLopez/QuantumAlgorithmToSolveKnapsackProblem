@@ -7,30 +7,39 @@ import modules.util.generalValue as general
 from modules.generator.datasetGenerator import DatasetGenerator
 from modules.algorithms.metaheuristics.simple_state.hillClimbing import HillClimbing
 from modules.algorithms.metaheuristics.quantum.ibmQuantum import IbmQuantum
+from modules.algorithms.metaheuristics.population.slime_mould.slimeMould import SlimeMould
 
-#root path of the project
+# ****************************************************************************
+# get root path of the project
+# ****************************************************************************
 ROOT_DIR = path.dirname(path.abspath(__file__))
 
 def main ():
-    print("<> running...")
-    mainUtil = MainUtil()
+    """ 
+    entry point to the program. algorithm in charge of evaluating the 
+    proposed algorithms to solve one or more binary knapsack problems
+    """
+    # variables 
     max_efos = 10000
     list_knapsack = []
-    list_metaheuristics = [HillClimbing(max_efos), IbmQuantum(max_efos)]
-    
+    list_metaheuristics = [HillClimbing(max_efos), SlimeMould(max_efos)]
+    mainUtil = MainUtil()
+    # set default path for folder dataset
+    folder_dataset = general.FOLDER_DATASET_GENERATED
+
     # ************************************************************************
     # generate dataset or extract it from files
     # ************************************************************************
-    # set default path for generate dataset
-    folder_dataset = general.FOLDER_DATASET_GENERATED
-    # generate flag is present
     if(mainUtil.arguments.is_generate()):
-         dataset_generator = DatasetGenerator(mainUtil.arguments)    
-         folder_dataset = dataset_generator.generate()
-    # get list of knapsack
+        # generate dataset 
+        dataset_generator = DatasetGenerator(mainUtil.arguments)
+        folder_dataset = dataset_generator.generate()
+    # get knapsack list from dataset folder name
     list_knapsack = mainUtil.get_knapsack_list(folder_dataset)
-    print(folder_dataset)
-    mainUtil.print_list_knapsack(list_knapsack)
+    if mainUtil.arguments.debug or True:
+        print("--- ::: " +folder_dataset)
+        mainUtil.print_list(list_knapsack)
+    # ************************************************************************
 
     # ************************************************************************
     # run metaheuristic list for every knapsack in knapsack problem list
@@ -43,6 +52,7 @@ def main ():
         debug = mainUtil.arguments.is_debug_enable(),
         deep_debug = mainUtil.arguments.is_debug_enable()
     )
+    # ************************************************************************
     print("<> execution finished.")
 
 if __name__ == '__main__':

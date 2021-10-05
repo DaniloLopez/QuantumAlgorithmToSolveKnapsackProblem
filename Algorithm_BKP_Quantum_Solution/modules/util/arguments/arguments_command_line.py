@@ -1,4 +1,4 @@
-from modules.util.arguments import Arguments
+from modules.util.arguments.arguments import Arguments
 import argparse
 import modules.util.generalValue as general
 
