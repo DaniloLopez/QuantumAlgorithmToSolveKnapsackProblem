@@ -43,6 +43,13 @@ class Knapsack():
     def density(self, index):
         return self.items[index].density
 
+    def get_lowest_density_item_position(self):
+        low_pos = 0
+        for i in range(0, len(self.items)):
+            if self.items[low_pos].density > self.items[i].density :
+                low_pos = i
+        return low_pos
+
     #setters
     def add_item_to_item_list(self, item):
         """ add an item to solution list """

@@ -1,3 +1,4 @@
+from numpy.lib.function_base import select
 from modules.algorithms.solution import Solution
 from numpy.random import uniform
 from numpy import log10
@@ -30,18 +31,13 @@ class SlimeMouldSolution(Solution):
         obj_solution.w = solution.w
         return obj_solution
 
-    def random_initialization(self):
-        selected = []
-        unselected = []
-        self.fillPositionAleatory()
-        my_weight = self._define_selected_unselected_list(selected, unselected)
-        my_weight = self._complete(unselected, my_weight)
+    def random_initialization(self):      
+        self.fillPositionAleatory()        
         self.evaluate()
 
     def fillPositionAleatory(self):
-        """ Position list is filled to evaluate the solution. """
+        """ a position list is filled aleatory to evaluate the solution. """
         self.position = []
-        cap = self.my_container.my_knapsack.capacity
         for i in range(0, self.my_container.my_knapsack.n_items):
             rnd = self.my_container.my_aleatory.uniform(0,1)
             if rnd > 0.5:
@@ -52,12 +48,31 @@ class SlimeMouldSolution(Solution):
     def evaluate(self):
         self.my_container.current_efos += 1 
         self.calculate_weight_solution()
-        self.calculate_fitness_solution(self.weight)
+        self.calculate_fitness_solution()
+        self.__repairFunction()
 
-    def calculate_fitness_solution(self, weight):
+    def calculate_fitness_solution(self):
         """penalty function for unfeasible solutions"""
         self.fitness = self.my_container.my_knapsack.evaluate(self.position)
-        if weight > self.my_container.my_knapsack.capacity:
-            self.fitness = self.fitness * -1
+        if self.weight > self.my_container.my_knapsack.capacity:
+            self.fitness = self.fitness * -1            
             
-    
+    def __repairFunction(self):
+        selected = []
+        unselected = []
+        self._define_selected_unselected_list(selected, unselected)
+        while (self.fitness < 0):
+            low_pos = self.get_lowest_density_item_position(selected)
+            self.position[selected[low_pos]] = 0
+            self.calculate_weight_solution()
+            self.calculate_fitness_solution()
+
+    def get_lowest_density_item_position(self, unselected):
+        low_pos = 0 
+        kp_items = self.my_container.my_knapsack.items
+        for i in range (0, len(unselected)) :
+            if kp_items[unselected[low_pos]].density > kp_items[unselected[i]].density :
+                low_pos = i
+        return low_pos
+
+        

@@ -13,18 +13,18 @@ from modules.algorithms.metaheuristics.population.slime_mould.slimeMould import 
 # get root path of the project
 # ****************************************************************************
 ROOT_DIR = path.dirname(path.abspath(__file__))
+ZERO_DOT_THREE = 0.3
+POP_SIZE = 10
+MAX_EFOS = 10000
 
 def main ():
     """ 
     entry point to the program. algorithm in charge of evaluating the 
     proposed algorithms to solve one or more binary knapsack problems
     """
-    # variables 
-    max_efos = 10000
+    # variables     
     list_knapsack = []
-    slimeMould = SlimeMould(max_efos)
-    slimeMould.setPopSize = 10
-    list_metaheuristics = [slimeMould]
+    list_metaheuristics = [HillClimbing(MAX_EFOS), SlimeMould(MAX_EFOS, POP_SIZE, ZERO_DOT_THREE)]
     mainUtil = MainUtil()
     # set default path for folder dataset
     folder_dataset = general.FOLDER_DATASET_GENERATED
@@ -47,7 +47,7 @@ def main ():
     # run metaheuristic list for every knapsack in knapsack problem list
     # ************************************************************************
     mainUtil.init_result_file()
-    print("<><> run algorithms...")
+    print("<-><-> run algorithms...")
     mainUtil.run_metaheuristics(
         list_knapsack,  
         list_metaheuristics,
