@@ -80,6 +80,7 @@ class MainUtil():
                         )
                         if substraction < 1e-10 : 
                             times_found_ideal += 1
+                            
                     self.obj_fileWriter.write_line(
                         util.get_line_result_format (
                             knapsack, 

@@ -22,7 +22,9 @@ def main ():
     # variables 
     max_efos = 10000
     list_knapsack = []
-    list_metaheuristics = [HillClimbing(max_efos), SlimeMould(max_efos)]
+    slimeMould = SlimeMould(max_efos)
+    slimeMould.setPopSize = 10
+    list_metaheuristics = [slimeMould]
     mainUtil = MainUtil()
     # set default path for folder dataset
     folder_dataset = general.FOLDER_DATASET_GENERATED
@@ -47,7 +49,7 @@ def main ():
     mainUtil.init_result_file()
     print("<><> run algorithms...")
     mainUtil.run_metaheuristics(
-        list_knapsack,
+        list_knapsack,  
         list_metaheuristics,
         debug = mainUtil.arguments.is_debug_enable(),
         deep_debug = mainUtil.arguments.is_debug_enable()

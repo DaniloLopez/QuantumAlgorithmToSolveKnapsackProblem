@@ -28,10 +28,7 @@ class Solution():
         obj_solution.my_container = solution.my_container
         return obj_solution
 
-    def quantum_initialization(self):
-         self.evaluate()
-
-    def random_initialization(self):
+    def random_initialization(self, theRandom=None):
         selected = []
         unselected = []
         my_weight = self._define_selected_unselected_list(selected, unselected)
@@ -107,8 +104,9 @@ class Solution():
     def _leave_only_valid_unselected_items(self, unselected, my_weight):
         free_space = self.my_container.my_knapsack.capacity - my_weight
         for i in range(len(unselected)-1, -1, -1):
-            if self.my_container.my_knapsack.weight(unselected[i])>free_space:
+            if self.my_container.my_knapsack.weight(unselected[i])>free_space:                
                 unselected.pop(i)
+                
     
     def _turn_on_random(self, unselected, my_weight):
         """Escoger aleatoriamente un elemento de la lista de no seleccionados, 
