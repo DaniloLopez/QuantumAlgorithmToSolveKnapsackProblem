@@ -32,7 +32,7 @@ class Solution():
         selected = []
         unselected = []
         my_weight = self._define_selected_unselected_list(selected, unselected)
-        my_weight = self._complete(unselected, my_weight)
+        my_weight = self.__complete(unselected, my_weight)
         self.evaluate()
     
     def tweak(self):
@@ -41,13 +41,13 @@ class Solution():
         my_weight = self._define_selected_unselected_list(selected, unselected)
         #operador terciario que se evalua según la probabilidad escogida
         my_weight = (
-            self._turn_off_random(selected, my_weight) 
+            self.__turn_off_random(selected, my_weight) 
             if self.my_container.my_aleatory.random() < general.ZERO_DOT_TWO
-            else self._turn_off_density(selected, my_weight)
+            else self.__turn_off_density(selected, my_weight)
         )
-        self._leave_only_valid_unselected_items(unselected, my_weight)
-        my_weight = self._turn_on_random(unselected, my_weight)
-        my_weight = self._complete(unselected, my_weight)
+        self.__leave_only_valid_unselected_items(unselected, my_weight)
+        my_weight = self.__turn_on_random(unselected, my_weight)
+        my_weight = self.__complete(unselected, my_weight)
         self.evaluate()
 
     def calculate_weight_solution(self):
@@ -91,24 +91,24 @@ class Solution():
                 unselected.append(i)
         return my_weight    
 
-    def _complete(self, unselected, my_weight):
+    def __complete(self, unselected, my_weight):
         weight = my_weight
         while True:
-            self._leave_only_valid_unselected_items(unselected, weight)
+            self.__leave_only_valid_unselected_items(unselected, weight)
             if unselected:
-                weight = self._turn_on_random(unselected, weight)
+                weight = self.__turn_on_random(unselected, weight)
             else:
                 break
         return weight
 
-    def _leave_only_valid_unselected_items(self, unselected, my_weight):
+    def __leave_only_valid_unselected_items(self, unselected, my_weight):
         free_space = self.my_container.my_knapsack.capacity - my_weight
         for i in range(len(unselected)-1, -1, -1):
             if self.my_container.my_knapsack.weight(unselected[i])>free_space:                
                 unselected.pop(i)
                 
     
-    def _turn_on_random(self, unselected, my_weight):
+    def __turn_on_random(self, unselected, my_weight):
         """Escoger aleatoriamente un elemento de la lista de no seleccionados, 
         eliminarlo y activar el vector posicion[] con el dato escogido 
         convirtiendolo a uno"""
@@ -120,7 +120,7 @@ class Solution():
             my_weight += self.my_container.my_knapsack.weight(pos_turn_on)
         return my_weight
 
-    def _turn_off_random(self, selected, my_weight):
+    def __turn_off_random(self, selected, my_weight):
         pos = self.my_container.my_aleatory.randint(0, len(selected)-1)
         pos_turn_off = selected[pos]
         selected.pop(pos)
@@ -128,7 +128,7 @@ class Solution():
         my_weight -= self.my_container.my_knapsack.weight(pos_turn_off)
         return my_weight
 
-    def _turn_off_density(self, selected, my_weight):
+    def __turn_off_density(self, selected, my_weight):
         if not selected:
             return
         by_density = dict()

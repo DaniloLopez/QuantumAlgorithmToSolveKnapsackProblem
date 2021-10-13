@@ -31,11 +31,28 @@ class SlimeMouldSolution(Solution):
         obj_solution.w = solution.w
         return obj_solution
 
+    #override
     def random_initialization(self):      
-        self.fillPositionAleatory()        
-        self.evaluate()
+        self.__fillPositionAleatory()        
+        self.evaluate()      
 
-    def fillPositionAleatory(self):
+    #override
+    def evaluate(self):
+        self.my_container.current_efos += 1
+        self.calculate_fitness_solution()
+        self.__repair_function()
+        self.__inprovement_algorithm()
+
+    #override
+    def calculate_fitness_solution(self):
+        """ penalty function for unfeasible solutions """        
+        self.fitness = self.my_container.my_knapsack.evaluate(self.position)
+        self.calculate_weight_solution()
+        # penalty function
+        if self.weight > self.my_container.my_knapsack.capacity:
+            self.fitness = self.fitness * -1
+
+    def __fillPositionAleatory(self):
         """ a position list is filled aleatory to evaluate the solution. """
         self.position = []
         for i in range(0, self.my_container.my_knapsack.n_items):
@@ -43,36 +60,47 @@ class SlimeMouldSolution(Solution):
             if rnd > 0.5:
                 self.position.append(1)
             else:
-                self.position.append(0)        
-
-    def evaluate(self):
-        self.my_container.current_efos += 1 
-        self.calculate_weight_solution()
-        self.calculate_fitness_solution()
-        self.__repairFunction()
-
-    def calculate_fitness_solution(self):
-        """penalty function for unfeasible solutions"""
-        self.fitness = self.my_container.my_knapsack.evaluate(self.position)
-        if self.weight > self.my_container.my_knapsack.capacity:
-            self.fitness = self.fitness * -1            
-            
-    def __repairFunction(self):
+                self.position.append(0)  
+    
+    def __repair_function(self):
         selected = []
         unselected = []
         self._define_selected_unselected_list(selected, unselected)
         while (self.fitness < 0):
-            low_pos = self.get_lowest_density_item_position(selected)
-            self.position[selected[low_pos]] = 0
-            self.calculate_weight_solution()
+            low_pos = self.__get_lowest_density_item_position(selected)
+            self.position[selected[low_pos]] = 0            
+            unselected.append(selected[low_pos])
+            selected.pop(low_pos)            
             self.calculate_fitness_solution()
 
-    def get_lowest_density_item_position(self, unselected):
+    def __inprovement_algorithm(self):
+        selected = []
+        unselected = []
+        self._define_selected_unselected_list(selected, unselected)
+        while (self.fitness > 0):
+            high_pos = self.__get_highest_density_item_position(unselected)
+            self.position[unselected[high_pos]] = 1
+            self.calculate_fitness_solution()
+            if self.fitness > 0:
+                selected.append(unselected[high_pos])
+                unselected.pop(high_pos)
+            else:
+                self.position[unselected[high_pos]] = 0
+                self.calculate_fitness_solution()
+                break
+            
+    def __get_lowest_density_item_position(self, selected):
         low_pos = 0 
         kp_items = self.my_container.my_knapsack.items
-        for i in range (0, len(unselected)) :
-            if kp_items[unselected[low_pos]].density > kp_items[unselected[i]].density :
+        for i in range (0, len(selected)) :
+            if kp_items[selected[low_pos]].density > kp_items[selected[i]].density :
                 low_pos = i
         return low_pos
-
         
+    def __get_highest_density_item_position(self, unselected):
+        high_pos = 0 
+        kp_items = self.my_container.my_knapsack.items
+        for i in range (0, len(unselected)) :
+            if kp_items[unselected[high_pos]].density < kp_items[unselected[i]].density :
+                high_pos = i
+        return high_pos
