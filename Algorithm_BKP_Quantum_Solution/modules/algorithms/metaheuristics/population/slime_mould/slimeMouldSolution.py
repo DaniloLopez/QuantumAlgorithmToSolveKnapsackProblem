@@ -41,7 +41,7 @@ class SlimeMouldSolution(Solution):
         self.my_container.current_efos += 1
         self.calculate_fitness_solution()
         self.__repair_function()
-        self.__inprovement_algorithm()
+        self.__improvement_algorithm()
 
     #override
     def calculate_fitness_solution(self):
@@ -73,22 +73,26 @@ class SlimeMouldSolution(Solution):
             selected.pop(low_pos)            
             self.calculate_fitness_solution()
 
-    def __inprovement_algorithm(self):
+    def __improvement_algorithm(self):
         selected = []
         unselected = []
         self._define_selected_unselected_list(selected, unselected)
         while (self.fitness > 0):
+            self.__moveItemsNofactibles(unselected)
+            if len(unselected) == 0:
+                break
             high_pos = self.__get_highest_density_item_position(unselected)
             self.position[unselected[high_pos]] = 1
-            self.calculate_fitness_solution()
-            if self.fitness > 0:
-                selected.append(unselected[high_pos])
-                unselected.pop(high_pos)
-            else:
-                self.position[unselected[high_pos]] = 0
-                self.calculate_fitness_solution()
-                break
+            unselected.pop(high_pos)
+            self.calculate_fitness_solution()            
             
+    def __moveItemsNofactibles(self, unselected):
+        available_weight = self.my_container.my_knapsack.capacity - self.weight
+        # recorrer la lista de atras hacia adelante
+        for i in range (len(unselected)-1, -1, -1):
+            if self.my_container.my_knapsack.items[unselected[i]].weight > available_weight:
+                unselected.pop(i)
+
     def __get_lowest_density_item_position(self, selected):
         low_pos = 0 
         kp_items = self.my_container.my_knapsack.items

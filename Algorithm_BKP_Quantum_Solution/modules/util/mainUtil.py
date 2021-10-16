@@ -116,7 +116,7 @@ class MainUtil():
 
     def print_list(self, list):
         print("--------------------------------------------------------------")
-        print("------- ::: LIST{ length : " +str(len(list))+ " } ::: -------")
+        print("------- ::: LIST{ length : " +str(len(list))+ " } ::: --------")
         for i in list:
             print(str(i))
         print("------- ::: END LIST ::: -------------------------------------")
