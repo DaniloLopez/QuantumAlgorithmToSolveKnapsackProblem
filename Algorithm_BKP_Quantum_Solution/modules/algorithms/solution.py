@@ -53,7 +53,7 @@ class Solution():
     def calculate_weight_solution(self):
         self.weight = 0.0
         for i in range(len(self.position)):
-            if(self.position[i] == 1):
+            if self.position[i] == 1:
                 self.weight += self.my_container.my_knapsack.weight(i)
         
     def calculate_fitness_solution(self, weight):
@@ -84,7 +84,7 @@ class Solution():
         unselected.clear()
         my_weight = 0.0
         for i in range(len(self.position)):
-            if(self.position[i] == 1):
+            if self.position[i] == 1:
                 selected.append(i)
                 my_weight += self.my_container.my_knapsack.weight(i)
             else:
@@ -139,7 +139,7 @@ class Solution():
         by_density = sorted(by_density.items(), key=operator.itemgetter(1))
         #elitism operation
         restricted_list_size = int(len(by_density) / 2)
-        if(restricted_list_size == 0): 
+        if restricted_list_size == 0:
             restricted_list_size = 1
         pos  = self.my_container.my_aleatory.randint(0, restricted_list_size-1)
         pos_turn_off = by_density[pos][0]

@@ -29,34 +29,34 @@ def main ():
         IbmQuantum(MAX_EFOS), 
         HillClimbing(MAX_EFOS)
     ]
-    mainUtil = MainUtil()
+    main_util = MainUtil()
     # set default path for folder dataset
     folder_dataset = general.FOLDER_DATASET_GENERATED
 
     # ************************************************************************
     # generate dataset or extract it from files
     # ************************************************************************
-    if(mainUtil.arguments.is_generate()):
+    if main_util.arguments.is_generate():
         # generate dataset 
-        dataset_generator = DatasetGenerator(mainUtil.arguments)
+        dataset_generator = DatasetGenerator(main_util.arguments)
         folder_dataset = dataset_generator.generate()
     # get knapsack list from dataset folder name
-    list_knapsack = mainUtil.get_knapsack_list(folder_dataset)
-    if mainUtil.arguments.debug or True:
+    list_knapsack = main_util.get_knapsack_list(folder_dataset)
+    if main_util.arguments.debug or True:
         print("--- ::: " +folder_dataset)
-        mainUtil.print_list(list_knapsack)
+        main_util.print_list(list_knapsack)
     # ************************************************************************
 
     # ************************************************************************
     # run metaheuristic list for every knapsack in knapsack problem list
     # ************************************************************************
-    mainUtil.init_result_file()
+    main_util.init_result_file()
     print("<-><-> run algorithms...")
-    mainUtil.run_metaheuristics(
+    main_util.run_metaheuristics(
         list_knapsack,  
         list_metaheuristics,
-        debug = mainUtil.arguments.is_debug_enable(),
-        deep_debug = mainUtil.arguments.is_debug_enable()
+        debug = main_util.arguments.is_debug_enable(),
+        deep_debug = main_util.arguments.is_debug_enable()
     )
     # ************************************************************************
     print("<> execution finished.")

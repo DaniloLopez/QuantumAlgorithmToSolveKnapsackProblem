@@ -24,19 +24,19 @@ class SlimeMould(PopulationMetaheuristic):
         self.current_efos = 0
 
         g_best = None   # DF - Best fitness all iterations
-        listSearchAgent = self.__generate_population_aleatory()
+        list_search_agents = self.__generate_population_aleatory()
 
         # returns descending order list according to best fitness
-        listSearchAgent, g_best = self.__get_sorted_list_and_global_best_solution(
-            listSearchAgent,
+        list_search_agents, g_best = self.__get_sorted_list_and_global_best_solution(
+            list_search_agents,
             isReverse=True
         )
         t = 0
         while t < self.max_efos:
             # plus epsilon to avoid denominator zero
-            s = listSearchAgent[0].fitness - \
-                listSearchAgent[-1].fitness + self._EPSILON
-            self.calculate_w(listSearchAgent, s)
+            s = list_search_agents[0].fitness - \
+                list_search_agents[-1].fitness + self._EPSILON
+            self.calculate_w(list_search_agents, s)
 
             # The value of vb oscillates randomly between [−a, a] and gradually
             # approaches zero as the iterations increase
@@ -50,7 +50,7 @@ class SlimeMould(PopulationMetaheuristic):
             for i in range(0, self.pop_size):
                 pos_new = np.zeros(self.my_knapsack.n_items)
                 # Eq.(2.2)
-                p = np.tanh(abs(listSearchAgent[i].fitness - g_best.fitness))
+                p = np.tanh(abs(list_search_agents[i].fitness - g_best.fitness))
                 for j in range(0, self.my_knapsack.n_items):
                     if uniform(0, 1) < self.z:  # Eq.(2.7)
                         # rand ⋅ (UB − LB) + LB, rand < z
@@ -68,44 +68,44 @@ class SlimeMould(PopulationMetaheuristic):
                             # Eq. 12
                             #xb(t) + vb * (w *xa(t)-xb(t))
                             pos_new[j] = g_best.position[j] + vb * (
-                                listSearchAgent[i].w *
-                                listSearchAgent[id_a].position[j] - 
-                                listSearchAgent[id_b].position[j]
+                                list_search_agents[i].w *
+                                list_search_agents[id_a].position[j] -
+                                list_search_agents[id_b].position[j]
                             )
                         else:                            
                             # uniform(0,1) X gausian(x(t))
                             pos_new[j] = uniform(0,1) * self.__gaussian(
                                 self._MU, 
                                 self._SIGMA, 
-                                listSearchAgent[i].position[j]
+                                list_search_agents[i].position[j]
                             )
                 # Check bound and re-calculate fitness after each individual move
                 self.__amend_position(pos_new)
 
                 # EVALUAR RESULTADOS CON O SIN LINEA 80 - 81
-                listSearchAgent[i].position = pos_new
-                listSearchAgent[i].evaluate()
-                if g_best.fitness < listSearchAgent[i].fitness :
-                    g_best = SlimeMouldSolution.init_solution(listSearchAgent[i])
+                list_search_agents[i].position = pos_new
+                list_search_agents[i].evaluate()
+                if g_best.fitness < list_search_agents[i].fitness :
+                    g_best = SlimeMouldSolution.init_solution(list_search_agents[i])
 
                 # bitwise operation
                 bitwise_current_position = self.__bitwise_solution(
-                    listSearchAgent[i], 
+                    list_search_agents[i],
                     g_best
                 )
-                bitwise_current = SlimeMouldSolution.init_solution(listSearchAgent[i])
+                bitwise_current = SlimeMouldSolution.init_solution(list_search_agents[i])
                 bitwise_current.position = bitwise_current_position
                 bitwise_current.evaluate()
 
-                if bitwise_current.fitness >listSearchAgent[i].fitness :
-                    listSearchAgent[i] = bitwise_current
+                if bitwise_current.fitness >list_search_agents[i].fitness :
+                    list_search_agents[i] = bitwise_current
 
-                if g_best.fitness < listSearchAgent[i].fitness :
-                    g_best = SlimeMouldSolution.init_solution(listSearchAgent[i])
+                if g_best.fitness < list_search_agents[i].fitness :
+                    g_best = SlimeMouldSolution.init_solution(list_search_agents[i])
 
             # returns descending order list according to best fitness
-            listSearchAgent, g_best = self.__get_sorted_list_and_global_best_solution(
-                listSearchAgent, 
+            list_search_agents, g_best = self.__get_sorted_list_and_global_best_solution(
+                list_search_agents,
                 isReverse=True
             )
             if g_best.fitness >= self.my_knapsack.objective :
@@ -113,10 +113,10 @@ class SlimeMould(PopulationMetaheuristic):
             t += 1
         self.my_best_solution = g_best
     
-    def __bitwise_solution(self, currentSM, g_best):        
+    def __bitwise_solution(self, current_SM, g_best):
         rnd_position = np.random.choice(
             [0,1], 
-            len(currentSM.position), 
+            len(current_SM.position),
             p = [0.5, 0.5]
         )
         # apply and operation
@@ -124,7 +124,7 @@ class SlimeMould(PopulationMetaheuristic):
         or_position = np.zeros(len(rnd_position))
         # apply or operation
         for i in range (0, len(rnd_position)) : 
-            if (currentSM.position[i] == 1 or and_position[i] == 1):
+            if current_SM.position[i] == 1 or and_position[i] == 1:
                 or_position[i] = 1
         return or_position.tolist()
 
@@ -135,10 +135,10 @@ class SlimeMould(PopulationMetaheuristic):
 
     def __generate_population_aleatory(self):
         """generate population vector aleatory"""
-        listAgent = []
+        list_agent = []
         for i in range(self.pop_size):
-            listAgent.append(self.__get_instance_solution())
-        return listAgent
+            list_agent.append(self.__get_instance_solution())
+        return list_agent
 
     def __get_instance_solution(self):
         """ generate an instances solution for Slime Mould. """
@@ -149,30 +149,30 @@ class SlimeMould(PopulationMetaheuristic):
     def __get_sorted_list_and_global_best_solution(
         self, 
         population=None, 
-        isReverse=False
+        is_reverse=False
         ):
         """ sort population and return the sorted population and the best 
         position. """
         sorted_pop = sorted(
-            population, key=lambda ks: ks.fitness, reverse=isReverse)
+            population, key=lambda ks: ks.fitness, reverse=is_reverse)
         return sorted_pop, SlimeMouldSolution.init_solution(sorted_pop[0])
 
     def __amend_position(self, position=None):
         for i in range(0, len(position)) :
-            if (abs(math.tanh(position[i])) >= uniform(0,1)) :
+            if abs(math.tanh(position[i])) >= uniform(0,1) :
                 position[i] = 1
             else:
                 position[i] = 0
 
-    def calculate_w(self, listSearchAgent, s):
+    def calculate_w(self, list_search_agents, s):
         # calculate weight. EQ 6
         for i in range(self.pop_size):
             if i <= int(self.pop_size / 2):
-                listSearchAgent[i].w = 1 + uniform(0, 1) * np.log10(
-                    (listSearchAgent[0].fitness - listSearchAgent[i].fitness) / s + 1)
+                list_search_agents[i].w = 1 + uniform(0, 1) * np.log10(
+                    (list_search_agents[0].fitness - list_search_agents[i].fitness) / s + 1)
             else:
-                listSearchAgent[i].w = 1 - uniform(0, 1) * np.log10(
-                    (listSearchAgent[0].fitness - listSearchAgent[i].fitness) / s + 1)
+                list_search_agents[i].w = 1 - uniform(0, 1) * np.log10(
+                    (list_search_agents[0].fitness - list_search_agents[i].fitness) / s + 1)
 
     def __str__(self) -> str:
         return super().__str__() + ".Slime_Mould_Algorithm"
