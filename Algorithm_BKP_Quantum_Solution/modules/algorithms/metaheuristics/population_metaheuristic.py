@@ -7,7 +7,7 @@ class PopulationMetaheuristic(Algorithm):
         super(PopulationMetaheuristic, self).__init__()
         self.curve = []
         self.pop_size = pop_size        
-        self.lb = [pop_size]
+        self.lb = [-pop_size]
         self.ub = [pop_size]
         self.z = z_value
 

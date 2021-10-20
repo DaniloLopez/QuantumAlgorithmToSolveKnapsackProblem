@@ -43,7 +43,10 @@ def get_line_result_format(knapsack, list_fitness, list_efos, list_times,
     line += get_attr_value("TIMES_FOUND_IDEAL", times_found_ideal, init=True)
     line += get_attr_value("FITNESS_LIST", list_fitness)
     line += get_attr_value("EFOS_LIST", list_efos)
-    line += get_attr_value("AVERAGE_TIME", str(round((sum(list_times) * 100) / iterations, 2)))    
+    line += get_attr_value(
+        "AVERAGE_TIME", 
+        str(round((sum(list_times) * 100) / iterations, 2))
+    )    
     line += " }"
     
     return line

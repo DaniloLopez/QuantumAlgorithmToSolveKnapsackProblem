@@ -24,7 +24,11 @@ def main ():
     """
     # variables     
     list_knapsack = []
-    list_metaheuristics = [SlimeMould(MAX_EFOS, POP_SIZE, ZERO_DOT_THREE)]
+    list_metaheuristics = [
+        SlimeMould(MAX_EFOS, POP_SIZE, ZERO_DOT_THREE), 
+        IbmQuantum(MAX_EFOS), 
+        HillClimbing(MAX_EFOS)
+    ]
     mainUtil = MainUtil()
     # set default path for folder dataset
     folder_dataset = general.FOLDER_DATASET_GENERATED

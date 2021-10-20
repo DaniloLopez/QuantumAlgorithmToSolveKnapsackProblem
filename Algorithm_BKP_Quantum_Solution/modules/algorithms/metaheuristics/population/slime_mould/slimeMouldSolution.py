@@ -97,7 +97,7 @@ class SlimeMouldSolution(Solution):
         low_pos = 0 
         kp_items = self.my_container.my_knapsack.items
         for i in range (0, len(selected)) :
-            if kp_items[selected[low_pos]].density > kp_items[selected[i]].density :
+            if kp_items[selected[low_pos]].density > kp_items[selected[i]].density:
                 low_pos = i
         return low_pos
         
@@ -105,6 +105,6 @@ class SlimeMouldSolution(Solution):
         high_pos = 0 
         kp_items = self.my_container.my_knapsack.items
         for i in range (0, len(unselected)) :
-            if kp_items[unselected[high_pos]].density < kp_items[unselected[i]].density :
+            if kp_items[unselected[high_pos]].density < kp_items[unselected[i]].density:
                 high_pos = i
         return high_pos
