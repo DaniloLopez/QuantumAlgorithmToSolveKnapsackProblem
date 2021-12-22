@@ -14,7 +14,8 @@ class DatasetGenerator(Generator):
     
     def generate(self):
         self.validate_arguments()
-        return general.FOLDER_DATASET_GENERATED   
+        self._generate_difficult()
+        return general.FOLDER_DATASET_GENERATED
 
     def validate_arguments(self):
         self._validate_duplicate_arguments()
@@ -46,7 +47,8 @@ class DatasetGenerator(Generator):
 
     def _validate_option_valid(self, list, min_value, max_value, max_parameters):
         if(len(list) > max_parameters):
-            raise Exception("parametro invalido, maximum: " + str(max_parameters) + " arguments")
+            raise Exception("ERROR: argument invalid, maximum: " 
+                + str(max_parameters) + " arguments")
         else:
             self._validate_min_max(list, min_value, max_value)
 
@@ -57,49 +59,29 @@ class DatasetGenerator(Generator):
             
     def _validate_min_max(self, list_eval, min_value, max_value):
         if(min(list_eval) < min_value or max(list_eval) > max_value):
-            raise Exception("parametro invalido, verifique el rango. valid: "  + str(min_value) + " - " + str(max_value))
-
-    def _generate_type(self):
-        if sum(self.args.type) <= 10 and len(self.args) <= 4 :
-            if 1 in self.args.type :
-                self.generate_uncorrelated()
-            if 2 in self.args.type :
-                self.generate_weakly_correlation()
-            if 3 in self.args.type :
-                self.generate_strongly_correlation()
-            if 4 in self.args.type:
-                self.generate_subset_sum()
-        else:
-            raise Exception("Bad arguments for parameter -t/-T ")
+            raise Exception("ERROR: argument invalid. valid: "  + str(min_value) + " - " + str(max_value))
         
     def _generate_difficult(self):
-        if sum(self.args.type) <= 6 and len(self.args) <= 4 :
+        total = sum(self.args.difficult)
+        if total > 0 and total <= 6 :
             if 1 in self.args.difficult :
-                pass
+                self._generate(general.EASY, 1)
             if 2 in self.args.difficult :
-                pass
+                self._generate(general.MEDIUM, 2)
             if 3 in self.args.difficult :
-                pass
-            if 0 in self.args.difficult :
-                pass
+                self._generate(general.HARD, 3)            
         else:
             raise Exception(
                 "<>Bad arguments for parameter (-d/-D).\t)" +
                 "err: Repeated values in parameters"
             )
-
-    def generate_by_difficult(self):
-        """generate dataset low difficult"""
-        self._generate(general.EASY)
-        self._generate(general.MEDIUM)
-        self._generate(general.HARD)
     
-    def _generate(self, difficult):
+    def _generate(self, difficult, diff):
         for type in self.args.type :
                 for nitems in range(self.args.nitems[0], self.args.nitems[1]+1):
-                    for range in range(self.args.range[0], self.args.range[1]):
+                    for rang in range(self.args.range[0], self.args.range[1]+1):                        
                         file_name = util.build_commnad_line_text_generate (
-                            type, difficult, nitems, range, 3
+                            type, difficult, diff, nitems, rang, 3
                         )
                         os.system(difficult + " " + file_name)
                         

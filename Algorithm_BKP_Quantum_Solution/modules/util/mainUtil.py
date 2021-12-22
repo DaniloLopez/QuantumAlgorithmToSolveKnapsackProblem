@@ -53,16 +53,18 @@ class MainUtil():
         debug=False, 
         deep_debug=False
     ):
-        try:            
-            for my_metaheuristic in metaheuristic_list:
-                util.if_print_text(my_metaheuristic, debug)
-                self.obj_fileWriter.write_line(str(my_metaheuristic))
-                for knapsack in knapsack_list:
-                    util.if_print_text("\n\t" + str(knapsack), debug)
+        try:  
+            self.obj_fileWriter.write_line(util.get_solution_header(metaheuristic_list))
+            for knapsack in knapsack_list:
+                util.if_print_text("\n\t" + str(knapsack), debug)
+                self.obj_fileWriter.write(util.get_info_dataset(knapsack))                
+                for my_metaheuristic in metaheuristic_list:
                     list_fitness = []
                     list_efos = []
                     list_times = []
-                    times_found_ideal = 0
+                    times_found_ideal = 0          
+                    util.if_print_text(my_metaheuristic, debug)
+                    #self.obj_fileWriter.write("*"+ str(my_metaheuristic))
                     for it in range(self.arguments.get_iterations()):
                         random.seed(it)                        
                         start_time= time() # initial time record
@@ -81,7 +83,7 @@ class MainUtil():
                         if substraction < 1e-10 : 
                             times_found_ideal += 1
                             
-                    self.obj_fileWriter.write_line(
+                    self.obj_fileWriter.write(
                         util.get_line_result_format (
                             knapsack, 
                             list_fitness, 
@@ -96,7 +98,7 @@ class MainUtil():
                         "\t" + str(my_metaheuristic.my_best_solution), 
                         debug
                     )
-                print("")
+                self.obj_fileWriter.write_line("")
         except OSError as err:
             print("OS error: {0}".format(err))
         except:

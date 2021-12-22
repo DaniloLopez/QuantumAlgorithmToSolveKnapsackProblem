@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 class Knapsack():
     """docstring for Knapsack."""
 
@@ -15,13 +16,13 @@ class Knapsack():
 
     def is_equal_solution(self, list_solution):
         """compares solution"""
-        if(len(self.solution) != len(list_solution)):             
+        if(len(self.solution) != len(list_solution)):
             return False
-        else:             
-            for i in range(0,len(self.solution)):
-                if(self.solution[i] != list_solution[i]): 
+        else:
+            for i in range(0, len(self.solution)):
+                if(self.solution[i] != list_solution[i]):
                     return False
-        return True 
+        return True
 
     def calculate_knapsack_value_weight(self, solution):
         sum_value = 0
@@ -46,11 +47,11 @@ class Knapsack():
     def get_lowest_density_item_position(self):
         low_pos = 0
         for i in range(0, len(self.items)):
-            if self.items[low_pos].density > self.items[i].density :
+            if self.items[low_pos].density > self.items[i].density:
                 low_pos = i
         return low_pos
 
-    #setters
+    # setters
     def add_item_to_item_list(self, item):
         """ add an item to solution list """
         self.items.append(item)
@@ -67,13 +68,11 @@ class Knapsack():
         elif self.n_items < other.n_items:
             return -1
         else:
-            return 1    
+            return 1
 
     def __str__(self):
         """ to_string function to print information from a knapsack instance"""
-        line = "{ \"FILE_NAME\": " + str(self.file_name) +\
-            ",    \"N_ITEM\": " + str(self.n_items) +\
-            ",    \"CAPACITY\": " + str(self.capacity) +\
-            ",    \"OBJECTIVE\": " + str(self.objective) +\
-            ",    \"SOLUTION\": " + str(self.solution) + " }"
+        line = str(self.file_name) + " " + str(self.n_items) + " " + \
+            str(self.capacity) + " " + \
+            str(self.objective) + " " + str(self.solution)
         return line

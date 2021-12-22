@@ -24,11 +24,13 @@ def main ():
     """
     # variables     
     list_knapsack = []
+    
     list_metaheuristics = [
         SlimeMould(MAX_EFOS, POP_SIZE, ZERO_DOT_THREE), 
-        IbmQuantum(MAX_EFOS), 
+        #IbmQuantum(MAX_EFOS), 
         HillClimbing(MAX_EFOS)
     ]
+    
     main_util = MainUtil()
     # set default path for folder dataset
     folder_dataset = general.FOLDER_DATASET_GENERATED
@@ -42,7 +44,7 @@ def main ():
         folder_dataset = dataset_generator.generate()
     # get knapsack list from dataset folder name
     list_knapsack = main_util.get_knapsack_list(folder_dataset)
-    if main_util.arguments.debug or True:
+    if main_util.arguments.debug:
         print("--- ::: " +folder_dataset)
         main_util.print_list(list_knapsack)
     # ************************************************************************
@@ -51,7 +53,7 @@ def main ():
     # run metaheuristic list for every knapsack in knapsack problem list
     # ************************************************************************
     main_util.init_result_file()
-    print("<-><-> run algorithms...")
+    print("<-><-> run algorithms...")    
     main_util.run_metaheuristics(
         list_knapsack,  
         list_metaheuristics,

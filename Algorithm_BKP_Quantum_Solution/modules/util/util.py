@@ -1,59 +1,67 @@
+import math
+import modules.util.generalValue as general
+from datetime import datetime
+from os import scandir, getcwd
+import numpy as np
+import os
 from modules.util.generalValue import SEPARATOR
 import sys
 sys.path.append('../')
-import os
-import numpy as np
-from os import scandir, getcwd
-from datetime import datetime
-import modules.util.generalValue as general
+
 
 def get_path():
     return os.getcwd()
 
+
 def get_info_time():
     return datetime.now().strftime("%d%m%Y_%H%M%S")
 
+
 def get_result_file_name():
     return (
-        get_path() + SEPARATOR + "solutions" + SEPARATOR + "result_" + 
+        get_path() + SEPARATOR + "solutions" + SEPARATOR + "result_" +
         get_info_time() + ".txt"
-    )    
+    )
+
 
 def fill_spaces(value, length):
     return str(value).ljust(length)[:length]
 
-def get_list_files_folder(path = getcwd()):
+
+def get_list_files_folder(path=getcwd()):
     """list existing files in a given path"""
     return [arch.name for arch in scandir(path) if arch.is_file()]
+
 
 def get_line_header(iterations) -> str:
     return f"Number of iterations: {iterations} \n"
 
+
 def get_attr_value(attr, value, init=False):
-    line = "\"" if init else ",    \""    
+    line = "\"" if init else ",    \""
     return line + attr + "\": " + str(value)
 
-def get_line_result_format(knapsack, list_fitness, list_efos, list_times, 
-                        times_found_ideal, iterations, best_solution):
-    line = "\t\"knapsack\": "
-    line += str(knapsack)
-    line += "\n\t\"best_solution\": "
-    line += str(best_solution)
-    line += "\n\t\"metadata\": {"
-    line += get_attr_value("TIMES_FOUND_IDEAL", times_found_ideal, init=True)
-    line += get_attr_value("FITNESS_LIST", list_fitness)
-    line += get_attr_value("EFOS_LIST", list_efos)
-    line += get_attr_value(
-        "AVERAGE_TIME", 
-        str(round((sum(list_times) * 100) / iterations, 2))
-    )    
-    line += " }"
-    
+
+def get_line_result_format(knapsack, list_fitness, list_efos, list_times,
+                           times_found_ideal, iterations, best_solution):
+    avg = sum(list_fitness) / len(list_fitness)
+    var = sum((fit-avg)**2 for fit in list_fitness) / len(list_fitness)
+    st_dev = math.sqrt(var)
+
+    #line = "best_solution: " + str(best_solution)
+    line = "success_rate: " + \
+        str(round(((times_found_ideal*100)/iterations), 2)) + "% "
+    line += "fitness_average: " + str(round(float(avg), 2)) + "% "
+    line += "standar_deviation: " + str(round(st_dev, 2)) +" "
+    line += "best_fitness: " + str(max(list_fitness)) +" "
+    line += "worst_fitness: " + str(min(list_fitness)) + " "
+    line +="average_time: " + str(round((sum(list_times) * 100) / iterations, 2))+ " ###"
     return line
 
-def get_line_result(obj_kp, profits_solution, weights_solution, 
-                    num_exact_solution, num_iterations, times):    
-    line =  str(obj_kp.n_items + " ")
+
+def get_line_result(obj_kp, profits_solution, weights_solution,
+                    num_exact_solution, num_iterations, times):
+    line = str(obj_kp.n_items + " ")
     line += str(obj_kp.capacity + " ")
     line += str(obj_kp.objective + " ")
     line += str(np.max(profits_solution) + " ")
@@ -69,13 +77,21 @@ def get_line_result(obj_kp, profits_solution, weights_solution,
     line += str(sum(times)/len(times) + " ")
     return line
 
-def generate_full_name_file(id, type, difficult, nitems, range):
-    return (general.FOLDER_DATASET_GENERATED + SEPARATOR + difficult + 
-            SEPARATOR + "t" + str(type) + "_d" +str(difficult) + 
+
+def generate_full_name_file(type, difficult, diff, nitems, range):
+    return (general.FOLDER_DATASET_GENERATED + difficult +
+            SEPARATOR + "t" + str(type) + "_d" + str(diff) +
             "_n" + str(nitems) + "_r" + str(range) + ".txt")
 
-def build_commnad_line_text_generate(type, difficult, nitems, range, 
-                                instance, S=1000):
+
+def build_commnad_line_text_generate(
+        type,
+        difficult,
+        diff,
+        nitems,
+        range,
+        instance,
+        S=1000):
     """
     type: 1=uncorrelated., 2=weakly corr., 3=strongly corr., 4=subset sum.
     difficult: difficult.
@@ -84,10 +100,25 @@ def build_commnad_line_text_generate(type, difficult, nitems, range,
     instance: instance no.
     S: number of tests in series (typically 1000).
     """
-    return (str(id.n_items) + " " + str(id.range) + " " + str(id.type_corr) + 
-            " " + str(instance) + " " + str(S) + " " + 
-            generate_full_name_file(type, difficult, nitems, range))
+    return (str(nitems) + " " + str(range) + " " + str(type) +
+            " " + str(instance) + " " + str(S) + " " +
+            generate_full_name_file(type, difficult, diff, nitems, range))
+
 
 def if_print_text(object, condition=True):
     if condition:
         print(object)
+
+
+def get_info_dataset(knapsack):
+    return knapsack.file_name + "  " + str(knapsack.n_items) + "  " + str(knapsack.capacity) + "  " + str(knapsack.objective) + "  [" + str(knapsack.solution)[1:-1]+"]  "
+
+def get_solution_header(metaheuristic_list):
+    n = len(metaheuristic_list)
+    line = "\t\t\tDATASET\t\t\t ###"
+    for i in range(n):
+        line += "\tAlgorithm "+ metaheuristic_list[i].__class__.__name__ +"\t###"
+    line+="\n file_name|n items|capacity|objective|solution"
+    for i in range (n):
+        line+="|success Rate|fitness average|standar deviation|best fitness|worst fitness|time average|###"
+    return line

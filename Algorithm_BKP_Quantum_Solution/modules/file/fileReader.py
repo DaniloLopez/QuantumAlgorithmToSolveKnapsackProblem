@@ -71,7 +71,7 @@ class FileReader():
     def _calculate_optimal_solution(self):
         """generate optimal solution to knapsack with brute force"""
         best_result = []
-        print([it.weight for it in self.knapsack.items])
+        #print([it.weight for it in self.knapsack.items])
         #initialize variables to zero sending zero_list 
         best_value,best_weight = self.knapsack.calculate_knapsack_value_weight(
             self._complete_text_right(
@@ -84,11 +84,11 @@ class FileReader():
                 bin, "0", self.knapsack.n_items
             )
             v, w = self.knapsack.calculate_knapsack_value_weight(temp_solution)
-            print(
+            """print(
                 "solution: " + str(temp_solution) + " " +
                 "value: " + str(v) + " " +
                 "weight: " + str(w)
-            )
+            )"""
             if(w <= self.knapsack.capacity and v >= best_value):
                 best_value,best_weight=v, w
                 best_result = temp_solution            

@@ -29,7 +29,7 @@ class SlimeMould(PopulationMetaheuristic):
         # returns descending order list according to best fitness
         list_search_agents, g_best = self.__get_sorted_list_and_global_best_solution(
             list_search_agents,
-            isReverse=True
+            is_reverse=True
         )
         t = 0
         while t < self.max_efos:
@@ -106,7 +106,7 @@ class SlimeMould(PopulationMetaheuristic):
             # returns descending order list according to best fitness
             list_search_agents, g_best = self.__get_sorted_list_and_global_best_solution(
                 list_search_agents,
-                isReverse=True
+                is_reverse=True
             )
             if g_best.fitness >= self.my_knapsack.objective :
                 break
