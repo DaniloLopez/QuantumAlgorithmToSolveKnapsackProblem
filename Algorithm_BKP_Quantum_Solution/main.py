@@ -6,8 +6,9 @@ from modules.util.mainUtil import MainUtil
 import modules.util.generalValue as general
 from modules.generator.datasetGenerator import DatasetGenerator
 from modules.algorithms.metaheuristics.simple_state.hillClimbing import HillClimbing
-from modules.algorithms.metaheuristics.quantum.ibmQuantum import IbmQuantum
+# from modules.algorithms.metaheuristics.quantum.ibmQuantum import IbmQuantum
 from modules.algorithms.metaheuristics.population.slime_mould.slimeMould import SlimeMould
+from modules.algorithms.metaheuristics.evolutionary.grey_wolf_optimizer.greyWolfOptimizer import GreyWolf
 
 # ****************************************************************************
 # get root path of the project
@@ -26,9 +27,10 @@ def main ():
     list_knapsack = []
     
     list_metaheuristics = [
-        SlimeMould(MAX_EFOS, POP_SIZE, ZERO_DOT_THREE), 
+        # SlimeMould(MAX_EFOS, POP_SIZE, ZERO_DOT_THREE), 
+        GreyWolf(MAX_EFOS, POP_SIZE)
         #IbmQuantum(MAX_EFOS), 
-        HillClimbing(MAX_EFOS)
+        # HillClimbing(MAX_EFOS)
     ]
     
     main_util = MainUtil()

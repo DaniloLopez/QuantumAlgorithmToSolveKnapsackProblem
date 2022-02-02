@@ -12,7 +12,7 @@ class Algorithm(ABC):
         self.population = []
 
     @abstractmethod
-    def execute(self, the_knapsack, the_aleatory, debug):
+    def execute(self, the_knapsack, the_aleatory, debug=False):
         pass
 
     def __str__(self) -> str:

@@ -1,5 +1,5 @@
 from modules.algorithms.metaheuristics.population.slime_mould.slimeMouldSolution import SlimeMouldSolution
-from modules.algorithms.metaheuristics.population_metaheuristic import PopulationMetaheuristic
+from modules.algorithms.metaheuristics.populationMetaheuristic import PopulationMetaheuristic
 
 from numpy.random import uniform, choice
 import numpy as np
@@ -16,7 +16,7 @@ class SlimeMould(PopulationMetaheuristic):
         super(SlimeMould, self).__init__(pop_size, z_value)
         self.max_efos = max_efos
 
-    def execute(self, the_knapsack, the_aleatory, debug):
+    def execute(self, the_knapsack, the_aleatory, debug=False):
         # variables
         self.my_knapsack = the_knapsack
         self.my_aleatory = the_aleatory

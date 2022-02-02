@@ -34,7 +34,7 @@ class SlimeMouldSolution(Solution):
     #override
     def random_initialization(self):      
         self.__fillPositionAleatory()        
-        self.evaluate()      
+        self.evaluate()
 
     #override
     def evaluate(self):

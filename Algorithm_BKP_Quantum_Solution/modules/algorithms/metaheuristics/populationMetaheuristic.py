@@ -11,7 +11,7 @@ class PopulationMetaheuristic(Algorithm):
         self.ub = [pop_size]
         self.z = z_value
 
-    def execute(self, the_knapsack, the_aleatory, debug):
+    def execute(self, the_knapsack, the_aleatory, debug=False):
         pass
 
     def __str__(self) -> str:

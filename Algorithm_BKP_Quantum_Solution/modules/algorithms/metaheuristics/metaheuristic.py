@@ -7,7 +7,7 @@ class Metaheuristic(Algorithm):
         super(Metaheuristic, self).__init__()
         self.curve = []
 
-    def execute(self, the_knapsack, the_aleatory, debug):
+    def execute(self, the_knapsack, the_aleatory, debug=False):
         pass
 
     def __str__(self) -> str:

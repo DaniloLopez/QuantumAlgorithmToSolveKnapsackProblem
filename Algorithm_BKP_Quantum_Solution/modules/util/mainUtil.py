@@ -101,8 +101,8 @@ class MainUtil():
                 self.obj_fileWriter.write_line("")
         except OSError as err:
             print("OS error: {0}".format(err))
-        except:
-            print("Unexpected error:", sys.exc_info()[0])
+        except BaseException as e:
+            print("Unexpected error: {}".format(e))
             raise
         finally:        
             self.obj_fileWriter.close()
