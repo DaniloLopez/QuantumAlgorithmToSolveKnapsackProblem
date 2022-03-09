@@ -66,7 +66,7 @@ class GreyWolfSolution(Solution):
         while(w_total < self.my_container.my_knapsack.capacity):
             i = random.randint(0, m)
             if self.position[i] == 0: 
-                r = random.choice([0,1])
+                r = random.uniform(0,1)
                 cos = quantum[i][0] # TODO deberia ser seno ya que es quien representa la probabilidad de seleccionar el item
                 if r > math.pow(abs(cos),2): #observation of quantum vector
                     self.position[i] = 1

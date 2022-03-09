@@ -68,8 +68,10 @@ class MainUtil():
                     for it in range(self.arguments.get_iterations()):
                         random.seed(it)                        
                         start_time= time() # initial time record
+                        
                         # invocation execute metaheuristic
                         my_metaheuristic.execute(knapsack, random, deep_debug)
+                        
                         elapsed_time = time() - start_time # end time record
                         list_fitness.append (
                             my_metaheuristic.my_best_solution.fitness
@@ -77,8 +79,8 @@ class MainUtil():
                         list_efos.append(my_metaheuristic.current_efos)
                         list_times.append(elapsed_time)                    
                         substraction = (
-                            my_metaheuristic.my_best_solution.fitness - 
-                            knapsack.objective
+                            my_metaheuristic.my_best_solution.fitness
+                            - knapsack.objective
                         )
                         if substraction < 1e-10 : 
                             times_found_ideal += 1
