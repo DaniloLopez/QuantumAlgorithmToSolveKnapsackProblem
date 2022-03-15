@@ -54,7 +54,9 @@ class MainUtil():
         deep_debug=False
     ):
         try:  
-            self.obj_fileWriter.write_line(util.get_solution_header(metaheuristic_list))
+            self.obj_fileWriter.write_line(
+                util.get_solution_header(metaheuristic_list)
+            )
             for knapsack in knapsack_list:
                 util.if_print_text("\n\t" + str(knapsack), debug)
                 self.obj_fileWriter.write(util.get_info_dataset(knapsack))                

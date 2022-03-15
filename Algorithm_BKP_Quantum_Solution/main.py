@@ -9,6 +9,7 @@ from modules.algorithms.metaheuristics.simple_state.hillClimbing import HillClim
 # from modules.algorithms.metaheuristics.quantum.ibmQuantum import IbmQuantum
 from modules.algorithms.metaheuristics.population.slime_mould.slimeMould import SlimeMould
 from modules.algorithms.metaheuristics.evolutionary.grey_wolf_optimizer.greyWolfOptimizer import GreyWolf
+from modules.algorithms.metaheuristics.population.dragonfly.dragonfly import Dragonfly
 
 # ****************************************************************************
 # get root path of the project
@@ -28,9 +29,10 @@ def main ():
     
     list_metaheuristics = [
         # SlimeMould(MAX_EFOS, POP_SIZE, ZERO_DOT_THREE), 
-        GreyWolf(MAX_EFOS, POP_SIZE)
+        # GreyWolf(MAX_EFOS, POP_SIZE)
         #IbmQuantum(MAX_EFOS), 
         # HillClimbing(MAX_EFOS)
+        Dragonfly(MAX_EFOS, POP_SIZE)
     ]
     
     main_util = MainUtil()

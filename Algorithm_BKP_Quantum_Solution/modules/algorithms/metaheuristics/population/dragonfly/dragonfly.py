@@ -1,8 +1,9 @@
-from random import random
+import random
 import numpy as np
 
 from modules.algorithms.metaheuristics.populationMetaheuristic import PopulationMetaheuristic
 from modules.algorithms.metaheuristics.population.dragonfly.dragonflySolution import DragonflySolution
+from modules.algorithms.metaheuristics.population.dragonfly import DIM_DA
 
 class Dragonfly(PopulationMetaheuristic):
     """DragonfLy algorithm
@@ -10,12 +11,8 @@ class Dragonfly(PopulationMetaheuristic):
     Args:
         PopulationMetaheuristic (pop_size, z_value): Base metaheuristic class
     """
-    def __init__(self, arg):
-        super(Dragonfly, self).__init__()
-        self.arg = arg
-
-    def __init__(self, max_efos, pop_size, z_value):
-        super(Dragonfly, self).__init__(pop_size, z_value)
+    def __init__(self, max_efos, pop_size):
+        super(Dragonfly, self).__init__(pop_size, None)
         self.max_efos = max_efos
 
     def execute(self, the_knapsack, the_aleatory, debug=False):
@@ -31,51 +28,57 @@ class Dragonfly(PopulationMetaheuristic):
         # initialize dragonfly population and step vector
         # Calculate the objective values of all dragonflies
         X = self.__initialize_dragonflies_population()
-        t = 0
-        while t < self.max_efos:
+        t = 1
+        while t <= self.max_efos:
             source, enemy = self.__get_source_and_enemy(X)
             w, s, a, c, f, e = self.__calculate_constants(t)
             
             # get neighbors for actual iteration 
-            for i in range(self.pop_size):
+            for i in range(DIM_DA):
                 neighbors_x = []
                 # Find the neighboring solutions 
                 # (all the dragonflies are assumed as a group in binary search spaces)
-                for j in range(self.pop_size):
-                    if (i != j): # not compare itself                 
+                for j in range(DIM_DA):
+                    if (i != j): # not compare itself
                         neighbors_x.append(DragonflySolution.init_solution(X[j]))
                 neighbors_no = len(neighbors_x)
                 
                 # Seperation 
-                S=np.zeros(self.my_knapsack.n_items)
+                S=np.zeros(DIM_DA)
                 for k in neighbors_x:
-                    S = S + (np.array(k.position) - np.array(X[i].position))
+                    S = S + (np.array(k.da) - np.array(X[i].da))
                 S = -S
                 
                 # Alignment
-                sum_delta = np.zeros(self.my_knapsack.n_items)
-                for a in neighbors_x:
-                    sum_delta = sum_delta + a.step
-                A = (np.sum(sum_delta))/neighbors_no
+                sum_delta = np.zeros(DIM_DA)
+                for nig in neighbors_x:
+                    sum_delta = sum_delta + nig.step
+                A = sum_delta / neighbors_no
                 
                 # Cohesion
-                sum_x = np.zeros(neighbors_no)
-                for a in neighbors_x:
-                    sum_x = sum_x + a.position
-                C_temp = (np.sum(sum_x))/neighbors_no
-                C = C_temp - X[i].position
+                sum_x = np.zeros(DIM_DA)
+                for nig in neighbors_x:
+                    sum_x = sum_x + np.sum(nig.da)
+                C_temp = sum_x / neighbors_no
+                C = C_temp - X[i].da
                 
                 # Attraction to food
-                F = np.array(source.position) - np.array(X[i].position)
+                F = np.array(source.da) - np.array(X[i].da)
                 
                 # Distraction from enemy
-                E = np.array(enemy.position) - np.array(X[i].position)
+                E = np.array(enemy.da) - np.array(X[i].da)
             
-                X[i].step = (s*S + a*A + c*C + f*F + e*E) + w*X[i].step
-                X[i].position = (
-                    np.array(X[i].position) + np.array(X[i].step)
+                for j in range(len(X[i].step)):
+                    X[i].step[j] = (s*S[j] + a*A[j] + c*C[j] + f*F[j] + e*E[j]) + w * X[i].step[j]
+                X[i].da = (
+                    np.array(X[i].da) + np.array(X[i].step)
                 ).tolist()
+                
+                #TODO evaluate gx to get binary position vector
                 X[i].evaluate()
+        t += 1
+        self.my_best_solution = DragonflySolution.init_solution(source)
+        return source
 
    
     def __initialize_dragonflies_population(self):
@@ -93,33 +96,34 @@ class Dragonfly(PopulationMetaheuristic):
     def __calculate_constants(self, t):
         # Update w, s, a, c, f, and e
         w = 0.9-t*((0.9-0.4)/self.max_efos)
-        my_c = 0.1-t*((0.1-0)/(self.max_efos/2))
-        if my_c < 0:
-            my_c = 0
+        rate = 0.1-t*((0.1-0)/(self.max_efos/2))
+        if rate < 0:
+            rate = 0
         
-        s = 2 * random.uniform(0,1) * my_c # Seperation weight
-        a = 2 * random.uniform(0,1) * my_c # Alignment weight
-        c = 2 * random.uniform(0,1) * my_c # Cohesion weight
+        s = 2 * random.uniform(0,1) * rate # Seperation weight
+        a = 2 * random.uniform(0,1) * rate # Alignment weight
+        c = 2 * random.uniform(0,1) * rate # Cohesion weight
         f = 2 * random.uniform(0,1) # Food attraction weight
-        e = my_c # Enemy distraction weight
+        e = rate # Enemy distraction weight
         
         if t > (3*self.max_efos/4):
             e = 0
 
+        return w, s, a, c, f, e
+
     def __get_source_and_enemy(self, population):
         # Update the food source and enemy
-        source = None
-        enemy = None
+        source = population[0]
+        enemy = population[0]
         for i in range(self.pop_size):
+            
             # get the best fitness
-            if source and population[i].fitness > source.fitness:
-                source = population[i]
-            else:
-                source = population[i]
+            if population[i].fitness > source.fitness:
+                source =  population[i]
+
             # get the worst fitness
-            if enemy and population[i].fitness < enemy.fitness:
+            if population[i].fitness < enemy.fitness:
                 enemy = population[i]
-            else:
-                enemy = population[i]
+
         return source, enemy
         
