@@ -17,7 +17,7 @@ from modules.algorithms.metaheuristics.population.dragonfly.dragonfly import Dra
 ROOT_DIR = path.dirname(path.abspath(__file__))
 ZERO_DOT_THREE = 0.3
 POP_SIZE = 10
-MAX_EFOS = 10000
+MAX_EFOS = 100
 
 def main ():
     """ 

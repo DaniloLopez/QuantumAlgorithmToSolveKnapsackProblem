@@ -57,6 +57,9 @@ class DragonflySolution(Solution):
         # fitnees debe retornar el exceso de peso pero negativo. C - sum(Wi * Xi)
         self.fitness = self.my_container.my_knapsack.evaluate(self.position)#calculo de fitness adicional para valores negativos
         self.calculate_weight_solution()
+        # penalty function
+        if self.weight > self.my_container.my_knapsack.capacity:
+            self.fitness = self.my_container.my_knapsack.capacity - self.weight
 
     def __get_binary_vector_aleatory(self, length, min, max, is_continuous):
         """ a position list is filled aleatory to evaluate the solution. """
@@ -76,8 +79,14 @@ class DragonflySolution(Solution):
         d = self.da[3]
         k = self.da[4]
 
+        cos_value = None
+        sen_value = None
         for x in range(len(self.position)):
-            gx = math.sin( 
-                2 * PI * (x-a) * b * math.cos(2 * PI * (x-a) * c) + k
-            ) + d
-            self.position[x] = 1 if gx > 0 else 0
+            
+            try:
+                cos_value = 2 * PI * (x-a) * c
+                sen_value = 2 * PI * (x-a) * b
+                gx = math.sin(sen_value * math.cos(cos_value) + k) + d
+                self.position[x] = 1 if gx > 0 else 0
+            except Exception as e:
+                print(e)

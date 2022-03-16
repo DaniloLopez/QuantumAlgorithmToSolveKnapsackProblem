@@ -28,17 +28,22 @@ class Dragonfly(PopulationMetaheuristic):
         # initialize dragonfly population and step vector
         # Calculate the objective values of all dragonflies
         X = self.__initialize_dragonflies_population()
+        source = X[0]
+        enemy = X[0]
         t = 1
         while t <= self.max_efos:
-            source, enemy = self.__get_source_and_enemy(X)
+            source, enemy = self.__get_source_and_enemy(X, source, enemy)
+            if source.fitness == 0:
+                print("as")
             w, s, a, c, f, e = self.__calculate_constants(t)
-            
+
             # get neighbors for actual iteration 
-            for i in range(DIM_DA):
+            for i in range(self.pop_size):
                 neighbors_x = []
+
                 # Find the neighboring solutions 
                 # (all the dragonflies are assumed as a group in binary search spaces)
-                for j in range(DIM_DA):
+                for j in range(self.pop_size):
                     if (i != j): # not compare itself
                         neighbors_x.append(DragonflySolution.init_solution(X[j]))
                 neighbors_no = len(neighbors_x)
@@ -66,17 +71,25 @@ class Dragonfly(PopulationMetaheuristic):
                 F = np.array(source.da) - np.array(X[i].da)
                 
                 # Distraction from enemy
-                E = np.array(enemy.da) - np.array(X[i].da)
+                E = np.array(enemy.da) + np.array(X[i].da)
             
-                for j in range(len(X[i].step)):
+                for j in range(DIM_DA):
                     X[i].step[j] = (s*S[j] + a*A[j] + c*C[j] + f*F[j] + e*E[j]) + w * X[i].step[j]
+                    if X[i].step[j] > 1:
+                        X[i].step[j] = 1
+                    elif X[i].step[j] < -1:
+                        X[i].step[j] = -1
+
+                #equation 7
                 X[i].da = (
                     np.array(X[i].da) + np.array(X[i].step)
                 ).tolist()
                 
                 #TODO evaluate gx to get binary position vector
                 X[i].evaluate()
-        t += 1
+            if(t == 9999):
+                print("a")
+            t += 1
         self.my_best_solution = DragonflySolution.init_solution(source)
         return source
 
@@ -111,12 +124,9 @@ class Dragonfly(PopulationMetaheuristic):
 
         return w, s, a, c, f, e
 
-    def __get_source_and_enemy(self, population):
+    def __get_source_and_enemy(self, population, source, enemy):
         # Update the food source and enemy
-        source = population[0]
-        enemy = population[0]
         for i in range(self.pop_size):
-            
             # get the best fitness
             if population[i].fitness > source.fitness:
                 source =  population[i]
@@ -125,5 +135,5 @@ class Dragonfly(PopulationMetaheuristic):
             if population[i].fitness < enemy.fitness:
                 enemy = population[i]
 
-        return source, enemy
+        return DragonflySolution.init_solution(source), DragonflySolution.init_solution(enemy)
         
