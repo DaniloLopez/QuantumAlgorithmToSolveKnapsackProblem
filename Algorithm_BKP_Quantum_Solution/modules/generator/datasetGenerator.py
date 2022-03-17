@@ -59,7 +59,11 @@ class DatasetGenerator(Generator):
             
     def _validate_min_max(self, list_eval, min_value, max_value):
         if(min(list_eval) < min_value or max(list_eval) > max_value):
-            raise Exception("ERROR: argument invalid. valid: "  + str(min_value) + " - " + str(max_value))
+            raise Exception(
+                "ERROR: argument invalid. valid: "  
+                + str(min_value) 
+                + " - " + str(max_value)
+            )
         
     def _generate_difficult(self):
         total = sum(self.args.difficult)

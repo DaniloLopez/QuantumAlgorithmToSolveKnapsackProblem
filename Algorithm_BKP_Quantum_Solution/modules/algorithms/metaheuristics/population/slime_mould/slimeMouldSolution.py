@@ -90,7 +90,7 @@ class SlimeMouldSolution(Solution):
         available_weight = self.my_container.my_knapsack.capacity - self.weight
         # recorrer la lista de atras hacia adelante
         for i in range (len(unselected)-1, -1, -1):
-            if self.my_container.my_knapsack.items[unselected[i]].weight > available_weight:
+            if (self.my_container.my_knapsack.items[unselected[i]].weight > available_weight):
                 unselected.pop(i)
 
     def __get_lowest_density_item_position(self, selected):

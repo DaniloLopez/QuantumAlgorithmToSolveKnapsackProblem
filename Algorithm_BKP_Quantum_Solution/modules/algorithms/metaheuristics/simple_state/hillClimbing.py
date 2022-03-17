@@ -19,7 +19,9 @@ class HillClimbing(Metaheuristic):
         s = Solution.init_owner(self)
         s.random_initialization()
         self.curve.append(s.fitness)
-        while self.current_efos < self.max_efos and abs(s.fitness - self.my_knapsack.objective) > 1e-10:
+        while self.current_efos < self.max_efos and abs(
+                s.fitness - self.my_knapsack.objective
+            ) > 1e-10:
             r = Solution.init_solution(s)
             r.tweak()
             if r.fitness > s.fitness:

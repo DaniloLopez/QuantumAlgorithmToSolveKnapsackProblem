@@ -111,7 +111,13 @@ def if_print_text(object, condition=True):
 
 
 def get_info_dataset(knapsack):
-    return knapsack.file_name + "  " + str(knapsack.n_items) + "  " + str(knapsack.capacity) + "  " + str(knapsack.objective) + "  [" + str(knapsack.solution)[1:-1]+"]  "
+    return (
+        knapsack.file_name 
+        + "  " + str(knapsack.n_items) 
+        + "  " + str(knapsack.capacity) 
+        + "  " + str(knapsack.objective) 
+        + "  [" + str(knapsack.solution)[1:-1]+"]  "
+    )
 
 def get_solution_header(metaheuristic_list):
     n = len(metaheuristic_list)

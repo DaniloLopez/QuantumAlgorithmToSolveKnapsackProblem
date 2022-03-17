@@ -150,7 +150,7 @@ class SlimeMould(PopulationMetaheuristic):
         self, 
         population=None, 
         is_reverse=False
-        ):
+    ):
         """ sort population and return the sorted population and the best 
         position. """
         sorted_pop = sorted(
@@ -169,10 +169,18 @@ class SlimeMould(PopulationMetaheuristic):
         for i in range(self.pop_size):
             if i <= int(self.pop_size / 2):
                 list_search_agents[i].w = 1 + uniform(0, 1) * np.log10(
-                    (list_search_agents[0].fitness - list_search_agents[i].fitness) / s + 1)
+                    (
+                        list_search_agents[0].fitness 
+                        - list_search_agents[i].fitness
+                    ) / s + 1
+                )
             else:
                 list_search_agents[i].w = 1 - uniform(0, 1) * np.log10(
-                    (list_search_agents[0].fitness - list_search_agents[i].fitness) / s + 1)
+                    (
+                        list_search_agents[0].fitness 
+                        - list_search_agents[i].fitness
+                    ) / s + 1
+                )
 
     def __str__(self) -> str:
         return super().__str__() + ".Slime_Mould_Algorithm"
