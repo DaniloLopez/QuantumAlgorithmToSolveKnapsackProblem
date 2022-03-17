@@ -11,11 +11,12 @@
 
 ## Setup
 
-> rootDirectory/pipenv install --dev
+> [rootDirectory]/ pipenv install --dev
+> [rootDirectory]/ pip install qiskit 0.14.1
 
 
 ## Development
 
 ### Run 
 
-> rootDirectory/python main.py
+> [rootDirectory]/python main.py

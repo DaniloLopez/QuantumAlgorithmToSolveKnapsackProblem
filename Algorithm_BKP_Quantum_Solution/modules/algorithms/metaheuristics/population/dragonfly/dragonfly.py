@@ -16,7 +16,6 @@ class Dragonfly(PopulationMetaheuristic):
         self.max_efos = max_efos
 
     def execute(self, the_knapsack, the_aleatory, debug=False):
-        # variables
         self.my_knapsack = the_knapsack
         self.my_aleatory = the_aleatory
         self.curve = []
@@ -31,6 +30,7 @@ class Dragonfly(PopulationMetaheuristic):
         source = X[0]
         enemy = X[0]
         t = 1
+
         while t <= self.max_efos:
             source, enemy = self.__get_source_and_enemy(X, source, enemy)
             if source.fitness == 0:
@@ -41,7 +41,7 @@ class Dragonfly(PopulationMetaheuristic):
             for i in range(self.pop_size):
                 neighbors_x = []
 
-                # Find the neighboring solutions 
+                # Find the neighboring solutions(all population)
                 # (all the dragonflies are assumed as a group in binary search spaces)
                 for j in range(self.pop_size):
                     if (i != j): # not compare itself
@@ -73,8 +73,12 @@ class Dragonfly(PopulationMetaheuristic):
                 # Distraction from enemy
                 E = np.array(enemy.da) + np.array(X[i].da)
             
+                #update step vector
                 for j in range(DIM_DA):
-                    X[i].step[j] = (s*S[j] + a*A[j] + c*C[j] + f*F[j] + e*E[j]) + w * X[i].step[j]
+                    X[i].step[j] = (
+                        s*S[j] + a*A[j] + c*C[j] + f*F[j] + e*E[j]
+                    ) + w * X[i].step[j]
+                    #normalize value step to 1, -1 due to sen function
                     if X[i].step[j] > 1:
                         X[i].step[j] = 1
                     elif X[i].step[j] < -1:
@@ -84,11 +88,9 @@ class Dragonfly(PopulationMetaheuristic):
                 X[i].da = (
                     np.array(X[i].da) + np.array(X[i].step)
                 ).tolist()
-                
-                #TODO evaluate gx to get binary position vector
+
+                #evaluate gx to get binary position vector
                 X[i].evaluate()
-            if(t == 9999):
-                print("a")
             t += 1
         self.my_best_solution = DragonflySolution.init_solution(source)
         return source
@@ -135,5 +137,8 @@ class Dragonfly(PopulationMetaheuristic):
             if population[i].fitness < enemy.fitness:
                 enemy = population[i]
 
-        return DragonflySolution.init_solution(source), DragonflySolution.init_solution(enemy)
+        return (
+            DragonflySolution.init_solution(source), 
+            DragonflySolution.init_solution(enemy)
+        )
         

@@ -53,11 +53,9 @@ class DragonflySolution(Solution):
     #override
     def calculate_fitness_solution(self):
         """ penalty function for unfeasible solutions """
-        #TODO dar ponderacion a fitness negativos 
-        # fitnees debe retornar el exceso de peso pero negativo. C - sum(Wi * Xi)
-        self.fitness = self.my_container.my_knapsack.evaluate(self.position)#calculo de fitness adicional para valores negativos
+        self.fitness = self.my_container.my_knapsack.evaluate(self.position)
         self.calculate_weight_solution()
-        # penalty function
+        # penalty function: fitness = C - sum(Wi * Xi)
         if self.weight > self.my_container.my_knapsack.capacity:
             self.fitness = self.my_container.my_knapsack.capacity - self.weight
 
