@@ -1,4 +1,4 @@
-from modules.util.arguments.arguments import Arguments
+from modules.arguments.arguments import Arguments
 import argparse
 import modules.util.generalValue as general
 
@@ -29,10 +29,13 @@ class ArgumentsCommandLine(Arguments):
     #override abstract methods
     def is_generate(self):
         return self.args.generate
+        
     def get_arguments(self):
         return self.args
+
     def get_iterations(self):
         return self.args.iterations
+        
     def is_debug_enable(self):
         return self.args.debug
 

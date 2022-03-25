@@ -33,8 +33,6 @@ class Dragonfly(PopulationMetaheuristic):
 
         while t <= self.max_efos:
             source, enemy = self.__get_source_and_enemy(X, source, enemy)
-            if source.fitness == 0:
-                print("as")
             w, s, a, c, f, e = self.__calculate_constants(t)
 
             # get neighbors for actual iteration 

@@ -2,7 +2,8 @@
 #!/usr/bin/env python3
 
 from os import path
-from modules.util.mainUtil import MainUtil
+from modules.main.mainUtil import MainUtil
+from modules.main.evaluate import Evaluate
 import modules.util.generalValue as general
 from modules.generator.datasetGenerator import DatasetGenerator
 from modules.algorithms.metaheuristics.simple_state.hillClimbing import HillClimbing
@@ -17,7 +18,7 @@ from modules.algorithms.metaheuristics.population.dragonfly.dragonfly import Dra
 ROOT_DIR = path.dirname(path.abspath(__file__))
 ZERO_DOT_THREE = 0.3
 POP_SIZE = 10
-MAX_EFOS = 10000
+MAX_EFOS = 100
 
 def main ():
     """ 
@@ -56,9 +57,10 @@ def main ():
     # ************************************************************************
     # run metaheuristic list for every knapsack in knapsack problem list
     # ************************************************************************
-    main_util.init_result_file()
+    evaluate = Evaluate()
+    evaluate.init_result_file()
     print("<-><-> run algorithms...")    
-    main_util.run_metaheuristics(
+    evaluate.run_metaheuristics(
         list_knapsack,  
         list_metaheuristics,
         debug = main_util.arguments.is_debug_enable(),

@@ -1,43 +1,19 @@
-from os import listdir
 from modules.file.fileWriter import FileWriter
-from modules.util.arguments.arguments_command_line import ArgumentsCommandLine
-from modules.generator.datasetGenerator import DatasetGenerator
+from modules.arguments.arguments_command_line import ArgumentsCommandLine
 import modules.util.generalValue as general
 from time import time
 import random
-from modules.util.generalValue import SEPARATOR
 import modules.util.util as util
-from modules.file.fileReader import FileReader
-import sys
 
-class MainUtil():
+class Evaluate():
     def __init__(self):
         self.obj_fileWriter=FileWriter()
         self.arguments = ArgumentsCommandLine(
             general.DESCRIPTION_TEXT, 
             general.EPILOG_TEXT
         )
-        print(self.arguments)
         self.init_result_file()
         pass
-
-    def get_knapsack_list(self, knapsack_files_path):
-        knapsack_list = []
-        # list the folders contained in the root directory
-        list_folder_dataset_generated = listdir(knapsack_files_path)
-        for folder_name in list_folder_dataset_generated:
-            root_path = knapsack_files_path + folder_name
-            for knapsack_file_name in util.get_list_files_folder( root_path ):
-                #read knapsack file
-                full_file_path = root_path + SEPARATOR + knapsack_file_name
-                reader_knapsack_file = FileReader(
-                    full_file_path, 
-                    knapsack_file_name
-                )
-                knapsack = reader_knapsack_file.get_knapsack()
-                if knapsack is not None:
-                    knapsack_list.append(knapsack)
-        return knapsack_list
 
     def init_result_file(self):
         self.obj_fileWriter.open(util.get_result_file_name())
@@ -110,20 +86,3 @@ class MainUtil():
             raise
         finally:        
             self.obj_fileWriter.close()
-
-    def generate_dataset(self, arguments):
-        """Generate dataset according to arguments of subcomand generate"""        
-        generator = DatasetGenerator(arguments)
-        # generating dataset...
-        generator.generate()
-        print("--------------------------------------------------------------")
-        print("------- ::: DATASET GENERATED ::: ----------------------------")
-        print("--------------------------------------------------------------")
-
-    def print_list(self, list):
-        print("--------------------------------------------------------------")
-        print("------- ::: LIST{ length : " +str(len(list))+ " } ::: --------")
-        for i in list:
-            print(str(i))
-        print("------- ::: END LIST ::: -------------------------------------")
-        print("--------------------------------------------------------------")

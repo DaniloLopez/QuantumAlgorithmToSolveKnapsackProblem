@@ -4,7 +4,6 @@ import numpy as np
 from numpy import math
 from modules.algorithms.metaheuristics.evolutionary.grey_wolf_optimizer.greyWolfOptimizerSolution import GreyWolfSolution
 from modules.algorithms.metaheuristics.populationMetaheuristic import PopulationMetaheuristic
-from modules.algorithms.metaheuristics.evolutionary.grey_wolf_optimizer.greyWolfOptimizerSolution import GreyWolfSolution
 
 ELITISM_WOLVES = 3
 F0 = 0.02
