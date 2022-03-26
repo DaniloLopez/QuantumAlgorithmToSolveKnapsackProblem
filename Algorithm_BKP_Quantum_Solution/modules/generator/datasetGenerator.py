@@ -46,8 +46,8 @@ class DatasetGenerator(Generator):
     def _validate_range_arguments(self):
         self._validate_option_valid(self.args.type, 1, 4, 4)
         self._validate_option_valid(self.args.difficult, 1, 3, 3)
-        self._validate_range_valid(self.args.nitems, 1, general.MAX_N_ITEMS)
-        self._validate_range_valid(self.args.range, 1, general.MAX_RANGE)
+        self.args.nitems = self._validate_range_valid(self.args.nitems, 1, general.MAX_N_ITEMS)
+        self.args.range = self._validate_range_valid(self.args.range, 1, general.MAX_RANGE)
 
     def _validate_option_valid(self, list, min_value, max_value, max_parameters):
         if(len(list) > max_parameters):
@@ -62,12 +62,13 @@ class DatasetGenerator(Generator):
     def _validate_range_valid(self, list_eval, min_value, max_value):
         self._validate_min_max(list_eval, min_value, max_value)
         if(len(list_eval) == 2):
-            list_eval = list(range(min(list_eval), max(list_eval)+1))
+            return list(range(min(list_eval), max(list_eval)+1))
+        return list_eval
             
     def _validate_min_max(self, list_eval, min_value, max_value):
         if(min(list_eval) < min_value or max(list_eval) > max_value):
             raise Exception(
-                f"ERROR: argument invalid. valid: {min_value} - {max_value}"
+                f"ERROR: argument invalid. valid range: {min_value} - {max_value}"
             )
         
     def _generate_difficult(self):
@@ -85,17 +86,18 @@ class DatasetGenerator(Generator):
                 "err: Repeated values in parameters"
             )
     
-    def _generate(self, difficult, diff):
+    def _generate(self, generator, difficult):
         for type in self.args.type :
-                for nitems in range(self.args.nitems[0], self.args.nitems[1]+1):
-                    for rang in range(self.args.range[0], self.args.range[1]+1):                        
+                for nitems in self.args.nitems:
+                    for rang in self.args.range:
                         file_name = util.build_commnad_line_text_generate (
-                            type, 
+                            generator,
+                            type,
                             difficult, 
-                            diff, 
                             nitems, 
                             rang, 
                             3
                         )
-                        os.system(difficult + " " + file_name)
+                        var = os.system(generator + " " + file_name)
+                        print(var)
                         

@@ -1,13 +1,15 @@
-import math
-import modules.util.generalValue as general
-from datetime import datetime
-from os import scandir, getcwd
-import numpy as np
-import os
-from modules.util.generalValue import SEPARATOR
 import sys
-sys.path.append('../')
+import os
+import math
+import numpy as np
+import modules.util.generalValue as general
 
+from os import scandir, getcwd
+from modules.util.generalValue import SEPARATOR
+from datetime import datetime
+from modules.util import util
+
+sys.path.append('../')
 
 def get_path():
     return os.getcwd()
@@ -78,16 +80,16 @@ def get_line_result(obj_kp, profits_solution, weights_solution,
     return line
 
 
-def generate_full_name_file(type, difficult, diff, nitems, range):
-    return (general.FOLDER_DATASET_GENERATED + difficult +
-            SEPARATOR + "t" + str(type) + "_d" + str(diff) +
-            "_n" + str(nitems) + "_r" + str(range) + ".txt")
+def generate_full_name_file(generator, type, difficult, nitems, range):
+    folder_name = f"{general.FOLDER_DATASET_GENERATED}_{util.get_info_time()}{SEPARATOR}{generator}"
+    os.makedirs(folder_name, exist_ok=True)
+    return (f"{folder_name}{SEPARATOR}t{type}_d{difficult}_n{nitems}_r{range}.dat")
 
 
 def build_commnad_line_text_generate(
+        generate,
         type,
         difficult,
-        diff,
         nitems,
         range,
         instance,
@@ -102,7 +104,7 @@ def build_commnad_line_text_generate(
     """
     return (str(nitems) + " " + str(range) + " " + str(type) +
             " " + str(instance) + " " + str(S) + " " +
-            generate_full_name_file(type, difficult, diff, nitems, range))
+            generate_full_name_file(generate, type, difficult, nitems, range))
 
 
 def if_print_text(object, condition=True):
