@@ -80,13 +80,14 @@ def get_line_result(obj_kp, profits_solution, weights_solution,
     return line
 
 
-def generate_full_name_file(generator, type, difficult, nitems, range):
-    folder_name = f"{general.FOLDER_DATASET_GENERATED}_{util.get_info_time()}{SEPARATOR}{generator}"
+def generate_full_name_file(folder_name, generator, type, difficult, nitems, range):
+    folder_name = f"{folder_name}{SEPARATOR}{generator}"
     os.makedirs(folder_name, exist_ok=True)
     return (f"{folder_name}{SEPARATOR}t{type}_d{difficult}_n{nitems}_r{range}.dat")
 
 
 def build_commnad_line_text_generate(
+        folder_name,
         generate,
         type,
         difficult,
@@ -104,7 +105,7 @@ def build_commnad_line_text_generate(
     """
     return (str(nitems) + " " + str(range) + " " + str(type) +
             " " + str(instance) + " " + str(S) + " " +
-            generate_full_name_file(generate, type, difficult, nitems, range))
+            generate_full_name_file(folder_name, generate, type, difficult, nitems, range))
 
 
 def if_print_text(object, condition=True):

@@ -250,11 +250,10 @@ void showitems(int n, int *pp, int *ww, long long c)
 
   out = fopen(filename, "w");
   if (out == NULL) error("no file");
-  fprintf(out,"%d\n", n);
+  fprintf(out,"%d %lld\n", n, c);
   for (i = 0; i < n; i++) {
-    fprintf(out, "%5d %5d %5d\n", i, pp[i], ww[i]);
+    fprintf(out, "%d %d\n", pp[i], ww[i]);
   }
-  fprintf(out,"%lld\n", c);
   fclose(out);
 }
 
@@ -270,25 +269,15 @@ void main(int argc, char *argv[])
   int ok;
   long long c;
 
-  if (argc == 6) {
+  if (argc == 7) {
     n = atoi(argv[1]);
     r = atoi(argv[2]);
     type = atoi(argv[3]);
     i = atoi(argv[4]);
     S = atoi(argv[5]);
-    printf("generator2 %d %d %d %d %d\n", n, r, type, i, S);
+    filename = argv[6];
   } else {
-    printf("generator2\n");
-    printf("n = ");
-    ok = scanf("%d", &n);
-    printf("r = ");
-    ok = scanf("%d", &r);
-    printf("t = ");
-    ok = scanf("%d", &type);
-    printf("i = ");
-    ok = scanf("%d", &i);
-    printf("S = ");
-    ok = scanf("%d", &S);
+    error("Parameter Error generating Hard Dataset");
   }
 
   pp = (int *) malloc(n * sizeof(int));

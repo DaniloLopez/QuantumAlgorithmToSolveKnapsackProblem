@@ -165,11 +165,10 @@ void showitems(item *f, item *l, stype c)
  
   out = fopen(filename, "w"); 
   if (out == NULL) error("no file");
-  fprintf(out,"%d\n", NO(f,l));
+  fprintf(out,"%d %ld\n", NO(f,l), c);
   for (i = f; i <= l; i++) {
-    fprintf(out, "%5d %5d %5d\n", NO(f,i), i->p, i->w);
+    fprintf(out, "%d %d\n", i->p, i->w);
   }
-  fprintf(out,"%ld\n", c);
   fclose(out);
 }
 
@@ -300,7 +299,6 @@ stype maketest(item *f, item *l, int r, int type, int v, int S)
   }
   c = (v * (double) wsum) / (S + 1);
   for (i = f; i <= l; i++) if (i->w > c) c = i->w;
-  printf("test %d: wsum %ld, psum %ld, cap %ld\n", v, wsum, psum, c); 
   switch (type) {
     case  1: return c;
     case  2: return c;
@@ -332,25 +330,15 @@ void main(int argc, char *argv[])
   int n, r, type, i, S;
   stype c;
  
-  if (argc == 6) {
+  if (argc == 7) {
     n = atoi(argv[1]);
     r = atoi(argv[2]);
     type = atoi(argv[3]);
     i = atoi(argv[4]);
     S = atoi(argv[5]);
-    printf("generator2 %d %d %d %d %d\n", n, r, type, i, S);
+    filename = argv[6];
   } else {
-    printf("generator2\n");
-    printf("n = ");
-    scanf("%d", &n);
-    printf("r = ");
-    scanf("%d", &r);
-    printf("t = ");
-    scanf("%d", &type);
-    printf("i = ");
-    scanf("%d", &i);
-    printf("S = ");
-    scanf("%d", &S);
+    error("Parameter Error generating Medium Dataset");
   }
 
   f = palloc(n, sizeof(item));

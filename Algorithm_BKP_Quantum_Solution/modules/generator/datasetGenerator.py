@@ -15,11 +15,13 @@ class DatasetGenerator(Generator):
     """
     def __init__(self, arguments):
         super(DatasetGenerator, self).__init__(arguments)
+        self.folder_name = None
     
     def generate(self):
+        self.folder_name = f"{general.FOLDER_DATASET_GENERATED}_{util.get_info_time()}"
         self.validate_arguments()
         self._generate_difficult()
-        return general.FOLDER_DATASET_GENERATED
+        return self.folder_name
 
     def validate_arguments(self):
         self._validate_duplicate_arguments()
@@ -91,6 +93,7 @@ class DatasetGenerator(Generator):
                 for nitems in self.args.nitems:
                     for rang in self.args.range:
                         file_name = util.build_commnad_line_text_generate (
+                            self.folder_name,
                             generator,
                             type,
                             difficult, 

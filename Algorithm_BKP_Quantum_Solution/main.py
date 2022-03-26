@@ -53,6 +53,7 @@ def main ():
         # generate dataset 
         dataset_generator = DatasetGenerator(main_util.arguments)
         folder_dataset = dataset_generator.generate()
+        print(f"dataset generate in: {folder_dataset}")
     
     # evaluate if dataset is in a folder
     elif main_util.arguments.get_folder_name():

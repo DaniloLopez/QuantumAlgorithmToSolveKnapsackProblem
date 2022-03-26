@@ -58,6 +58,7 @@
 #include <values.h>
 #include <string.h>
 #include <malloc.h>
+#include <sys/stat.h>
 
 
 /* ======================================================================
@@ -170,11 +171,10 @@ void showitems(item *f, item *l, stype c)
  
   out = fopen(filename, "w"); 
   if (out == NULL) error("no file");
-  fprintf(out,"%d\n", NO(f,l));
+  fprintf(out,"%d %lu\n", NO(f,l), c);
   for (i = f; i <= l; i++) {
-    fprintf(out, "%5d %5d %5d\n", NO(f,i), i->p, i->w);
+    fprintf(out, "%d %d\n", i->p, i->w);
   }
-  fprintf(out,"%lu\n", c);
   fclose(out);
 }
 
@@ -218,7 +218,6 @@ stype maketest(item *f, item *l, int r, int type, int v, int S)
 /* ======================================================================
 				main
    ====================================================================== */
-
 int main(int argc, char *argv[])
 {
   item *f, *l;
@@ -232,20 +231,8 @@ int main(int argc, char *argv[])
     i = atoi(argv[4]);
     S = atoi(argv[5]);
     filename = argv[6];
-
-    printf("generator %d %d %d %d %d\n", n, r, type, i, S);
   } else {
-    printf("generator\n");
-    printf("n = ");
-    scanf("%d", &n);
-    printf("r = ");
-    scanf("%d", &r);
-    printf("t = ");
-    scanf("%d", &type);
-    printf("i = ");
-    scanf("%d", &i);
-    printf("S = ");
-    scanf("%d", &S);
+    error("Parameter Error generating Easy Dataset");
   }
 
   f = palloc(n, sizeof(item));
