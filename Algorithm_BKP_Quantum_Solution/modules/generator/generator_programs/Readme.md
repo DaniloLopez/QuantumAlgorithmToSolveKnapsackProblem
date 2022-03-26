@@ -9,7 +9,7 @@ comando para compilar cada programa:
 
 FLAGS
 
-cc -> indica el compilador
+cc -> indica el compilador(en windows puede ser gcc)
 
 -o name -> nombre archivo de salida, si o se esecifica se tomara el nombre a.out, b.out, ..., zz.out ascendentemente en orden alfabetico.
 

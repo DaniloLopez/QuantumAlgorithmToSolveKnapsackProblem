@@ -14,7 +14,7 @@ class ArgumentsCommandLine(Arguments):
             prog=general.PROGRAM_NAME,
             description=self.description,
             epilog=self.epilog
-            )
+        )
         #group for option File and Folder. Mutually exclusive in Parser
         self.group_file_folder =  self.parser.add_mutually_exclusive_group()
         self._init_parser_arguments()        
@@ -129,7 +129,6 @@ class ArgumentsCommandLine(Arguments):
            self.nitems = self.args.nitems
            self.range = self.args.range
         self.debug = self.args.debug
-        print(self.args)
 
     def __str__(self):
         return f"i: {self.iterations} type:{self.type} difficult:{self.difficult} n items:{self.nitems} range:{self.range} fl:{self.file} fd:{self.folder}"

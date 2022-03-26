@@ -16,11 +16,12 @@ DESCRIPTION_TEXT = "This program execute and analyze a set of data with "\
     "information about a knapsack every file; the information of a file is "\
     "read and with an algorithm that emulate the functionality of a quantum "\
     "computer."
-EPILOG_TEXT="Author: Danilo López - dlopezs@unicauca.edu.co"
+EPILOG_TEXT="Author:    Danilo López (dlopezs@unicauca.edu.co) .............................. "\
+    "Co-Author: Carlos Cobos (ccobos@unicauca.edu.co) ............................ "
 
 #GLOBAL VARIABLES
 DATASET_FN = "dataset_fn"
-GENERATED_DATASET = "generated_dataset"
+GENERATED_DATASET = "generated_dataset_26032022_110009"
 NUM_ITERATIONS_STATIC = 20
 FOLDER_DATASET_FN = DIR_FILES + DATASET_FN + SEPARATOR
 FOLDER_DATASET_GENERATED = DIR_FILES + GENERATED_DATASET
@@ -61,13 +62,13 @@ ARGH_DIFFICULT += "Options: ([1=Easy, 2=Medium, 3=Hard])."
 
 ARG_N = "-n"
 ARG_NITEMS = "--nitems"
-ARGH_NITEMS = "Indicate quantity o items stored in knapsack. \n"
+ARGH_NITEMS = "Indicate quantity o items stored in knapsack. Max value = 13. \n"
 ARGH_NITEMS += "If you send two arguments the program take it like range, "
 ARGH_NITEMS += "otherwise take item by item.\n [ { n1 - n2} <> {n1, n2, ..., n} ]"
 
 ARG_R = "-r"
 ARG_RANGE = "--range"
-ARGH_RANGE = "Indicate range of creation for dataset."
+ARGH_RANGE = "Indicate range of creation for dataset. Max value = 100. "
 ARGH_RANGE += "If you send two arguments the program take it like range, "
 ARGH_RANGE += "otherwise take item by item.\n [ { r1 - r2} <> {r1, r2, ..., r} ]"
 

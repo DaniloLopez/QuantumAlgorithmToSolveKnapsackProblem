@@ -2,7 +2,6 @@ import sys
 import os
 import math
 import numpy as np
-import modules.util.generalValue as general
 
 from os import scandir, getcwd
 from modules.util.generalValue import SEPARATOR
@@ -51,13 +50,12 @@ def get_line_result_format(knapsack, list_fitness, list_efos, list_times,
     st_dev = math.sqrt(var)
 
     #line = "best_solution: " + str(best_solution)
-    line = "success_rate: " + \
-        str(round(((times_found_ideal*100)/iterations), 2)) + "% "
-    line += "fitness_average: " + str(round(float(avg), 2)) + "% "
-    line += "standar_deviation: " + str(round(st_dev, 2)) +" "
-    line += "best_fitness: " + str(max(list_fitness)) +" "
-    line += "worst_fitness: " + str(min(list_fitness)) + " "
-    line +="average_time: " + str(round((sum(list_times) * 100) / iterations, 2))+ " ###"
+    line = str(round(((times_found_ideal*100)/iterations), 2)) + "%  "
+    line += str(round(float(avg), 2)) + "%  "
+    line += str(round(st_dev, 2)) +"  "
+    line += str(max(list_fitness)) +"  "
+    line += str(min(list_fitness)) + "  "
+    line += str(round((sum(list_times) * 100) / iterations, 2))+ "  ###  "
     return line
 
 
@@ -103,9 +101,11 @@ def build_commnad_line_text_generate(
     instance: instance no.
     S: number of tests in series (typically 1000).
     """
-    return (str(nitems) + " " + str(range) + " " + str(type) +
-            " " + str(instance) + " " + str(S) + " " +
-            generate_full_name_file(folder_name, generate, type, difficult, nitems, range))
+    full_name_file = generate_full_name_file(
+        folder_name, generate, type, difficult, nitems, range
+    )
+    return f"{nitems} {range} {type} {instance} {S} {full_name_file}"
+        
 
 
 def if_print_text(object, condition=True):
@@ -127,7 +127,7 @@ def get_solution_header(metaheuristic_list):
     line = "\t\t\tDATASET\t\t\t ###"
     for i in range(n):
         line += "\tAlgorithm "+ metaheuristic_list[i].__class__.__name__ +"\t###"
-    line+="\n file_name|n items|capacity|objective|solution"
+    line+="\n file_name|n items|capacity|objective|solution  ###  "
     for i in range (n):
-        line+="|success Rate|fitness average|standar deviation|best fitness|worst fitness|time average|###"
+        line+="|success Rate|fitness average|standar deviation|best fitness|worst fitness|time average|  ###  "
     return line

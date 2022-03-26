@@ -1,0 +1,9 @@
+Number of iterations: 31 
+
+file_name,slime_mould,grey_wolf,dragon_fly,quantum
+t1_d1_n10_r10.dat  23.0,25.0,
+t1_d1_n5_r10.dat  17.0,19.0,
+t1_d1_n6_r10.dat  23.0,23.0,
+t1_d1_n7_r10.dat  23.0,23.0,
+t1_d1_n8_r10.dat  23.0,23.0,
+t1_d1_n9_r10.dat  23.0,25.0,

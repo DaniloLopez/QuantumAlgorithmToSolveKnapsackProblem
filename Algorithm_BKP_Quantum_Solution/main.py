@@ -9,7 +9,7 @@ from modules.main.evaluate import Evaluate
 import modules.util.generalValue as general
 from modules.generator.datasetGenerator import DatasetGenerator
 from modules.algorithms.metaheuristics.simple_state.hillClimbing import HillClimbing
-# from modules.algorithms.metaheuristics.quantum.ibmQuantum import IbmQuantum
+from modules.algorithms.metaheuristics.quantum.ibmQuantum import IbmQuantum
 from modules.algorithms.metaheuristics.population.slime_mould.slimeMould import SlimeMould
 from modules.algorithms.metaheuristics.evolutionary.grey_wolf_optimizer.greyWolfOptimizer import GreyWolf
 from modules.algorithms.metaheuristics.population.dragonfly.dragonfly import Dragonfly
@@ -20,7 +20,7 @@ from modules.algorithms.metaheuristics.population.dragonfly.dragonfly import Dra
 ROOT_DIR = path.dirname(path.abspath(__file__))
 ZERO_DOT_THREE = 0.3
 POP_SIZE = 10
-MAX_EFOS = 100
+MAX_EFOS = 500
 
 def main ():
     """ 
@@ -31,11 +31,12 @@ def main ():
     list_knapsack = []
     
     list_metaheuristics = [
-        # SlimeMould(MAX_EFOS, POP_SIZE, ZERO_DOT_THREE), 
-        # GreyWolf(MAX_EFOS, POP_SIZE)
-        #IbmQuantum(MAX_EFOS), 
-        HillClimbing(MAX_EFOS)
-        # Dragonfly(MAX_EFOS, POP_SIZE)
+        SlimeMould(MAX_EFOS, POP_SIZE, ZERO_DOT_THREE), 
+        GreyWolf(MAX_EFOS, POP_SIZE),
+        Dragonfly(MAX_EFOS, POP_SIZE),
+        IbmQuantum(MAX_EFOS),
+        # HillClimbing(MAX_EFOS)
+        
     ]
     
     main_util = MainUtil()
@@ -58,7 +59,9 @@ def main ():
     # evaluate if dataset is in a folder
     elif main_util.arguments.get_folder_name():
         folder_name = main_util.arguments.get_folder_name()
-        exist_in_default_folder = os.path.isdir(files_folder_default + folder_name)
+        exist_in_default_folder = os.path.isdir(
+            files_folder_default + folder_name
+        )
         if os.path.isdir(folder_name) or exist_in_default_folder:
             folder_dataset = (
                 (general.DIR_FILES + folder_name)
@@ -84,7 +87,9 @@ def main ():
                 file = open(file_path)
                 file.close()
                 file_name = file_path.split(general.SEPARATOR)
-                knapsack_from_file = main_util.get_knapsack(file_path, file_name=file_name[-1])
+                knapsack_from_file = main_util.get_knapsack(
+                    file_path, file_name=file_name[-1]
+                )
                 if knapsack_from_file:
                     list_knapsack.append(knapsack_from_file)
             except FileNotFoundError:

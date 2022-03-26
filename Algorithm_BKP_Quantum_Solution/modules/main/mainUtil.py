@@ -1,11 +1,8 @@
-from os import listdir
 import os
 from modules.file.fileWriter import FileWriter
 from modules.arguments.arguments_command_line import ArgumentsCommandLine
 from modules.generator.datasetGenerator import DatasetGenerator
 import modules.util.generalValue as general
-from modules.util.generalValue import SEPARATOR
-import modules.util.util as util
 from modules.file.fileReader import FileReader
 
 class MainUtil():
@@ -15,15 +12,11 @@ class MainUtil():
             general.DESCRIPTION_TEXT, 
             general.EPILOG_TEXT
         )
-        print(self.arguments)
-        pass
 
     def get_knapsack_list(self, knapsack_files_path):
         knapsack_list = []
         # list the folders contained in the root directory
-        list_folder_dataset = listdir(knapsack_files_path)
         for folder_name, dirs, files in os.walk(knapsack_files_path):
-            root_path = knapsack_files_path + folder_name
             for knapsack_file_name in files:
                 #read knapsack file
                 full_file_path = folder_name + general.SEPARATOR + knapsack_file_name

@@ -8,6 +8,7 @@ import modules.util.util as util
 class Evaluate():
     def __init__(self):
         self.obj_fileWriter=FileWriter()
+        self.obj_fileWriter_fitness=FileWriter()
         self.arguments = ArgumentsCommandLine(
             general.DESCRIPTION_TEXT, 
             general.EPILOG_TEXT
@@ -16,11 +17,18 @@ class Evaluate():
         pass
 
     def init_result_file(self):
-        self.obj_fileWriter.open(util.get_result_file_name())
+        name = util.get_result_file_name()
+        self.obj_fileWriter.open(name)
         self.obj_fileWriter.write(
             util.get_line_header(self.arguments.get_iterations())
         )
         self.obj_fileWriter.new_line()
+
+        self.obj_fileWriter_fitness.open(name + "_fitness.csv")
+        self.obj_fileWriter_fitness.write(
+            util.get_line_header(self.arguments.get_iterations())
+        )
+        self.obj_fileWriter_fitness.new_line()
 
     def run_metaheuristics(
         self, 
@@ -33,9 +41,14 @@ class Evaluate():
             self.obj_fileWriter.write_line(
                 util.get_solution_header(metaheuristic_list)
             )
+            self.obj_fileWriter_fitness.write_line(
+                "file_name,slime_mould,grey_wolf,dragon_fly,quantum"
+            )
             for knapsack in knapsack_list:
                 util.if_print_text("\n\t" + str(knapsack), debug)
-                self.obj_fileWriter.write(util.get_info_dataset(knapsack))                
+                self.obj_fileWriter.write(util.get_info_dataset(knapsack) + " ### ")
+                self.obj_fileWriter_fitness.write(knapsack.file_name + "  ")
+
                 for my_metaheuristic in metaheuristic_list:
                     list_fitness = []
                     list_efos = []
@@ -57,8 +70,8 @@ class Evaluate():
                         list_efos.append(my_metaheuristic.current_efos)
                         list_times.append(elapsed_time)                    
                         substraction = (
-                            my_metaheuristic.my_best_solution.fitness
-                            - knapsack.objective
+                            knapsack.objective
+                            - my_metaheuristic.my_best_solution.fitness
                         )
                         if substraction < 1e-10 : 
                             times_found_ideal += 1
@@ -74,11 +87,15 @@ class Evaluate():
                             my_metaheuristic.my_best_solution
                         )
                     )
+                    self.obj_fileWriter_fitness.write(
+                        f"{sum(list_fitness) / len(list_fitness)},"
+                    )
                     util.if_print_text(
                         "\t" + str(my_metaheuristic.my_best_solution), 
                         debug
                     )
                 self.obj_fileWriter.write_line("")
+                self.obj_fileWriter_fitness.write_line("")
         except OSError as err:
             print("OS error: {0}".format(err))
         except BaseException as e:
