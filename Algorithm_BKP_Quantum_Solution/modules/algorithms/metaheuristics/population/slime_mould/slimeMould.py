@@ -24,7 +24,7 @@ class SlimeMould(PopulationMetaheuristic):
         self.current_efos = 0
 
         g_best = None   # DF - Best fitness all iterations
-        list_search_agents = self.__generate_population_aleatory()
+        list_search_agents = self.generate_population_aleatory()
 
         # returns descending order list according to best fitness
         list_search_agents, g_best = self.__get_sorted_list_and_global_best_solution(
@@ -113,6 +113,19 @@ class SlimeMould(PopulationMetaheuristic):
             t += 1
         self.my_best_solution = g_best
     
+    def generate_population_aleatory(self):
+        """generate population vector aleatory"""
+        list_agent = []
+        for i in range(self.pop_size):
+            list_agent.append(self.get_instance_solution())
+        return list_agent
+
+    def get_instance_solution(self):
+        """ generate an instances solution for Slime Mould. """
+        s = SlimeMouldSolution.init_owner(self)
+        s.random_initialization()
+        return s
+        
     def __bitwise_solution(self, current_SM, g_best):
         rnd_position = np.random.choice(
             [0,1], 
@@ -132,19 +145,6 @@ class SlimeMould(PopulationMetaheuristic):
         c = -((x - mu)*(x - mu)) / (2 * (sigma*sigma))
         d = 1 / (sigma * math.sqrt(2*math.pi))
         return  d * math.exp(c)
-
-    def __generate_population_aleatory(self):
-        """generate population vector aleatory"""
-        list_agent = []
-        for i in range(self.pop_size):
-            list_agent.append(self.__get_instance_solution())
-        return list_agent
-
-    def __get_instance_solution(self):
-        """ generate an instances solution for Slime Mould. """
-        s = SlimeMouldSolution.init_owner(self)
-        s.random_initialization()
-        return s
 
     def __get_sorted_list_and_global_best_solution(
         self, 

@@ -30,7 +30,7 @@ class GreyWolf(PopulationMetaheuristic):
         self.curve = []
         self.current_efos = 0
         g_best = None   # DF - Best fitness all iterations
-        Q = self.__generate_population_aleatory()  # 3.3 initialization
+        Q = self.generate_population_aleatory()  # 3.3 initialization
 
         # get best solution - wolves alpha
         g_best = Q[0]
@@ -81,14 +81,14 @@ class GreyWolf(PopulationMetaheuristic):
         self.my_best_solution = GreyWolfSolution.init_solution(g_best)
         return g_best
 
-    def __generate_population_aleatory(self):
+    def generate_population_aleatory(self):
         """generate population vector aleatory"""
         list_agent = []
         for i in range(self.pop_size):
-            list_agent.append(self.__get_instance_solution())
+            list_agent.append(self.get_instance_solution())
         return list_agent
 
-    def __get_instance_solution(self):
+    def get_instance_solution(self):
         """ generate an instances solution for Slime Mould. """
         s = GreyWolfSolution.init_owner(self)
         s.random_initialization()

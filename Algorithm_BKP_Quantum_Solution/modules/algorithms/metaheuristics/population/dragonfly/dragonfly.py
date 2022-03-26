@@ -26,7 +26,7 @@ class Dragonfly(PopulationMetaheuristic):
 
         # initialize dragonfly population and step vector
         # Calculate the objective values of all dragonflies
-        X = self.__initialize_dragonflies_population()
+        X = self.generate_population_aleatory()
         source = X[0]
         enemy = X[0]
         t = 1
@@ -94,13 +94,13 @@ class Dragonfly(PopulationMetaheuristic):
         return source
 
    
-    def __initialize_dragonflies_population(self):
+    def generate_population_aleatory(self):
         population = []
         for i in range(self.pop_size):
-            population.append(self.__get_instance_solution())
+            population.append(self.get_instance_solution())
         return population
 
-    def __get_instance_solution(self):
+    def get_instance_solution(self):
         """ generate an instances solution for Slime Mould. """
         s = DragonflySolution.init_owner(self)
         s.random_initialization()

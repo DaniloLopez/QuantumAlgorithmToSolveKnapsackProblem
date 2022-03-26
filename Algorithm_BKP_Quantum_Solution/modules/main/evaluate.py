@@ -47,7 +47,7 @@ class Evaluate():
             for knapsack in knapsack_list:
                 util.if_print_text("\n\t" + str(knapsack), debug)
                 self.obj_fileWriter.write(util.get_info_dataset(knapsack) + " ### ")
-                self.obj_fileWriter_fitness.write(knapsack.file_name + "  ")
+                self.obj_fileWriter_fitness.write(knapsack.file_name + ", ")
 
                 for my_metaheuristic in metaheuristic_list:
                     list_fitness = []
@@ -88,7 +88,7 @@ class Evaluate():
                         )
                     )
                     self.obj_fileWriter_fitness.write(
-                        f"{sum(list_fitness) / len(list_fitness)},"
+                        f"{sum(list_fitness) / len(list_fitness)}, "
                     )
                     util.if_print_text(
                         "\t" + str(my_metaheuristic.my_best_solution), 

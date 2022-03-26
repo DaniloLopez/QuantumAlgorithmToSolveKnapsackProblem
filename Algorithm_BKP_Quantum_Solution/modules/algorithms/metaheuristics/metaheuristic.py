@@ -1,3 +1,4 @@
+from abc import abstractmethod
 from modules.algorithms.algorithm import Algorithm
 
 class Metaheuristic(Algorithm):
@@ -7,6 +8,7 @@ class Metaheuristic(Algorithm):
         super(Metaheuristic, self).__init__()
         self.curve = []
 
+    @abstractmethod
     def execute(self, the_knapsack, the_aleatory, debug=False):
         pass
 
