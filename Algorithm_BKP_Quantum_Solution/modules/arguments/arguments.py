@@ -29,3 +29,11 @@ class Arguments(ABC):
     @abstractmethod
     def get_iterations(self):
         pass
+
+    @abstractmethod
+    def get_file_name(self):
+        pass
+
+    @abstractmethod
+    def get_folder_name(self):
+        pass

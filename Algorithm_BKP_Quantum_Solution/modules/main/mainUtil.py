@@ -26,15 +26,21 @@ class MainUtil():
             for knapsack_file_name in util.get_list_files_folder( root_path ):
                 #read knapsack file
                 full_file_path = root_path + SEPARATOR + knapsack_file_name
-                reader_knapsack_file = FileReader(
+                knapsack = self.get_knapsack(
                     full_file_path, 
-                    knapsack_file_name
+                    file_name=knapsack_file_name
                 )
-                knapsack = reader_knapsack_file.get_knapsack()
-                if knapsack is not None:
+                if knapsack:
                     knapsack_list.append(knapsack)
         return knapsack_list
 
+    def get_knapsack(self, full_file_path, file_name=None):
+        reader_knapsack_file = FileReader(
+            full_file_path, 
+            short_file_name=file_name
+        )
+        return reader_knapsack_file.get_knapsack()
+         
     def generate_dataset(self, arguments):
         """Generate dataset according to arguments of subcomand generate"""        
         generator = DatasetGenerator(arguments)

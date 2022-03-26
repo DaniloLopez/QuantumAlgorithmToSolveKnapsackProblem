@@ -8,7 +8,11 @@ import modules.util.generalValue as general
 from modules.generator.generator import Generator
 
 class DatasetGenerator(Generator):
-    """docstring for DatasetGenerator."""
+    """dataset_Generator
+
+    Args:
+        Generator (ABS): _description_
+    """
     def __init__(self, arguments):
         super(DatasetGenerator, self).__init__(arguments)
     
@@ -42,13 +46,16 @@ class DatasetGenerator(Generator):
     def _validate_range_arguments(self):
         self._validate_option_valid(self.args.type, 1, 4, 4)
         self._validate_option_valid(self.args.difficult, 1, 3, 3)
-        self._validate_range_valid(self.args.nitems, 1,general.MAX_N_ITEMS)
+        self._validate_range_valid(self.args.nitems, 1, general.MAX_N_ITEMS)
         self._validate_range_valid(self.args.range, 1, general.MAX_RANGE)
 
     def _validate_option_valid(self, list, min_value, max_value, max_parameters):
         if(len(list) > max_parameters):
-            raise Exception("ERROR: argument invalid, maximum: " 
-                + str(max_parameters) + " arguments")
+            raise Exception(
+                "ERROR: argument invalid, maximum: " 
+                + str(max_parameters) 
+                + " arguments"
+            )
         else:
             self._validate_min_max(list, min_value, max_value)
 
@@ -60,9 +67,7 @@ class DatasetGenerator(Generator):
     def _validate_min_max(self, list_eval, min_value, max_value):
         if(min(list_eval) < min_value or max(list_eval) > max_value):
             raise Exception(
-                "ERROR: argument invalid. valid: "  
-                + str(min_value) 
-                + " - " + str(max_value)
+                f"ERROR: argument invalid. valid: {min_value} - {max_value}"
             )
         
     def _generate_difficult(self):
@@ -76,7 +81,7 @@ class DatasetGenerator(Generator):
                 self._generate(general.HARD, 3)            
         else:
             raise Exception(
-                "<>Bad arguments for parameter (-d/-D).\t)" +
+                "<>Bad arguments for parameter (-d DIFFICULT).\t)" +
                 "err: Repeated values in parameters"
             )
     
@@ -85,7 +90,12 @@ class DatasetGenerator(Generator):
                 for nitems in range(self.args.nitems[0], self.args.nitems[1]+1):
                     for rang in range(self.args.range[0], self.args.range[1]+1):                        
                         file_name = util.build_commnad_line_text_generate (
-                            type, difficult, diff, nitems, rang, 3
+                            type, 
+                            difficult, 
+                            diff, 
+                            nitems, 
+                            rang, 
+                            3
                         )
                         os.system(difficult + " " + file_name)
                         

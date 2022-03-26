@@ -39,6 +39,12 @@ class ArgumentsCommandLine(Arguments):
     def is_debug_enable(self):
         return self.args.debug
 
+    def get_file_name(self):
+        return self.file
+
+    def get_folder_name(self):
+        return self.folder
+
     #private methods
     def _init_parser_arguments(self):
         self.parser.add_argument(
