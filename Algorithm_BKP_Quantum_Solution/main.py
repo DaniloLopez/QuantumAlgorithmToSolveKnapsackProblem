@@ -60,7 +60,7 @@ def main ():
         exist_in_default_folder = os.path.isdir(files_folder_default + folder_name)
         if os.path.isdir(folder_name) or exist_in_default_folder:
             folder_dataset = (
-                (files_folder_default + folder_name)
+                (general.DIR_FILES + folder_name)
                 if exist_in_default_folder 
                 else folder_name
             )
