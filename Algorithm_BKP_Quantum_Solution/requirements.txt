@@ -1,0 +1,4 @@
+numpy==1.18.1
+pandas==0.25.3
+qiskit==0.34.2
+qiskit_terra==0.11.1
