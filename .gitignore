@@ -145,7 +145,7 @@ dmypy.json
 #result files
 #*.dat
 files/generate_dataset_*/
-solutions/
+# solutions/
 
 # config environment
 .vscode
