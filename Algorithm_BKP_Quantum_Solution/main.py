@@ -20,8 +20,8 @@ from modules.algorithms.metaheuristics.population.dragonfly.dragonfly import Dra
 # ****************************************************************************
 ROOT_DIR = path.dirname(path.abspath(__file__))
 ZERO_DOT_THREE = 0.3
-POP_SIZE = 10
-MAX_EFOS = 500
+POP_SIZE = 20
+MAX_EFOS = 1000
 
 def main ():
     """ 
@@ -36,7 +36,7 @@ def main ():
         GreyWolf(MAX_EFOS, POP_SIZE),
         Dragonfly(MAX_EFOS, POP_SIZE),
         IbmQuantumEigensolver(MAX_EFOS),
-        IbmQuantumQAOA(MAX_EFOS),
+        # IbmQuantumQAOA(MAX_EFOS),
         # HillClimbing(MAX_EFOS)
     ]
     

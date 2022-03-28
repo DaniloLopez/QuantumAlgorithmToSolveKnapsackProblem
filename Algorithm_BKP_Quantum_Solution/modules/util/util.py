@@ -50,13 +50,13 @@ def get_line_result_format(knapsack, list_fitness, list_efos, list_times,
     st_dev = math.sqrt(var)
 
     #line = "best_solution: " + str(best_solution)
-    line = str(round(((times_found_ideal*100)/iterations), 2)) + "%  "
-    line += str(round(float(avg), 2)) + "%  "
-    line += str(round(st_dev, 2)) +"  "
-    line += str(max(list_fitness)) +"  "
-    line += str(min(list_fitness)) + "  "
-    line += str(round((sum(list_times) * 100) / iterations, 2))+ "  ###  "
-    return line
+    line = str(round(((times_found_ideal*100)/iterations), 2)) + "% "
+    line += str(round(float(avg), 2)) + " "
+    line += str(round(st_dev, 2)) +" "
+    line += str(max(list_fitness)) +" "
+    line += str(min(list_fitness)) + " "
+    line += str(round((sum(list_times) * 100) / iterations, 2))
+    return line + " ### "
 
 
 def get_line_result(obj_kp, profits_solution, weights_solution,
@@ -119,15 +119,15 @@ def get_info_dataset(knapsack):
         + "  " + str(knapsack.n_items) 
         + "  " + str(knapsack.capacity) 
         + "  " + str(knapsack.objective) 
-        + "  [" + str(knapsack.solution)[1:-1]+"]  "
+        + "  [" + str(knapsack.solution)[1:-1]+"]"
     )
 
 def get_solution_header(metaheuristic_list):
     n = len(metaheuristic_list)
-    line = "\t\t\tDATASET\t\t\t ###"
+    line = "DATASET_INFO ### "
     for i in range(n):
-        line += "\tAlgorithm "+ metaheuristic_list[i].__class__.__name__ +"\t###"
-    line+="\n file_name|n items|capacity|objective|solution  ###  "
+        line += "Algorithm__"+ metaheuristic_list[i].__class__.__name__ +" ### "
+    line+="\nFileName nItems Capacity Objective Solution ### "
     for i in range (n):
-        line+="|success Rate|fitness average|standar deviation|best fitness|worst fitness|time average|  ###  "
+        line+="success_rate fitness_avg standard_deviation best_fitness worst_fitness time_avg ### "
     return line

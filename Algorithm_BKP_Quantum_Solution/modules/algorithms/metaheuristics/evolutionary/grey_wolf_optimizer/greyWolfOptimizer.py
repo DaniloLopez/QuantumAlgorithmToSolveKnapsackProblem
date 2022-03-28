@@ -167,7 +167,11 @@ class GreyWolf(PopulationMetaheuristic):
 
     def __get_upsilon_wolves(self, leader_wolves, actual_wolf, t):
         if actual_wolf.fitness < leader_wolves.fitness:
-            return leader_wolves.fitness / actual_wolf.fitness
+            return (
+                leader_wolves.fitness / actual_wolf.fitness
+                if actual_wolf.fitness > 0
+                else 0
+            )
         else:
             return (
                 (np.random.normal(_MU, _SIGMA) * self.max_efos) 

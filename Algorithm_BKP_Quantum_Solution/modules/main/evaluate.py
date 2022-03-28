@@ -24,7 +24,7 @@ class Evaluate():
         )
         self.obj_fileWriter.new_line()
 
-        self.obj_fileWriter_fitness.open(name + "_fitness.csv")
+        self.obj_fileWriter_fitness.open(f"{name.split('.')[0]}_fitness.csv")
         self.obj_fileWriter_fitness.write(
             util.get_line_header(self.arguments.get_iterations())
         )
@@ -42,14 +42,16 @@ class Evaluate():
                 util.get_solution_header(metaheuristic_list)
             )
             self.obj_fileWriter_fitness.write_line(
-                "file_name,slime_mould,grey_wolf,dragon_fly,quantumEigensolver,quantumQAOA"
+                "FileName,Objective,Slime_mould,Grey_wolf,Dragon_fly,QuantumEigensolver,QuantumQAOA"
             )
             for knapsack in knapsack_list:
+                print(knapsack.file_name)
                 util.if_print_text("\n\t" + str(knapsack), debug)
                 self.obj_fileWriter.write(util.get_info_dataset(knapsack) + " ### ")
-                self.obj_fileWriter_fitness.write(knapsack.file_name + ", ")
+                self.obj_fileWriter_fitness.write(f"{knapsack.file_name},{knapsack.objective},")
 
                 for my_metaheuristic in metaheuristic_list:
+                    print(my_metaheuristic.__class__.__name__)
                     list_fitness = []
                     list_efos = []
                     list_times = []
@@ -88,7 +90,7 @@ class Evaluate():
                         )
                     )
                     self.obj_fileWriter_fitness.write(
-                        f"{sum(list_fitness) / len(list_fitness)}, "
+                        f"{sum(list_fitness) / len(list_fitness)},"
                     )
                     util.if_print_text(
                         "\t" + str(my_metaheuristic.my_best_solution), 

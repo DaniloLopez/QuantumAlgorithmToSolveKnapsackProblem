@@ -37,8 +37,6 @@ class IbmQuantumEigensolver(Metaheuristic):
         # Numpy Eigensolver
         meo = MinimumEigenOptimizer(min_eigen_solver=NumPyMinimumEigensolver())
         result = meo.solve(qp)
-        print("result:\n", result)
-        print("\nsolution:\n", prob.interpret(result))
 
         # init solution object
         self.my_best_solution = Solution.init_owner(self)
