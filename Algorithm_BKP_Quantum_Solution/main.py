@@ -32,13 +32,12 @@ def main ():
     list_knapsack = []
     
     list_metaheuristics = [
-        # SlimeMould(MAX_EFOS, POP_SIZE, ZERO_DOT_THREE),
-        # GreyWolf(MAX_EFOS, POP_SIZE),
-        # Dragonfly(MAX_EFOS, POP_SIZE),
+        SlimeMould(MAX_EFOS, POP_SIZE, ZERO_DOT_THREE),
+        GreyWolf(MAX_EFOS, POP_SIZE),
+        Dragonfly(MAX_EFOS, POP_SIZE),
         IbmQuantumEigensolver(MAX_EFOS),
         IbmQuantumQAOA(MAX_EFOS),
         # HillClimbing(MAX_EFOS)
-        
     ]
     
     main_util = MainUtil()
