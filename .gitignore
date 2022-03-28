@@ -143,7 +143,7 @@ dmypy.json
 .prof
 
 #result files
-*.dat
+#*.dat
 files/generate_dataset_*/
 solutions/
 
