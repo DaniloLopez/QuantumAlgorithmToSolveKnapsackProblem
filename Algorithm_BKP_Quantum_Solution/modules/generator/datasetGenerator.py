@@ -49,10 +49,10 @@ class DatasetGenerator(Generator):
         self._validate_option_valid(self.args.type, 1, 4, 4)
         self._validate_option_valid(self.args.difficult, 1, 3, 3)
         self.args.nitems = self._validate_range_valid(
-            self.args.nitems, 1, general.MAX_N_ITEMS
+            self.args.nitems, 1, general.MAX_N_ITEMS, 1
         )
         self.args.range = self._validate_range_valid(
-            self.args.range, 1, general.MAX_RANGE
+            self.args.range, 1, general.MAX_RANGE, 10
         )
 
     def _validate_option_valid(self, list, min_value, max_value, max_parameters):
@@ -65,10 +65,10 @@ class DatasetGenerator(Generator):
         else:
             self._validate_min_max(list, min_value, max_value)
 
-    def _validate_range_valid(self, list_eval, min_value, max_value):
+    def _validate_range_valid(self, list_eval, min_value, max_value, step):
         self._validate_min_max(list_eval, min_value, max_value)
         if(len(list_eval) == 2):
-            return list(range(min(list_eval), max(list_eval)+1))
+            return list(range(min(list_eval), max(list_eval)+1, step))
         return list_eval
             
     def _validate_min_max(self, list_eval, min_value, max_value):
@@ -85,7 +85,7 @@ class DatasetGenerator(Generator):
             if 2 in self.args.difficult :
                 self._generate(general.MEDIUM, 2)
             if 3 in self.args.difficult :
-                self._generate(general.HARD, 3)            
+                self._generate(general.HARD, 3)
         else:
             raise Exception(
                 "<>Bad arguments for parameter (-d DIFFICULT).\t)" +
@@ -105,7 +105,5 @@ class DatasetGenerator(Generator):
                             rang, 
                             3
                         )
-                        res = os.system(generator + " " + file_name)
-                        if res != 0:
-                            print(f"error create file: {file_name}")
+                        os.system(generator + " " + file_name)
                         

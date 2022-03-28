@@ -6,7 +6,7 @@ import numpy as np
 import math
 import modules.util.util as util
 from qiskit.quantum_info import Pauli
-from qiskit.aqua.operators import WeightedPauliOperator
+from qiskit.opflow import WeightedPauliOperator
 from qiskit.aqua.algorithms import ExactEigensolver
 from qiskit.aqua.input import EnergyInput
 

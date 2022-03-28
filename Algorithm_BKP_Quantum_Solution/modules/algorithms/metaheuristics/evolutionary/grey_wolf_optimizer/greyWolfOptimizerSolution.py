@@ -1,6 +1,5 @@
 from typing import Match
 
-from pandas import value_counts
 from modules.algorithms.solution import Solution
 import random, math
 

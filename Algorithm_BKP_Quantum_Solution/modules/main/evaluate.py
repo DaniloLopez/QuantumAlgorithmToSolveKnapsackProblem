@@ -42,7 +42,7 @@ class Evaluate():
                 util.get_solution_header(metaheuristic_list)
             )
             self.obj_fileWriter_fitness.write_line(
-                "file_name,slime_mould,grey_wolf,dragon_fly,quantum"
+                "file_name,slime_mould,grey_wolf,dragon_fly,quantumEigensolver,quantumQAOA"
             )
             for knapsack in knapsack_list:
                 util.if_print_text("\n\t" + str(knapsack), debug)
@@ -99,7 +99,7 @@ class Evaluate():
         except OSError as err:
             print("OS error: {0}".format(err))
         except BaseException as e:
-            print("Unexpected error: {}".format(e))
+            print(f"Unexpected error: {e}")
             raise
         finally:        
             self.obj_fileWriter.close()

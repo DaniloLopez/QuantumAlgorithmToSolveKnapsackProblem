@@ -9,7 +9,8 @@ from modules.main.evaluate import Evaluate
 import modules.util.generalValue as general
 from modules.generator.datasetGenerator import DatasetGenerator
 from modules.algorithms.metaheuristics.simple_state.hillClimbing import HillClimbing
-from modules.algorithms.metaheuristics.quantum.ibmQuantum import IbmQuantum
+from modules.algorithms.metaheuristics.quantum.ibmQuantumQAOA import IbmQuantumQAOA
+from modules.algorithms.metaheuristics.quantum.ibmQuantumEigensolver import IbmQuantumEigensolver
 from modules.algorithms.metaheuristics.population.slime_mould.slimeMould import SlimeMould
 from modules.algorithms.metaheuristics.evolutionary.grey_wolf_optimizer.greyWolfOptimizer import GreyWolf
 from modules.algorithms.metaheuristics.population.dragonfly.dragonfly import Dragonfly
@@ -31,10 +32,11 @@ def main ():
     list_knapsack = []
     
     list_metaheuristics = [
-        SlimeMould(MAX_EFOS, POP_SIZE, ZERO_DOT_THREE), 
-        GreyWolf(MAX_EFOS, POP_SIZE),
-        Dragonfly(MAX_EFOS, POP_SIZE),
-        IbmQuantum(MAX_EFOS),
+        # SlimeMould(MAX_EFOS, POP_SIZE, ZERO_DOT_THREE),
+        # GreyWolf(MAX_EFOS, POP_SIZE),
+        # Dragonfly(MAX_EFOS, POP_SIZE),
+        IbmQuantumEigensolver(MAX_EFOS),
+        IbmQuantumQAOA(MAX_EFOS),
         # HillClimbing(MAX_EFOS)
         
     ]
@@ -54,7 +56,7 @@ def main ():
         # generate dataset 
         dataset_generator = DatasetGenerator(main_util.arguments)
         folder_dataset = dataset_generator.generate()
-        print(f"dataset generate in: {folder_dataset}")
+        print(f"Dataset generated in folder:\n{folder_dataset}")
     
     # evaluate if dataset is in a folder
     elif main_util.arguments.get_folder_name():

@@ -79,9 +79,9 @@ def get_line_result(obj_kp, profits_solution, weights_solution,
 
 
 def generate_full_name_file(folder_name, generator, type, difficult, nitems, range):
-    folder_name = f"{folder_name}{SEPARATOR}{generator}"
-    os.makedirs(folder_name, exist_ok=True)
-    return (f"{folder_name}{SEPARATOR}t{type}_d{difficult}_n{nitems}_r{range}.dat")
+    new_folder_name = f"{folder_name}{SEPARATOR}{generator}"
+    os.makedirs(new_folder_name, exist_ok=True)
+    return (f"{new_folder_name}{SEPARATOR}t{type}_d{difficult}_n{nitems}_r{range}.dat")
 
 
 def build_commnad_line_text_generate(
