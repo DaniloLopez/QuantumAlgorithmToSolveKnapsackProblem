@@ -1,7 +1,7 @@
 Number of iterations: 31 
 
 
-FileName,Objective,Slime_mould,Grey_wolf,Dragon_fly,QuantumEigensolver,
+FileName,Objective,Slime_mould,Grey_wolf,Dragon_fly,QuantumEigensolver
 
 t1_d1_n10_r10.dat,25,25.0,23.0,24.225806451612904,25.0,
 
@@ -62,9 +62,3 @@ t1_d1_n9_r30.dat,77,77.0,77.0,76.3225806451613,77.0,
 t1_d1_n9_r40.dat,61,61.0,61.0,60.774193548387096,61.0,
 
 t1_d1_n9_r50.dat,106,106.0,106.0,105.19354838709677,106.0,
-
-t2_d1_n10_r10.dat,12,12.0,11.0,12.0,12.0,
-
-t2_d1_n10_r20.dat,25,25.0,25.0,24.70967741935484,25.0,
-
-t2_d1_n10_r30.dat,33,33.0,
