@@ -50,7 +50,7 @@ def get_line_result_format(knapsack, list_fitness, list_efos, list_times,
     st_dev = math.sqrt(var)
 
     #line = "best_solution: " + str(best_solution)
-    line = str(round(((times_found_ideal*100)/iterations), 2)) + "% "
+    line = str(round(((times_found_ideal*100)/iterations), 2)) + " "
     line += str(round(float(avg), 2)) + " "
     line += str(round(st_dev, 2)) +" "
     line += str(max(list_fitness)) +" "
@@ -119,7 +119,7 @@ def get_info_dataset(knapsack):
         + "  " + str(knapsack.n_items) 
         + "  " + str(knapsack.capacity) 
         + "  " + str(knapsack.objective) 
-        + "  [" + str(knapsack.solution)[1:-1]+"]"
+        + "  [" + (str(knapsack.solution)[1:-1]).replace(" ", "") +"]"
     )
 
 def get_solution_header(metaheuristic_list):
@@ -129,5 +129,5 @@ def get_solution_header(metaheuristic_list):
         line += "Algorithm__"+ metaheuristic_list[i].__class__.__name__ +" ### "
     line+="\nFileName nItems Capacity Objective Solution ### "
     for i in range (n):
-        line+="success_rate fitness_avg standard_deviation best_fitness worst_fitness time_avg ### "
+        line+="success_rate(%) fitness_avg standard_deviation best_fitness worst_fitness time_avg ### "
     return line

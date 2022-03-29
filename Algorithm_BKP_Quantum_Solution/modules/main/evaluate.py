@@ -42,7 +42,7 @@ class Evaluate():
                 util.get_solution_header(metaheuristic_list)
             )
             self.obj_fileWriter_fitness.write_line(
-                "FileName,Objective,Slime_mould,Grey_wolf,Dragon_fly,QuantumEigensolver,QuantumQAOA"
+                "FileName,Objective,Slime_mould,Grey_wolf,Dragon_fly,QuantumEigensolver"
             )
             for knapsack in knapsack_list:
                 print(knapsack.file_name)
