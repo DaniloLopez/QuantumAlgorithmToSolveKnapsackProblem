@@ -25,10 +25,6 @@ class Evaluate():
         self.obj_fileWriter.new_line()
 
         self.obj_fileWriter_fitness.open(f"{name.split('.')[0]}_fitness.csv")
-        self.obj_fileWriter_fitness.write(
-            util.get_line_header(self.arguments.get_iterations())
-        )
-        self.obj_fileWriter_fitness.new_line()
 
     def run_metaheuristics(
         self, 
