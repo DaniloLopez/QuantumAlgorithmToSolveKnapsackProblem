@@ -42,13 +42,13 @@ class Evaluate():
                 util.get_solution_header(metaheuristic_list)
             )
             self.obj_fileWriter_fitness.write_line(
-                "FileName,Objective,Slime_mould,Grey_wolf,Dragon_fly,QuantumEigensolver"
+                "FileName,Slime_mould,Grey_wolf,Dragon_fly,QuantumEigensolver"
             )
             for knapsack in knapsack_list:
                 print(knapsack.file_name)
                 util.if_print_text("\n\t" + str(knapsack), debug)
                 self.obj_fileWriter.write(util.get_info_dataset(knapsack) + " ### ")
-                self.obj_fileWriter_fitness.write(f"{knapsack.file_name},{knapsack.objective},")
+                self.obj_fileWriter_fitness.write(f"{knapsack.file_name},")
 
                 for my_metaheuristic in metaheuristic_list:
                     print(my_metaheuristic.__class__.__name__)
