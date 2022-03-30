@@ -73,13 +73,11 @@ class GreyWolf(PopulationMetaheuristic):
                     Q[it] = q_c_solution
                 else:
                     Q[it].quantum_theta = (
-                        np.array(Q[it].quantum_theta) 
+                        np.array(Q[it].quantum_theta)
                         + self.__update_by_rgwo(Q.copy(), t, it)
                     ).tolist()
 
             t += 1
-            if t > 999:
-                print(t)
         self.my_best_solution = GreyWolfSolution.init_solution(g_best)
         return g_best
 

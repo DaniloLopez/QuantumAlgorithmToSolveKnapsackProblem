@@ -59,9 +59,6 @@ class Evaluate():
                     util.if_print_text(my_metaheuristic, debug)
                     #self.obj_fileWriter.write("*"+ str(my_metaheuristic))
                     for it in range(self.arguments.get_iterations()):
-                        print(it)
-                        if it == 11:
-                            print("en modo no temrina")
                         random.seed(it)                        
                         start_time= time() # initial time record
                         
@@ -78,7 +75,7 @@ class Evaluate():
                             knapsack.objective
                             - my_metaheuristic.my_best_solution.fitness
                         )
-                        if substraction < 1e-10 : 
+                        if substraction < 1e-10 :
                             times_found_ideal += 1
                             
                     self.obj_fileWriter.write(
