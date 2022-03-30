@@ -78,6 +78,8 @@ class GreyWolf(PopulationMetaheuristic):
                     ).tolist()
 
             t += 1
+            if t > 999:
+                print(t)
         self.my_best_solution = GreyWolfSolution.init_solution(g_best)
         return g_best
 
