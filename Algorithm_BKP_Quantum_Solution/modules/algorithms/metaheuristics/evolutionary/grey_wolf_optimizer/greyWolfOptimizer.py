@@ -35,10 +35,12 @@ class GreyWolf(PopulationMetaheuristic):
         # get best solution - wolves alpha
         g_best = Q[0]
         pos_g_best = 0
-
+        # print("EXCEUTE ALGORITMHM")
         t = 0
         while t < self.max_efos:
+            # print("eFOS: " + str(t))
             for it in range(self.pop_size):
+                # print("population no: " + str(it))
                 # get current best binary individual Xα
 
                 # de igual manera se hacen las 10 iteraciones, no supone una mejora significativa MAX()
@@ -57,12 +59,15 @@ class GreyWolf(PopulationMetaheuristic):
                         pos_qr1_qr2_selected.append(r)
 
                 # Apply mutation on qM(t) by Equations (8) and (11)//Adaptive mutation
+                # print("diferential control factor")
                 ft = self.__get_differentiation_control_factor(t)
+                # print("adaptative mutation")
                 q_m = self.__apply_adaptive_mutation(
                     Q, pos_g_best, pos_qr1_qr2_selected, ft
                 )
 
                 # Obtain qC(t) by crossover by Equations (12) and (13)//Crossover
+                # print("obtain crosover")
                 q_c = self.__obtain_crossover(Q[it].quantum_theta, q_m)
 
                 # create solution object for evaluate fitness
@@ -72,6 +77,7 @@ class GreyWolf(PopulationMetaheuristic):
                 if q_c_solution.fitness > Q[it].fitness:
                     Q[it] = q_c_solution
                 else:
+                    # print("update by rgwo")
                     Q[it].quantum_theta = (
                         np.array(Q[it].quantum_theta)
                         + self.__update_by_rgwo(Q.copy(), t, it)
@@ -151,7 +157,7 @@ class GreyWolf(PopulationMetaheuristic):
             + (1 - (t/self.max_efos)) 
             * (THETA_MAX - THETA_MIN)
         )  # equation 22
-
+        # print("update by rgwo")
         for j in range(len(alpha.position)):
             upsilon_alpha = self.__get_upsilon_wolves(alpha, pop[it], t)
             upsilon_beta = self.__get_upsilon_wolves(beta, pop[it], t)
@@ -166,6 +172,7 @@ class GreyWolf(PopulationMetaheuristic):
         return np.array(quantum_theta_crossover) # TODO vector s con todas las dimensiones
 
     def __get_upsilon_wolves(self, leader_wolves, actual_wolf, t):
+        # print("get upsilon wolves")
         if actual_wolf.fitness < leader_wolves.fitness:
             return (
                 leader_wolves.fitness / actual_wolf.fitness
