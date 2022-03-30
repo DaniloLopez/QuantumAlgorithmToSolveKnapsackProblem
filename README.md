@@ -16,8 +16,11 @@ The binary knapsack problem is solved by using the Ising model and its implement
 ## Setup
 
 > [rootDirectory]/ pipenv install --dev
+
 > [rootDirectory]/ conda create --name qiskit
+
 > [rootDirectory]/ conda activate qiskit
+
 > [rootDirectory]/ pip install -r requirements.txt
 
 
