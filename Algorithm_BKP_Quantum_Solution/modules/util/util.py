@@ -124,9 +124,9 @@ def get_info_dataset(knapsack):
 
 def get_solution_header(metaheuristic_list):
     n = len(metaheuristic_list)
-    line = "DATASET_INFO ### ### ### ### ###"
+    line = "### ### DATASET_INFO ### ### ###"
     for i in range(n):
-        line += "Algorithm__"+ metaheuristic_list[i].__class__.__name__ +" ### ### ### ### ### ### "
+        line += "### ### ### Algorithm__"+ metaheuristic_list[i].__class__.__name__ +" ### ### ### "
     line+="\nFileName nItems Capacity Objective Solution ### "
     for i in range (n):
         line+="success_rate(%) fitness_avg standard_deviation best_fitness worst_fitness time_avg ### "
