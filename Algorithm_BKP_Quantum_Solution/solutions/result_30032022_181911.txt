@@ -1,5 +1,0 @@
-Number of iterations: 31 
-
-DATASET_INFO ### Algorithm__SlimeMould ### Algorithm__GreyWolf ### Algorithm__Dragonfly ### Algorithm__IbmQuantumEigensolver ### 
-FileName nItems Capacity Objective Solution ### success_rate(%) fitness_avg standard_deviation best_fitness worst_fitness time_avg ### success_rate(%) fitness_avg standard_deviation best_fitness worst_fitness time_avg ### success_rate(%) fitness_avg standard_deviation best_fitness worst_fitness time_avg ### success_rate(%) fitness_avg standard_deviation best_fitness worst_fitness time_avg ### 
-t3_d3_n9_r50.dat  9  47  60  [0,0,0,0,1,1,0,1,0] ### 100.0 60.0 0.0 60.0 60.0 2.66 ### 100.0 60.0 0.0 60 60 300.54 ### 93.55 59.9 0.39 60 58 539.3 ### 100.0 60.0 0.0 60 60 170.88 ### 

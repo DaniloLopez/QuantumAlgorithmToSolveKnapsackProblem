@@ -116,17 +116,17 @@ def if_print_text(object, condition=True):
 def get_info_dataset(knapsack):
     return (
         knapsack.file_name 
-        + "  " + str(knapsack.n_items) 
-        + "  " + str(knapsack.capacity) 
-        + "  " + str(knapsack.objective) 
-        + "  [" + (str(knapsack.solution)[1:-1]).replace(" ", "") +"]"
+        + " " + str(knapsack.n_items) 
+        + " " + str(knapsack.capacity) 
+        + " " + str(knapsack.objective) 
+        + " [" + (str(knapsack.solution)[1:-1]).replace(" ", "") +"]"
     )
 
 def get_solution_header(metaheuristic_list):
     n = len(metaheuristic_list)
-    line = "DATASET_INFO ### "
+    line = "DATASET_INFO ### ### ### ### ###"
     for i in range(n):
-        line += "Algorithm__"+ metaheuristic_list[i].__class__.__name__ +" ### "
+        line += "Algorithm__"+ metaheuristic_list[i].__class__.__name__ +" ### ### ### ### ### ### "
     line+="\nFileName nItems Capacity Objective Solution ### "
     for i in range (n):
         line+="success_rate(%) fitness_avg standard_deviation best_fitness worst_fitness time_avg ### "
